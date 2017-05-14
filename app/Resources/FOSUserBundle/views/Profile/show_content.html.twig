@@ -1,0 +1,18 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div id="main" >
+  <div class="container-fluid">
+    <div class="page-header box">
+      <div class="box-title">
+        <h1 style="font-size:20px;line-height:24px;font-weight:400">Update User</h1>
+      </div>
+    </div>
+      <div class="row-fluid">
+
+<div class="fos_user_user_show">
+    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+</div>
+</div>
+</div>

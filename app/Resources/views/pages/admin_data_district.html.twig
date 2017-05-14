@@ -1,0 +1,242 @@
+{% extends 'template.html.twig' %}
+{% block left_nav %}
+    <div id="left">
+        <div class="subnav">
+            <div class="subnav-title">
+                <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Remaining Children</span></a>
+            </div>
+            <ul class="subnav-menu">
+                {% for dist in district %}
+                <li>
+                    <a href="{{ path('admin_data_district', {'district':dist.d_districtCode}) }}">{{ dist.d_districtName|capitalize }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {#<div class="subnav">#}
+            {#<div class="subnav-title">#}
+                {#<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Vaccine Usage</span></a>#}
+            {#</div>#}
+            {#<ul class="subnav-menu">#}
+                {#<li>#}
+                    {#<a href="#">South Region</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#">East Region</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#">South East Region</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#">Central Region</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#">West Region</a>#}
+                {#</li>#}
+            {#</ul>#}
+        {#</div>#}
+
+        <div class="subnav">
+            <ul class="subnav-menu">
+                <li>
+                    <a href="{{ path('admin_data_province', {'province':back_url}) }}" title="Go back to Province"><span>Back </span><i class="icon-reply"></i></a>
+                </li>
+            </ul>
+
+        </div>
+        <form id="filter_form" name="filter_form" action="{{ path('admin_data_district_filter') }}" method="post">
+        <div style="padding: 2px !important;">
+            <select name="s2[]" id="s2" class='select2-me input-block-level'
+                    multiple="multiple" data-placeholder="Filter by campaigns">
+                {% for campaign in campaigns %}
+                    <option value="{{ campaign.campaignId }}" {% if campaign.campaignId in selected %} selected {% endif %}>
+                        {{ [campaign.campaignType, campaign.campaignMonth, campaign.campaignYear]|join('-') }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="row-fluid">
+            <div style="width: 98%; margin-left: 1%; margin-right: auto">
+                <input type="hidden" value="{{ ajax_url_var }}" name="district_id">
+                <button type="submit" class="btn btn-info input-block-level">
+                    <i class="icon-filter"></i> Filter
+                </button>
+            </div>
+        </div>
+        </form>
+
+    </div>
+
+{% endblock %}
+{% block content %}
+<div id="main" data-ajax-url="{{ ajax_url_var }}">
+  <div class="container-fluid">
+    <div class="page-header box">
+      <div class="box-title">
+        <h1 style="font-size:20px;line-height:24px;font-weight:400">Admin Data Dashboard</h1>
+      </div>
+    </div>
+    <script src="{{ asset('/js/js/highcharts.js') }}"></script>
+    <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
+    <script src="{{ asset('/js/js/modules/grouped-categories.js') }}"></script>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+                {#{{ dump(clusters) }}#}
+                {#<script src="https://code.highcharts.com/highcharts.js"></script>#}
+                {#<script src="https://code.highcharts.com/modules/exporting.js"></script>#}
+
+                {#<div id="container3333" style="min-width: 310px; height: 500px; margin: 0 auto">#}
+                    {#{{ dump(clusters) }}#}
+                    {#<table border="1">#}
+                        {#<tr>#}
+                            {#<td>Cluster Names</td>#}
+                            {#{% for month in clusters|keys %}#}
+                                {#<td colspan="3">{{ month }}</td>#}
+                            {#{% endfor %}#}
+                        {#</tr>#}
+                        {#{% for month in clusters %}#}
+                            {#{% for key, cluster in month %}#}
+                            {#<tr>#}
+                                {#<td>{{ key }}</td>#}
+                                {#<td>{{ cluster.absent }}</td>#}
+                                {#<td>{{ cluster.sleep }}</td>#}
+                                {#<td>{{ cluster.refusal }}</td>#}
+                            {#</tr>#}
+                            {#{% endfor %}#}
+                        {#{% endfor %}#}
+                    {#</table>#}
+                {#</div>#}
+            <table id="example" class="table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <td rowspan="2">{{ clusters.cols[0].title }}</td>
+                        {% for top_col in clusters.top_cols %}
+                            <td colspan="3">{{ top_col }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for col in clusters.cols %}
+                            {% if loop.first == false %}
+                            <td>{{ col.title }}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td id="trend"> Trends </td>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span4">
+        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+      <div class="span4">
+        <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+      <div class="span4">
+        <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="container4" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var raw_data = JSON.parse('{{ clusters|json_encode(constant('JSON_HEX_APOS')) | raw }}');
+            //console.log(raw_data.data)
+            var table = $('#example').DataTable({
+                dom: 'Bfrtlp',
+                columnDefs: [
+                    { targets: [$('#example').find('thead > tr:last > td').length ], sortable: false}
+                ],
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [ 0, ':visible' ]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'colvis'
+                ],
+                "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
+                data:raw_data.data,
+                "createdRow": function (row, data, dataIndex) {
+//                    tdData = data[data.length-1];
+//                    //$("td:last", row).html("<span class='absent'>"+tdData.absent+"</span> <span class='sleep'>"+tdData.sleep+"</span> <span class='refusal'>"+tdData.refusal+"</span>");
+//                    //var obj_data = JSON.parse(tdData);
+//                    console.log(tdData);
+//                    //alert(rowdata);
+                    
+                }, 
+                "drawCallback": function (settings) {
+                    $('.absent:not(:has(canvas))').sparkline('html', {
+                        type: 'bar',
+                        barColor: 'orange',
+                        barWidth: '6',
+                        height: '20'
+                    });
+                    $('.sleep:not(:has(canvas))').sparkline('html', {
+                        type: 'bar',
+                        barColor: 'grey',
+                        barWidth: '6',
+                        height: '20'
+                    });
+                    $('.refusal:not(:has(canvas))').sparkline('html', {
+                        type: 'bar',
+                        barColor: 'red',
+                        barWidth: '6',
+                        height: '20'
+                    });
+                    
+                }
+
+            });
+
+
+        } );
+
+//        function render_spark() {
+//            $('.absent').sparkline('html', {type: 'bar', barColor: 'orange', barWidth: '6', height: '20'} );
+//            $('.sleep').sparkline('html', {type: 'bar', barColor: 'brown', barWidth: '6', height: '20'} );
+//            $('.refusal').sparkline('html', {type: 'bar', barColor: 'red', barWidth: '6', height: '20'} );
+//        }
+    </script>
+{% endblock %}
+{% block script_end %}
+{{parent()}}
+    {#<script src="{{ asset('js/js/custom-charts-district.js') }}"></script>#}
+    <script src="{{ asset('js/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/media/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('js/plugins/sparklines/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/datatable/extensions/Buttons/js/buttons.colVis.min.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('css/plugins/select2/select2.css') }}" >
+    <link rel="stylesheet" href="{{ asset('js/datatable/media/css/jquery.dataTables.css') }}" >
+    <link rel="stylesheet" href="{{ asset('js/datatable/extensions/Buttons/css/buttons.dataTables.min.css') }}">
+{% endblock %}

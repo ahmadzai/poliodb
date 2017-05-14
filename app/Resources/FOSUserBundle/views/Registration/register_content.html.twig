@@ -1,0 +1,20 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="main" >
+  <div class="container-fluid">
+    <div class="page-header box">
+      <div class="box-title">
+        <h1 style="font-size:20px;line-height:24px;font-weight:400">Register User</h1>
+      </div>
+    </div>
+      <div class="row-fluid">
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+      </div>
+        </div>
+
+{{ form_end(form) }}

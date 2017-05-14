@@ -1,0 +1,4 @@
+services:
+#    app_polio_db.example:
+#        class: App\PolioDbBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
