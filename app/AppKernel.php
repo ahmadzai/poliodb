@@ -19,7 +19,15 @@ class AppKernel extends Kernel
             new App\PolioDbBundle\AppPolioDbBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+            //new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
+
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+          
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

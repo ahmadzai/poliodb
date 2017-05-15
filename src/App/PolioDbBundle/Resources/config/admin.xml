@@ -1,0 +1,9 @@
+<service id="app.admin.user" class="App\PolioDbBundle\Admin\UserAdmin">
+    <tag name="sonata.admin" manager_type="orm" group="Content" label="User" />
+    <argument />
+    <argument>App\PolioDbBundle\Entity\User</argument>
+    <argument />
+    <call method="setTranslationDomain">
+        <argument>App\PolioDbBundle</argument>
+    </call>
+</service>

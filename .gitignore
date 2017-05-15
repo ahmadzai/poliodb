@@ -30,9 +30,6 @@
 !bin/console
 !bin/symfony_requirements
 
-# Assets and user uploads
-/web/bundles/
-/web/uploads/
 
 # PHPUnit
 /app/phpunit.xml
@@ -44,8 +41,6 @@
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
 
-### Symfony Patch ###
-/web/css/
-/web/js/
+
 
 # End of https://www.gitignore.io/api/symfony
