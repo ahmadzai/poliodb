@@ -35,3 +35,6 @@ services:
 
   app.my_factory:
     class: App\PolioDbBundle\Utils\MyFactory
+
+  security.acl.permission.map:
+    class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
