@@ -49,6 +49,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -57,9 +59,16 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        #auto_generate_proxy_classes: "%kernel.debug%"
+        #naming_strategy: doctrine.orm.naming_strategy.underscore
+        #auto_mapping: true
+
+        entity_managers:
+                  default:
+                      mappings:
+                          ApplicationSonataUserBundle: ~
+                          SonataUserBundle: ~
+                          FOSUserBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -72,13 +81,22 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
-    user_class: App\PolioDbBundle\Entity\User
+    user_class: Application\Sonata\UserBundle\Entity\User
     from_email:
         address: "ahmadnawid.mz@gmail.com"
         sender_name: Nawid
     registration:
         confirmation:
             enabled: true
+
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+
+    service:
+        user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+
+
 #easy_admin:
   #  entities:
       #  - App\PolioDbBundle\Entity\User
@@ -88,6 +106,11 @@ fos_user:
 sonata_block:
     default_contexts: [cms]
     blocks:
+        #...
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
+        sonata.block.service.text: # used to if you plan to use Sonata user routes
+    #blocks:
         # enable the SonataAdminBundle block
         sonata.admin.block.admin_list:
             contexts: [admin]
@@ -96,15 +119,31 @@ sonata_admin:
     security:
        handler: sonata.admin.security.handler.acl
        # acl security information
-       information:
-           GUEST:    [VIEW, LIST]
-           STAFF:    [EDIT, LIST, CREATE]
-           EDITOR:   [OPERATOR, EXPORT]
-           ADMIN:    [MASTER]
+       #information:
+          # GUEST:    [VIEW, LIST]
+          # STAFF:    [EDIT, LIST, CREATE]
+          # EDITOR:   [OPERATOR, EXPORT]
+          # ADMIN:    [MASTER]
 
         # permissions not related to an object instance and also to be available when objects do not exist
         # the DELETE admin permission means the user is allowed to batch delete objects
-       admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+       #admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
 
         # permission related to the objects
-       object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+      # object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+
+sonata_user:
+    security_acl: false
+    manager_type: orm # can be orm or mongodb
+
+
+
+# app/config/security.yml
+security:
+    # [...]
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    acl:
+        connection: default
