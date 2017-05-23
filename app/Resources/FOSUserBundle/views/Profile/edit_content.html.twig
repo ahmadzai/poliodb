@@ -1,0 +1,21 @@
+
+
+<div id="main" >
+  <div class="container-fluid">
+    <div class="page-header box">
+      <div class="box-title">
+        <h1 style="font-size:20px;line-height:24px;font-weight:400">Update User</h1>
+      </div>
+    </div>
+      <div class="row-fluid">
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+    {{ form_widget(form) }}
+    <div>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+    </div>
+    </div>
+{{ form_end(form) }}

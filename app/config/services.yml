@@ -1,0 +1,40 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+  app.chart:
+    class: App\PolioDbBundle\Utils\Charts
+    factory: ['App\PolioDbBundle\Utils\MyFactory', createChart]
+    arguments: ["@app.settings"]
+
+  #admin.user:
+  #  class: App\PolioDbBundle\Admin\UserAdmin
+    #arguments: [~, App\PolioDbBundle\Entity\User, ~]
+    #arguments: [ setUserManager, ["@fosuser.usermanager"]]
+    #tags:
+      #    - { name: sonata.admin, manager_type: orm, label: User }
+
+  app.chart_manager:
+    class: App\PolioDbBundle\Utils\Charts
+    # call a method on the specified service
+    factory: ['@app.my_factory', createChart]
+    arguments: [ "@app.settings" ]
+
+  app.settings:
+    class: App\PolioDbBundle\Utils\Settings
+    factory: ['App\PolioDbBundle\Utils\MyFactory', initSettings]
+    arguments: [ "@doctrine.orm.entity_manager" ]
+
+  app.settings_manager:
+    class: App\PolioDbBundle\Utils\Settings
+        # call a method on the specified service
+    factory: ['@app.my_factory', initSettings]
+    arguments: [ "@doctrine.orm.entity_manager" ]
+
+  app.my_factory:
+    class: App\PolioDbBundle\Utils\MyFactory
+
+  security.acl.permission.map:
+    class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap

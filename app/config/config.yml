@@ -1,0 +1,175 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@AppPolioDbBundle/Resources/config/services.yml" }
+
+
+    # Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    #esi:             ~
+    translator: { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        #auto_generate_proxy_classes: "%kernel.debug%"
+        #naming_strategy: doctrine.orm.naming_strategy.underscore
+        #auto_mapping: true
+
+        entity_managers:
+                  default:
+                      mappings:
+                          ApplicationSonataUserBundle: ~
+                          SonataUserBundle: ~
+                          FOSUserBundle: ~
+                          AppPolioDbBundle: ~
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+    firewall_name: main
+    user_class: Application\Sonata\UserBundle\Entity\User
+    from_email:
+        address: "ahmadnawid.mz@gmail.com"
+        sender_name: Nawid
+    registration:
+        confirmation:
+            enabled: true
+
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.group_manager for mongodb)
+
+    service:
+        user_manager: sonata.user.orm.user_manager                      # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
+
+
+
+#easy_admin:
+  #  entities:
+      #  - App\PolioDbBundle\Entity\User
+  #design:
+      #  brand_color: '#1ABC9C'
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        #...
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
+        sonata.block.service.text: # used to if you plan to use Sonata user routes
+    #blocks:
+        # enable the SonataAdminBundle block
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+
+sonata_admin:
+    title: PolioDb
+    #title_logo: web\img\logo-big.png
+    security:
+       handler: sonata.admin.security.handler.acl
+       # acl security information
+       information:
+           GUEST:    [VIEW, LIST]
+           STAFF:    [EDIT, LIST, CREATE]
+           EDITOR:   [OPERATOR, EXPORT]
+           ADMIN:    [MASTER]
+
+        # permissions not related to an object instance and also to be available when objects do not exist
+        # the DELETE admin permission means the user is allowed to batch delete objects
+       admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+
+        # permission related to the objects
+       object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+    dashboard:
+        blocks:
+            -
+                position: left
+                type: sonata.admin.block.admin_list
+            -
+                position: right
+                type: sonata.block.service.text
+                settings:
+                    content: >
+                        <h2>Welcome to the PolioDb Admin</h2>
+                        <p>This is a <code>sonata.block.service.text</code> from the Block
+                        Bundle, you can create and add new block in these area by configuring
+                        the <code>sonata_admin</code> section.</p> <br /> For instance, here
+                        a RSS feed parser (<code>sonata.block.service.rss</code>):
+            -
+                position: right
+                type: sonata.block.service.rss
+                roles: [POST_READER]
+                settings:
+                    title: Sonata Project's Feeds
+                    url: https://sonata-project.org/blog/archive.rss
+
+sonata_user:
+    security_acl: false
+    manager_type: orm # can be orm or mongodb
+
+
+
+# app/config/security.yml
+security:
+    # [...]
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    acl:
+        connection: default
