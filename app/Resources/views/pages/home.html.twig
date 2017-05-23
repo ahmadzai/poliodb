@@ -7,9 +7,9 @@
         <h1 style="font-size:20px;line-height:24px;font-weight:400">ODK Forms Submission Dashboard</h1>
       </div>
     </div>
-    <script src="{{ asset('/js/js/highcharts.js') }}"></script>
-    <script src="{{ asset('/js/js/highcharts-3d.js') }}"></script>
-    <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/highcharts-3d.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/modules/exporting.js') }}"></script>
     <div class="row-fluid">
       <div class="span12">
         <div class="box">
@@ -43,5 +43,5 @@
 {% endblock %}
 {% block script_end %}
 {{parent()}}
-  <script src="{{ asset('js/js/custom-charts.js') }}"></script>
+  <script src="{{ asset('js/highcharts/custom-charts.js') }}"></script>
 {% endblock %}

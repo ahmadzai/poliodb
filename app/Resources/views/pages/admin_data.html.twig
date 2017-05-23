@@ -63,10 +63,10 @@
         <h1 style="font-size:20px;line-height:24px;font-weight:400">Home Page</h1>
       </div>
     </div>
-    <script src="{{ asset('/js/js/highcharts.js') }}"></script>
-    <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
-    <script src="{{ asset('/js/js/modules/offline-exporting.js') }}"></script>
-    <script src="{{ asset('/js/js/modules/grouped-categories.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/highcharts.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/modules/exporting.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/modules/offline-exporting.js') }}"></script>
+    <script src="{{ asset('/js/highcharts/modules/grouped-categories.js') }}"></script>
       <div class="row-fluid">
         {#  <div class="span12">
             {#  <div id="cont_reg_trend_last_camp" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -146,6 +146,6 @@
 {% endblock %}
 {% block script_end %}
 {{parent()}}
-    {#<script src="{{ asset('js/js/custom-charts-admin.js') }}"></script>#}
-    <script src="{{ asset('js/js/admin-home.js') }}"></script>
+    {#<script src="{{ asset('js/highcharts/custom-charts-admin.js') }}"></script>#}
+    <script src="{{ asset('js/highcharts/admin-home.js') }}"></script>
 {% endblock %}
