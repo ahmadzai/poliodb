@@ -2,27 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64139948-5eb9-4163-85b3-a2a02734593e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AclClasses.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AclEntries.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AclObjectIdentities.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AclSecurityIdentities.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/CatchupData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/FosUser.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/FosUserGroup.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/FosUserUser.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/IcmData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/TempAdminData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/TempCatchupData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/TempIcmData.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/Users.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Pol_System" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/sonata-project/user-bundle" afterPath="$PROJECT_DIR$/vendor/sonata-project/user-bundle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/poliodb.iml" afterPath="$PROJECT_DIR$/.idea/poliodb.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AdminDataRepository.php" afterPath="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AdminDataRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="poliodb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,11 +92,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BaseUser.orm.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BaseUser.orm.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/sonata-project/user-bundle/Resources/config/doctrine/BaseUser.orm.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+            <state relative-caret-position="340">
+              <caret line="20" column="104" lean-forward="true" selection-start-line="20" selection-start-column="104" selection-end-line="20" selection-end-column="104" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -160,7 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/ProvinceData.php" />
         <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/DistrictDataRepository.php" />
         <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/DistrictData.php" />
         <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/ProvinceDataRepository.php" />
@@ -210,6 +202,7 @@
         <option value="$PROJECT_DIR$/web/js/js/admin-home.js" />
         <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Controller/Api/ApiMainController.php" />
         <option value="$PROJECT_DIR$/src/App/PolioDbBundle/Entity/AdminDataRepository.php" />
+        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -755,12 +748,12 @@
       <workItem from="1490245512259" duration="2480000" />
       <workItem from="1491456671758" duration="1563000" />
       <workItem from="1493803869608" duration="2297000" />
-      <workItem from="1495952571236" duration="1051000" />
+      <workItem from="1495952571236" duration="1282000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="434206000" />
+    <option name="totallyTimeSpent" value="434437000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -825,13 +818,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/js/js/custom-charts-district.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/App/PolioDbBundle/Entity/DistrictAgg.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-136">
@@ -1152,18 +1138,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/sonata-project/user-bundle/Resources/config/doctrine/BaseUser.orm.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="30" lean-forward="true" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+        <state relative-caret-position="340">
+          <caret line="20" column="104" lean-forward="true" selection-start-line="20" selection-start-column="104" selection-end-line="20" selection-end-column="104" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
           <folding />
         </state>
       </provider>
