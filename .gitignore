@@ -8,6 +8,10 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
+# IDE
+.idea/*
+Pol_System
+
 # Email spool folder
 /app/spool/*
 

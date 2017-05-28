@@ -28,4 +28,22 @@ class AdminDataRepository extends EntityRepository {
         return $where;
     }
 
+//    public function adminDataAllByDay($day) {
+//        return $this->getEntityManager()
+//            ->creatQuery(
+//                "SELECT p.provinceRegion, p.provinceName, d.districtName, d.districtCode, adm.clusterName, cmp.campaignType
+//                 adm.targetPopulation, "
+//            )
+//    }
+
+
+    /*
+     return $this->getEntityManager()
+            ->createQuery(
+                "SELECT s.form as legend, s.month as xAxis, COUNT(s.id) as yAxisse FROM AppPolioDbBundle:Submissions s
+                 WHERE (s.month = :month1 OR s.month = :month2)
+                 GROUP BY s.form, s.month ORDER BY s.date"
+            ) ->setParameters(['month1'=>$month1, 'month2'=>$month2])
+            ->getResult();
+     */
 }
