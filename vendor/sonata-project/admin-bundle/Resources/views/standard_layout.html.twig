@@ -1,3 +1,6 @@
+<!doctype html>
+
+
 {#
 
 This file is part of the Sonata package.
@@ -22,7 +25,7 @@ file that was distributed with this source code.
 {% set _navbar_title = block('navbar_title') is defined ? block('navbar_title')|trim : null %}
 {% set _list_filters_actions = block('list_filters_actions') is defined ? block('list_filters_actions')|trim : null %}
 
-<!DOCTYPE html>
+
 <html {% block html_attributes %}class="no-js"{% endblock %}>
     <head>
         {% block meta_tags %}

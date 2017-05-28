@@ -16,6 +16,13 @@ services:
     #tags:
           #- { name: sonata.admin, manager_type: orm, label: User }
 
+  admin.data:
+    class: App\PolioDbBundle\Admin\AdminDataAdmin
+    arguments: [~, App\PolioDbBundle\Entity\AdminData, ~]
+    arguments: [ setUserManager, ["@fosuser.usermanager"]]
+    tags:
+          - { name: sonata.admin, manager_type: orm, label: AdminData }
+
   app.chart_manager:
     class: App\PolioDbBundle\Utils\Charts
     # call a method on the specified service
