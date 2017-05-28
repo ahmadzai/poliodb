@@ -10,7 +10,9 @@
 
 # IDE
 .idea/*
-.idea
+.idea/
+index.html
+
 Pol_System
 
 # Email spool folder
