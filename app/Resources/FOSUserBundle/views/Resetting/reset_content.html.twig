@@ -1,8 +1,19 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+{# framework style added.#}
+<div id="main" >
+  <div class="container-fluid">
+    <div class="page-header box">
+      <div class="box-title">
+        <h1 style="font-size:20px;line-height:24px;font-weight:400">Reset Password</h1>
+      </div>
+    </div>
+      <div class="row-fluid">
+
 {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
     {{ form_widget(form) }}
     <div>
         <input type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
     </div>
+  </div>
 {{ form_end(form) }}
