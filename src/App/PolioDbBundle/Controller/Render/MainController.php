@@ -28,4 +28,17 @@ class MainController extends Controller
         return $this->render("pages/admin_data.html.twig", ['ajax_url_var'=>'all', 'region' => $data]);
     }
 
+    /**
+     * @return Response
+     * @Route("/testquery", name="test")
+     */
+    public function testQuery()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('AppPolioDbBundle:AdminData')
+            //->adminDataAllByDay(1);
+            ->clusterAgg([9, 10], 3301);
+        return new Response(json_encode($data));
+    }
+
 }
