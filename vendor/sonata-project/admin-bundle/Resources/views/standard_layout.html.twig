@@ -280,15 +280,15 @@ file that was distributed with this source code.
                                                     </div>
                                                 {% endif %}
 
-                                                {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
+                                            {#    {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
                                                     <div class="nav navbar-right btn-group">
                                                         {% for mode, settings in admin.listModes %}
                                                             <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>
                                                         {% endfor %}
                                                     </div>
-                                                {% endif %}
+                                                {% endif %}  #}
 
-                                                {% block sonata_admin_content_actions_wrappers %}
+                                            {#    {% block sonata_admin_content_actions_wrappers %}
                                                     {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
                                                         <ul class="nav navbar-nav navbar-right">
                                                         {% if _actions|split('</a>')|length > 2 %}
@@ -303,7 +303,7 @@ file that was distributed with this source code.
                                                         {% endif %}
                                                         </ul>
                                                     {% endif %}
-                                                {% endblock sonata_admin_content_actions_wrappers %}
+                                                {% endblock sonata_admin_content_actions_wrappers %} #}
 
                                                 {% if _list_filters_actions is not empty %}
                                                     {{ _list_filters_actions|raw }}
