@@ -25,7 +25,7 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $data = $em->getRepository('AppPolioDbBundle:ProvinceData')
             ->selectAllRegions();
-        return $this->render("pages/admin_data.html.twig", ['ajax_url_var'=>'all', 'region' => $data]);
+        return $this->render("html/admin_data.html.twig", ['ajax_url_var'=>'all', 'region' => $data]);
     }
 
     /**
