@@ -349,9 +349,15 @@
           <li>
             <a href="{{ path('fos_user_profile_edit')}}">Edit profile</a>
           </li>
+         {% if is_granted('ROLE_SUPER_ADMIN') %}
           <li>
-            <a href="#">Account settings</a>
+            <a href="{{ path('admin_sonata_user_user_list')}}">Account settings</a>
+
+								<li>
+									<a href="{{ path('admin_sonata_user_user_create')}}">Create User</a>
+								</li>
           </li>
+         {% endif %}
           <li>
             <a href="{{ path('fos_user_security_logout')}}">Sign out</a>
           </li>

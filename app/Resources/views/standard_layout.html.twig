@@ -51,8 +51,9 @@
 
 
 {#{% block template %}
-{% include('template.html.twig') %}
+{% include('SonataAdminBundle::ajax_layout.html.twig') %}
 {% endblock %}#}
+
 
   {#}{% block sonata_head_title %}
   {% endblock %}#}
@@ -64,5 +65,3 @@
     {% block sonata_left_side %}
       {% include('pages/shared/nav_left.html.twig')%}
     {% endblock %}
-
-    

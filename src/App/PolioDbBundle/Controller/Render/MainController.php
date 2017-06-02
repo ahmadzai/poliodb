@@ -41,4 +41,12 @@ class MainController extends Controller
         return new Response(json_encode($data));
     }
 
+    /**
+     * @Route("/upload", name="upload")
+     */
+    public function uploadAction()
+    {
+        return $this->render("pages/upload.html.twig");
+    }
+
 }

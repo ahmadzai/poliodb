@@ -280,15 +280,15 @@ file that was distributed with this source code.
                                                     </div>
                                                 {% endif %}
 
-                                                {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
+                                            {#    {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
                                                     <div class="nav navbar-right btn-group">
                                                         {% for mode, settings in admin.listModes %}
                                                             <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>
                                                         {% endfor %}
                                                     </div>
-                                                {% endif %}
+                                                {% endif %}  #}
 
-                                                {% block sonata_admin_content_actions_wrappers %}
+                                            {#    {% block sonata_admin_content_actions_wrappers %}
                                                     {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
                                                         <ul class="nav navbar-nav navbar-right">
                                                         {% if _actions|split('</a>')|length > 2 %}
@@ -303,7 +303,7 @@ file that was distributed with this source code.
                                                         {% endif %}
                                                         </ul>
                                                     {% endif %}
-                                                {% endblock sonata_admin_content_actions_wrappers %}
+                                                {% endblock sonata_admin_content_actions_wrappers %} #}
 
                                                 {% if _list_filters_actions is not empty %}
                                                     {{ _list_filters_actions|raw }}
@@ -318,38 +318,42 @@ file that was distributed with this source code.
 
                     <section class="content">
                         {% block sonata_admin_content %}
-
+                        <div id="main" >
+                          <div class="container-fluid">
+                            <div class="page-header box">
+                              <!--<div class="box-title">
+                                <h1 style="font-size:20px;line-height:24px;font-weight:400">Admin</h1>
+                              </div>
+                            </div> -->
+                              <div class="row-fluid">
+                                <table class="table table-colored-header">
                             {% block notice %}
                                 {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
                             {% endblock notice %}
 
                             {% if _preview is not empty %}
-                                <div class="sonata-ba-preview">{{ _preview|raw }}</div>
+                                {{ _preview|raw }}
                             {% endif %}
-
                             {% if _content is not empty %}
-                                <div class="sonata-ba-content">{{ _content|raw }}</div>
+                              <td>  {{ _content|raw }} <td>
                             {% endif %}
-
                             {% if _show is not empty %}
-                                <div class="sonata-ba-show">{{ _show|raw }}</div>
+                                {{ _show|raw }}
                             {% endif %}
-
                             {% if _form is not empty %}
-                                <div class="sonata-ba-form">{{ _form|raw }}</div>
+                              {{ _form|raw }}
                             {% endif %}
-
                             {% if _list_filters is not empty %}
-                                <div class="row">
                                     {{ _list_filters|raw }}
-                                </div>
                             {% endif %}
 
                             {% if _list_table is not empty %}
-                                <div class="row">
+
                                     {{ _list_table|raw }}
-                                </div>
                             {% endif %}
+
+                          </div>
+                        </div>
                         {% endblock sonata_admin_content %}
                     </section>
                 {% endblock sonata_page_content %}
