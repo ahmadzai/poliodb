@@ -40,6 +40,7 @@ return array(
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Liuggio\\ExcelBundle\\' => array($vendorDir . '/liuggio/ExcelBundle'),
     'Knp\\Menu\\' => array($vendorDir . '/knplabs/knp-menu/src/Knp/Menu'),
     'Knp\\Bundle\\MenuBundle\\' => array($vendorDir . '/knplabs/knp-menu-bundle'),
     'JavierEguiluz\\Bundle\\EasyAdminBundle\\' => array($vendorDir . '/javiereguiluz/easyadmin-bundle'),

@@ -5,6 +5,15 @@ namespace App\PolioDbBundle\Controller\Render;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use App\PolioDbBundle\Entity\Testdata;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class MainController extends Controller
 {
@@ -44,9 +53,94 @@ class MainController extends Controller
     /**
      * @Route("/upload", name="upload")
      */
-    public function uploadAction()
+    public function uploadAction(Request $request)
     {
-        return $this->render("pages/upload.html.twig");
+
+    /**  $path_file = __DIR__. '\Book1.xlsx';
+      //$excelObj = PHPExcel_IOFactory::load($path_file);
+      $excelObj = $this->get('phpexcel')->createPHPExcelObject($path_file);
+      $sheet = $excelObj->getActiveSheet()->toArray(null,true,true,true);
+
+      $em = $this->getDoctrine()->getManager();
+
+      //READ EXCEL FILE CONTENT
+      foreach($sheet as $i=>$row) {
+          if($i !== 1) {
+
+          $account = $em->getRepository('AppPolioDbBundle:Testdata')->findOneByusername($row['A']);
+                   //if(!$account) {
+                       $user = new Testdata();
+          // }
+
+                   $user->setUserName($row['A']);
+                   $user->setEmail($row['B']);
+                   //$user->setEmail($row['C']);
+                   //... and so on
+
+
+                   $em->persist($user);
+                   $em->flush();
+      }
+ }**/
+
+
+        // replace this example code with whatever you need
+        $user = new Testdata();
+
+        $form = $this->createFormBuilder($user)
+        ->add('username',  TextType::class)
+        ->add('email',  TextType::class)
+        ->add('file', FileType::class, array('label' => 'Data (Excel/CSV file)'))
+        ->getForm();
+
+        //$form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            //get data
+
+          //  $file = $user->getBrochure();
+
+              //$em = $this->getDoctrine()->getManager();
+
+              $path_file = $user->getFile();
+              //$excelObj = PHPExcel_IOFactory::load($path_file);
+              $excelObj = $this->get('phpexcel')->createPHPExcelObject($path_file);
+              $sheet = $excelObj->getActiveSheet()->toArray(null,true,true,true);
+
+              $em = $this->getDoctrine()->getManager();
+
+              //READ EXCEL FILE CONTENT
+              foreach($sheet as $i=>$row) {
+                  //if($i !== 1) {
+
+                  //$account = $em->getRepository('AppPolioDbBundle:Testdata')->findOneByusername($row['A']);
+                           //if(!$account) {
+                           $user = new Testdata();
+
+                             //}
+                           $user->setUserName($row['A']);
+                           $user->setEmail($row['B']);
+                           //$user->setEmail($row['C']);
+                           //... and so on
+
+                           $em->persist($user);
+                           $em->flush();
+
+                  //}
+                }
+
+
+
+            //$username = $form['username']->getData();
+            //$email = $form['email']->getData();
+
+            //$user->setUsername($username);
+            //$user->setEmail($email);
+
+        }
+
+        return $this->render('pages/upload1.html.twig', array ('form' => $form->createView()));
     }
 
 }
