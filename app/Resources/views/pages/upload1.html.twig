@@ -1,0 +1,40 @@
+{% extends 'template.html.twig' %}
+
+
+{% block left_nav %}
+<div id="left">
+
+  <div class="subnav">
+    <div class="subnav-title">
+      <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Data Source</span></a>
+    </div>
+    <ul class="subnav-menu">
+
+      <li>
+        <a href="#">Admin Data</a>
+      </li>
+      <li>
+        <a href="#">Catchup Data</a>
+      </li>
+      <li>
+        <a href="#">ICM Data</a>
+      </li>
+
+    </ul>
+  </div>
+  </div>
+    {% endblock %}
+
+{% block content %}
+<div id="main">
+  <div class="container-fluid">
+
+
+    <h2 class="page-header"> Upload File </h2>
+    	{{form_start(form)}}
+    	{{form_widget(form)}}
+        {{ form_row(form.file) }}
+        <input type="submit" value="Upload" />
+    	{{form_end(form)}}
+
+{% endblock %}

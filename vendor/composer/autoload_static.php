@@ -66,6 +66,10 @@ class ComposerStaticInitc8d2b166072c570b7c11b21184345489
         array (
             'Monolog\\' => 8,
         ),
+        'L' => 
+        array (
+            'Liuggio\\ExcelBundle\\' => 20,
+        ),
         'K' => 
         array (
             'Knp\\Menu\\' => 9,
@@ -239,6 +243,10 @@ class ComposerStaticInitc8d2b166072c570b7c11b21184345489
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Liuggio\\ExcelBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/liuggio/ExcelBundle',
+        ),
         'Knp\\Menu\\' => 
         array (
             0 => __DIR__ . '/..' . '/knplabs/knp-menu/src/Knp/Menu',
@@ -321,6 +329,10 @@ class ComposerStaticInitc8d2b166072c570b7c11b21184345489
             'Pagerfanta\\' => 
             array (
                 0 => __DIR__ . '/..' . '/pagerfanta/pagerfanta/src',
+            ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
         ),
         'N' => 

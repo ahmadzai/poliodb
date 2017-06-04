@@ -1,10 +1,10 @@
 <?php
 
+use Doctrine\ORM\Mapping as ORM;
+
 namespace App\PolioDbBundle\Entity;
 
-/**
- * Users
- */
+
 class Users
 {
     /**
@@ -168,4 +168,3 @@ class Users
         return $this->userId;
     }
 }
-
