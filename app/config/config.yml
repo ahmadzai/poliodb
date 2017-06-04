@@ -125,11 +125,12 @@ sonata_admin:
     security:
        handler: sonata.admin.security.handler.role
        # acl security information
-       information:
-          #GUEST:    [VIEW, LIST]
-          STAFF:    [EDIT, LIST, CREATE]
-          EDITOR:   [OPERATOR, EXPORT]
-          ADMIN:    [MASTER]
+#       information:
+#          #GUEST:    [VIEW, LIST]
+#          STAFF:    [EDIT, LIST, CREATE]
+#          EDITOR:   [OPERATOR, EXPORT]
+#          ADMIN:    [MASTER, ROLE_SUPER_ADMIN]
+#          ROOT:   [SUPER_ADMIN]
 
         # permissions not related to an object instance and also to be available when objects do not exist
         # the DELETE admin permission means the user is allowed to batch delete objects
