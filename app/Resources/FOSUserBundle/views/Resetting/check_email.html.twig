@@ -1,72 +1,16 @@
-{#{% extends "@FOSUser/layout.html.twig" %}#}
+{% extends '::login_layout.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-
-
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<!-- Apple devices fullscreen -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<!-- Apple devices fullscreen -->
-<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-<title>{% block title %}Welcome!{% endblock %}</title>
-{% block stylesheets %}
-  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/bootstrap-responsive.min.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/plugins/jquery-ui/smoothness/jquery-ui.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/plugins/jquery-ui/smoothness/jquery.ui.theme.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/style.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/themes.css') }}" >
-  <link rel="stylesheet" href="{{ asset('css/plugins/icheck/all.css') }}" >
-
-{% endblock %}
-{% block javascripts %}
-    {#<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>#}
-  <script src="{{ asset('js/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/nicescroll/jquery.nicescroll.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/imagesLoaded/jquery.imagesloaded.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/jquery-ui/jquery.ui.core.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/jquery-ui/jquery.ui.widget.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/jquery-ui/jquery.ui.mouse.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/jquery-ui/jquery.ui.resizable.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/jquery-ui/jquery.ui.sortable.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('js/plugins/bootbox/jquery.bootbox.js') }}"></script>
-  <script src="{{ asset('js/eakroko.min.js') }}"></script>
-  <script src="{{ asset('js/application.js') }}"></script>
-  <script src="{{ asset('js/eakroko.js') }}"></script>
-  <script src="{{ asset('js/plugins/icheck/jquery.icheck.min.js') }}"></script>
-  <script src="{{ asset('js/demonstration.js') }}"></script>
-  <script src="{{ asset('js/plugins/nicescroll/jquery.nicescroll.min.js') }}"></script>
-  {# <script src="{{ asset('js/plugins/validation/jquery.validate.min.js') }}"></script> #}
-  <script src="{{ asset('js/plugins/validation/additional-methods.min.js') }}"></script>
-  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-  <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-{% endblock %}
-</head>
-
 {% block content %}
-
-	<div class="wrapper">
-  <div class="login-body">
-
-
-  {% block fos_user_content %}
-  <p>
-  {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
-  </p>
+  <div class="col-md-6 col-md-offset-3">
+  <div class="row">
+      <h2>Password reset email sent!</h2>
+      <p>
+      {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+      </p>
+      <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary" role="button">Login</a>
   </div>
   </div>
-  </body>
-  {% endblock %}
-
-
-
-
 
 {% endblock %}
