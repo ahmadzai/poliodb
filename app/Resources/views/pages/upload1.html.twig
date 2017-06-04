@@ -31,6 +31,13 @@
 
 
     <h2 class="page-header"> Upload File </h2>
+    <div class="box-content">
+								<ul class="minitiles">
+    <li class="teal">
+    <a href="{{ asset('upload/') }}template.xlsx">Template<span class='count'><i class="icon-inbox""></i></span><span class='name'></span></a>
+    </li>
+    </ul>
+    <br><br><br><br>
     	{{form_start(form)}}
     	{{form_widget(form)}}
         {{ form_row(form.file) }}

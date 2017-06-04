@@ -218,4 +218,8 @@ class Province
     {
         return $this->provinceCode;
     }
+
+    public function __toString() {
+    return $this->provinceRegion;
+}
 }

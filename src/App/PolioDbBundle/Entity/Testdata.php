@@ -33,6 +33,30 @@ class Testdata
      * @return integer
      */
 
+     /**
+      * @ORM\Column(type="string", length=100, nullable=true)
+      */
+     private $regions;
+
+      /**
+       * Get regions
+       *
+       * @return string
+       */
+     public function getRegions() {
+          return $this->regions;
+      }
+      /**
+       * Set regions
+       *
+       * @param string $regions
+       *
+       * @return Testdata
+       */
+    public function setRegions($regions /* = null, if optional */) {
+          $this->regions = $regions;
+    }
+
      private $file;
 
      public function getFile()

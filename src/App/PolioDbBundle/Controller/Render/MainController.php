@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\PolioDbBundle\Entity\Testdata;
+use App\PolioDbBundle\Entity\Province;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -13,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
 class MainController extends Controller
@@ -88,9 +91,16 @@ class MainController extends Controller
         $user = new Testdata();
 
         $form = $this->createFormBuilder($user)
-        ->add('username',  TextType::class)
-        ->add('email',  TextType::class)
-        ->add('file', FileType::class, array('label' => 'Data (Excel/CSV file)'))
+        //->add('username',  TextType::class)
+        //->add('email',  TextType::class)
+        ->add('regions', EntityType::class, array(
+          'class' => 'AppPolioDbBundle:Province',
+          'query_builder' => function (EntityRepository $er) {
+            return $er->createQueryBuilder('u')
+            ->groupBy('u.provinceRegion');
+         },
+      ))
+      ->add('file', FileType::class, array('label' => 'Data (Excel/CSV file)'))
         ->getForm();
 
         //$form = $this->createForm(ProductType::class, $product);
@@ -128,10 +138,13 @@ class MainController extends Controller
                            $em->flush();
 
                   //}
-                }
+                } $this->addFlash('Notice', 'Data Added to DB');
 
+                //$user = new Testdata();
 
-
+                  //}
+                //$region = $form['regions']->getData();
+                //$user->setRegions($region);
             //$username = $form['username']->getData();
             //$email = $form['email']->getData();
 
