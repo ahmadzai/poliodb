@@ -90,19 +90,21 @@ class MainController extends Controller
         // replace this example code with whatever you need
         $user = new Testdata();
 
+        $path_file = $user->getFile();
+
         $form = $this->createFormBuilder($user)
         //->add('username',  TextType::class)
         //->add('email',  TextType::class)
-        ->add('regions', EntityType::class, array(
+        /**->add('regions', EntityType::class, array(
           'class' => 'AppPolioDbBundle:Province',
           'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
             ->groupBy('u.provinceRegion');
          },
-      ))
-      ->add('file', FileType::class, array('label' => 'Data (Excel/CSV file)'))
+      ))*/
+      ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
+        //->add('textarea1', TextareaType::class)
         ->getForm();
-
         //$form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
@@ -138,7 +140,11 @@ class MainController extends Controller
                            $em->flush();
 
                   //}
-                } $this->addFlash('Notice', 'Data Added to DB');
+                }
+                $this->addFlash(
+                    'notice',
+                        'Your data has been loaded to DB!'
+                      );
 
                 //$user = new Testdata();
 

@@ -1,109 +1,113 @@
 <?php
 
 namespace App\PolioDbBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TempAdminData
+ * @ORM\Entity
+ * @ORM\Table(name="TempAdminData")
  */
 class TempAdminData
 {
-    /**
-     * @var integer
-     */
+  /**
+   * @ORM\Column(type="integer")
+   */
     private $districtCode;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
     private $subDistName;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
     private $clusterName;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
     private $clusterNo;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
     private $cluster;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
     private $targetPop;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $givenVials;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $usedVials;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $child011;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $child1259;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $regAbsent;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $vaccAbsent;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $regSleep;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $vaccSleep;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $regRefusal;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $vaccRefusal;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $newPolioCase;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $vaccDay;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
      */
     private $campaignId;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -574,4 +578,3 @@ class TempAdminData
         return $this->id;
     }
 }
-
