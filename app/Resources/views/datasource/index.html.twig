@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Datasources list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tablename</th>
+                <th>Tablelongname</th>
+                <th>Tabletype</th>
+                <th>Source</th>
+                <th>Dashboard</th>
+                <th>Uploadform</th>
+                <th>Entryform</th>
+                <th>Downloadform</th>
+                <th>Entrydate</th>
+                <th>Datalevel</th>
+                <th>Sort_no</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dataSource in dataSources %}
+            <tr>
+                <td><a href="{{ path('data_source_show', { 'id': dataSource.id }) }}">{{ dataSource.id }}</a></td>
+                <td>{{ dataSource.tableName }}</td>
+                <td>{{ dataSource.tableLongName }}</td>
+                <td>{{ dataSource.tableType }}</td>
+                <td>{{ dataSource.source }}</td>
+                <td>{{ dataSource.dashboard }}</td>
+                <td>{{ dataSource.uploadForm }}</td>
+                <td>{{ dataSource.entryForm }}</td>
+                <td>{{ dataSource.downloadForm }}</td>
+                <td>{% if dataSource.entryDate %}{{ dataSource.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ dataSource.dataLevel }}</td>
+                <td>{{ dataSource.sortno }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('data_source_show', { 'id': dataSource.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('data_source_edit', { 'id': dataSource.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('data_source_new') }}">Create a new dataSource</a>
+        </li>
+    </ul>
+{% endblock %}

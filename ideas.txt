@@ -1,0 +1,5 @@
+### Upload Functionality
+# Dynamic upload for every data-source: the table name should be taken as tempTableName and the filter will work based
+  on it's upload level.
+
+# Dynamic form:

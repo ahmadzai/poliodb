@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Datasource</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ dataSource.id }}</td>
+            </tr>
+            <tr>
+                <th>Tablename</th>
+                <td>{{ dataSource.tableName }}</td>
+            </tr>
+            <tr>
+                <th>Tablelongname</th>
+                <td>{{ dataSource.tableLongName }}</td>
+            </tr>
+            <tr>
+                <th>Tabletype</th>
+                <td>{{ dataSource.tableType }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ dataSource.source }}</td>
+            </tr>
+            <tr>
+                <th>Dashboard</th>
+                <td>{{ dataSource.dashboard }}</td>
+            </tr>
+            <tr>
+                <th>Uploadform</th>
+                <td>{{ dataSource.uploadForm }}</td>
+            </tr>
+            <tr>
+                <th>Entryform</th>
+                <td>{{ dataSource.entryForm }}</td>
+            </tr>
+            <tr>
+                <th>Downloadform</th>
+                <td>{{ dataSource.downloadForm }}</td>
+            </tr>
+            <tr>
+                <th>Entrydate</th>
+                <td>{% if dataSource.entryDate %}{{ dataSource.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Datalevel</th>
+                <td>{{ dataSource.dataLevel }}</td>
+            </tr>
+            <tr>
+                <th>Sort_no</th>
+                <td>{{ dataSource.sortno }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('data_source_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('data_source_edit', { 'id': dataSource.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
