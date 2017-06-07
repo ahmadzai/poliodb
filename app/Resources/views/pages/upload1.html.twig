@@ -333,7 +333,7 @@
 
 					<ul class="crumb-buttons">
 
-						<li class="range"><i class="icol-doc-pdf"></i><a href="#">Download Template</a></li>
+						<li><i class="icol-doc-pdf"></i><a href="{{ asset('upload/') }}template.xlsx">Download Template</a></li>
 
 					</ul>
 				</div>
@@ -359,18 +359,21 @@
           <input type="submit" class= "btn btn-primary" value="Upload" />
             <br><br>
 
-        <div class="form-group">
-        {# <label class="col-md-2 control-label">Textarea:</label> #}
-
-          {#logic of textarea here.#}
-
-        </div>
 
         {% for message in app.session.flashBag.get('notice') %}
-          <div class="col-md-10"><textarea rows="3" cols="5" name="textarea" class="form-control">
-                {{ message }}</textarea>
+        <div class="col-md-5"><textarea rows="2" cols="3" name="textarea" class="form-control">
+                {{ message }}</textarea></div>
         {% endfor %}
-        </div>
+
+
+        <br><br><br><br>
+        <input type="submit" class= "btn btn-success" value="Sync with Master" />
+
+        <br><br>
+        <div class="col-md-5"><textarea rows="2" cols="1" name="textarea" class="form-control">
+                </textarea>
+
+
     	{{form_end(form)}}
 
 

@@ -5,7 +5,7 @@ namespace App\PolioDbBundle\Controller\Render;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
-use App\PolioDbBundle\Entity\Testdata;
+use App\PolioDbBundle\Entity\TempAdminData;
 use App\PolioDbBundle\Entity\Province;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -88,9 +88,9 @@ class MainController extends Controller
 
 
         // replace this example code with whatever you need
-        $user = new Testdata();
+        $user = new TempAdminData();
 
-        $path_file = $user->getFile();
+        //$path_file = $user->getFile();
 
         $form = $this->createFormBuilder($user)
         //->add('username',  TextType::class)
@@ -128,12 +128,28 @@ class MainController extends Controller
 
                   //$account = $em->getRepository('AppPolioDbBundle:Testdata')->findOneByusername($row['A']);
                            //if(!$account) {
-                           $user = new Testdata();
+                           $user = new TempAdminData();
 
                              //}
-                           $user->setUserName($row['A']);
-                           $user->setEmail($row['B']);
-                           //$user->setEmail($row['C']);
+                           $user->setDistrictCode(trim($row['A']));
+                           $user->setSubDistName(trim($row['B']));
+                           $user->setClusterName(trim($row['C']));
+                           $user->setClusterNo(trim($row['D']));
+                           $user->setCluster(trim($row['E']));
+                           $user->setTargetPop(trim($row['F']));
+                           $user->setGivenVials(trim($row['G']));
+                           $user->setUsedVials(trim($row['H']));
+                           $user->setChild011(trim($row['I']));
+                           $user->setChild1259(trim($row['J']));
+                           $user->setRegAbsent(trim($row['K']));
+                           $user->setVaccAbsent(trim($row['L']));
+                           $user->setRegSleep(trim($row['M']));
+                           $user->setVaccSleep(trim($row['N']));
+                           $user->setRegRefusal(trim($row['O']));
+                           $user->setVaccRefusal(trim($row['P']));
+                           $user->setNewPolioCase(trim($row['Q']));
+                           $user->setVaccDay(trim($row['R']));
+                           $user->setCampaignId(trim($row['S']));
                            //... and so on
 
                            $em->persist($user);

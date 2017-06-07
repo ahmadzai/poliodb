@@ -111,6 +111,20 @@ class TempAdminData
      */
     private $id;
 
+    private $file;
+
+    public function getFile()
+    {
+      return $this->file;
+    }
+
+    public function setFile($file)
+    {
+       $this->file = $file;
+
+       return $this;
+     }
+
 
     /**
      * Set districtCode
