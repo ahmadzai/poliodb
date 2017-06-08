@@ -34,6 +34,31 @@ class Testdata
      */
 
      /**
+      * @ORM\Column(type="string", length=200, nullable=true)
+      */
+     private $textarea1;
+
+      /**
+       * Get regions
+       *
+       * @return string
+       */
+     public function getTextarea1() {
+          return $this->textarea1;
+      }
+      /**
+       * Set regions
+       *
+       * @param string $regions
+       *
+       * @return Testdata
+       */
+     public function setTextarea1($textarea1 /* = null, if optional */) {
+          $this->textarea1 = $textarea1;
+     }
+
+
+     /**
       * @ORM\Column(type="string", length=100, nullable=true)
       */
      private $regions;
