@@ -1,57 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Datasource</h1>
+    <h1>Tablesmanager</h1>
 
     <table>
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ dataSource.id }}</td>
+                <td>{{ tablesManager.id }}</td>
             </tr>
             <tr>
                 <th>Tablename</th>
-                <td>{{ dataSource.tableName }}</td>
+                <td>{{ tablesManager.tableName }}</td>
             </tr>
             <tr>
                 <th>Tablelongname</th>
-                <td>{{ dataSource.tableLongName }}</td>
+                <td>{{ tablesManager.tableLongName }}</td>
             </tr>
             <tr>
                 <th>Tabletype</th>
-                <td>{{ dataSource.tableType }}</td>
+                <td>{{ tablesManager.tableType }}</td>
             </tr>
             <tr>
                 <th>Source</th>
-                <td>{{ dataSource.source }}</td>
+                <td>{{ tablesManager.source }}</td>
             </tr>
             <tr>
                 <th>Dashboard</th>
-                <td>{{ dataSource.dashboard }}</td>
+                <td>{{ tablesManager.dashboard }}</td>
             </tr>
             <tr>
                 <th>Uploadform</th>
-                <td>{{ dataSource.uploadForm }}</td>
+                <td>{{ tablesManager.uploadForm }}</td>
             </tr>
             <tr>
                 <th>Entryform</th>
-                <td>{{ dataSource.entryForm }}</td>
+                <td>{{ tablesManager.entryForm }}</td>
             </tr>
             <tr>
                 <th>Downloadform</th>
-                <td>{{ dataSource.downloadForm }}</td>
-            </tr>
-            <tr>
-                <th>Entrydate</th>
-                <td>{% if dataSource.entryDate %}{{ dataSource.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ tablesManager.downloadForm }}</td>
             </tr>
             <tr>
                 <th>Datalevel</th>
-                <td>{{ dataSource.dataLevel }}</td>
+                <td>{{ tablesManager.dataLevel }}</td>
             </tr>
             <tr>
                 <th>Sort_no</th>
-                <td>{{ dataSource.sortno }}</td>
+                <td>{{ tablesManager.sortno }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ tablesManager.enabled }}</td>
+            </tr>
+            <tr>
+                <th>Entrydate</th>
+                <td>{% if tablesManager.entryDate %}{{ tablesManager.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>
     </table>
@@ -61,7 +65,7 @@
             <a href="{{ path('data_source_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('data_source_edit', { 'id': dataSource.id }) }}">Edit</a>
+            <a href="{{ path('data_source_edit', { 'id': tablesManager.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

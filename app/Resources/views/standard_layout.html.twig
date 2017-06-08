@@ -197,7 +197,10 @@ file that was distributed with this source code.
     <div id="container">
 
         {% block left_nav %}
-            {% include('html/common/nav_left.html.twig')%}
+            {{ render(controller(
+            'AppPolioDbBundle:TablesManager:menu'
+            ))
+            }}
         {% endblock %}
         <div id="content">
 

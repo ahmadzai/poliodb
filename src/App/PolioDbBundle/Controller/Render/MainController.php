@@ -35,9 +35,10 @@ class MainController extends Controller
     public function homeAdminDataAction()
     {
         $em = $this->getDoctrine()->getManager();
+
         $data = $em->getRepository('AppPolioDbBundle:ProvinceData')
             ->selectAllRegions();
-        return $this->render("html/admin_data.html.twig", ['ajax_url_var'=>'all', 'region' => $data]);
+        return $this->render("html/admin_data.html.twig", ['ajax_url_var'=>'all', 'data' => $data]);
     }
 
     /**

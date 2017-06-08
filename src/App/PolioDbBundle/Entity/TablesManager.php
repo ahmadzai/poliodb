@@ -3,18 +3,18 @@
  * Created by PhpStorm.
  * User: wakhan
  * Date: 6/5/2017
- * Time: 2:56 PM
+ * Time: 3:29 PM
  */
 
 namespace App\PolioDbBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="data_source")
+ * @ORM\Table(name="tables_manager")
  */
-class DataSource
+class TablesManager
 {
     /**
      * @ORM\Column(type="integer")
@@ -42,55 +42,62 @@ class DataSource
     private $tableType;
 
 
-     /**
-      * @var string
-      * @ORM\Column(type="string", length=100, nullable=true)
-      */
-     private $source;
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $source;
 
 
     /**
      * @var integer
      * @ORM\Column(name="dashboard", type="integer", length=1)
      */
-     private $dashboard;
+    private $dashboard;
 
-     /**
-      * @var integer
-      * @ORM\Column(name="upload_form", type="integer", length=1)
-      */
-     private $uploadForm;
+    /**
+     * @var integer
+     * @ORM\Column(name="upload_form", type="integer", length=1)
+     */
+    private $uploadForm;
 
-     /**
-      * @var integer
-      * @ORM\Column(name="entry_form", type="integer", length=1)
-      */
-     private $entryForm;
+    /**
+     * @var integer
+     * @ORM\Column(name="entry_form", type="integer", length=1)
+     */
+    private $entryForm;
 
-     /**
-      * @var integer
-      * @ORM\Column(name="download_form", type="integer", length=1)
-      */
-     private $downloadForm;
-
-     /**
-      * @var \DateTime
-      *
-      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
-      */
-     private $entryDate = 'CURRENT_TIMESTAMP';
+    /**
+     * @var integer
+     * @ORM\Column(name="download_form", type="integer", length=1)
+     */
+    private $downloadForm;
 
     /**
      * @var string
      * @ORM\Column(name="data_level", type="string", length=100)
      */
-     private $dataLevel;
+    private $dataLevel;
 
     /**
      * @var integer
      * @ORM\Column(name="sort_no", type="integer", length=3)
      */
-     private $sort_no;
+    private $sort_no;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", length=1)
+     */
+    private $enabled;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="entry_date", type="datetime", nullable=true)
+     */
+    private $entryDate = 'CURRENT_TIMESTAMP';
+
 
     /**
      * @return string
@@ -262,6 +269,22 @@ class DataSource
     }
 
     /**
+     * @return mixed
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
+    /**
      * @param mixed $downloadForm
      */
     public function setDownloadForm($downloadForm)
@@ -285,7 +308,8 @@ class DataSource
         $this->entryDate = $entryDate;
     }
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->entryDate = new \DateTime();
     }
 

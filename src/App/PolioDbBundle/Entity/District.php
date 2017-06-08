@@ -7,17 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * District
  *
- * @ORM\Table(name="district", uniqueConstraints={@ORM\UniqueConstraint(name="district_code_UNIQUE", columns={"district_code"}), @ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})}, indexes={@ORM\Index(name="fk_d_p_idx", columns={"province_code"})})
+ * @ORM\Table(name="district", uniqueConstraints={@ORM\UniqueConstraint(name="district_code_UNIQUE", columns={"district_code"})}, indexes={@ORM\Index(name="fk_d_p_idx", columns={"province_code"})})
  * @ORM\Entity
  */
 class District
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
 
     /**
      * @var string
@@ -80,30 +74,6 @@ class District
     private $provinceCode;
 
 
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return District
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set districtName
@@ -249,6 +219,12 @@ class District
         return $this->entryDate;
     }
 
+    public function __construct()
+    {
+        $this->entryDate = new \DateTime();
+    }
+
+
     /**
      * Get districtCode
      *
@@ -257,6 +233,14 @@ class District
     public function getDistrictCode()
     {
         return $this->districtCode;
+    }
+
+    /**
+     * @param int $districtCode
+     */
+    public function setDistrictCode($districtCode)
+    {
+        $this->districtCode = $districtCode;
     }
 
     /**

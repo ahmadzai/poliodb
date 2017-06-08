@@ -1,0 +1,67 @@
+{% extends 'main.html.twig' %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {##}
+{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/DT_bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/responsive/datatables.responsive.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <h1>Data Sources List</h1>
+
+    <table class="table table-striped table-bordered table-hover table-checkable table-responsive datatable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Table</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Source</th>
+                <th>Dashboard</th>
+                <th>Upload</th>
+                <th>Entry</th>
+                <th>Download</th>
+                <th>Level</th>
+                <th>Enabled</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tablesManager in tablesManagers %}
+            <tr>
+                <td><a href="{{ path('data_source_show', { 'id': tablesManager.id }) }}">{{ tablesManager.id }}</a></td>
+                <td>{{ tablesManager.tableName }}</td>
+                <td>{{ tablesManager.tableLongName }}</td>
+                <td>{{ tablesManager.tableType }}</td>
+                <td>{{ tablesManager.source }}</td>
+                <td>{{ tablesManager.dashboard }}</td>
+                <td>{{ tablesManager.uploadForm }}</td>
+                <td>{{ tablesManager.entryForm }}</td>
+                <td>{{ tablesManager.downloadForm }}</td>
+                <td>{{ tablesManager.dataLevel }}</td>
+                <td>{{ tablesManager.enabled }}</td>
+                <td>
+                    <ul style="list-style: none">
+                        <li>
+                            <a href="{{ path('data_source_show', { 'id': tablesManager.id }) }}"
+                               class="btn btn-success btn-xs">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('data_source_edit', { 'id': tablesManager.id }) }}"
+                               class="btn btn-info btn-xs">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <a href="{{ path('data_source_new') }}" class="btn btn-info">Create a new data source</a>
+
+    </div>
+{% endblock %}

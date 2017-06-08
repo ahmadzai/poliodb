@@ -97,9 +97,9 @@
         </script>
         {# Demo #}
         <script type="text/javascript" src="{{ asset('template/assets/js/custom.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('template/assets/js/demo/pages_calendar.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_filled_blue.js')}}"></script>
-        <script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_simple.js')}}"></script>
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/pages_calendar.js')}}"></script>#}
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_filled_blue.js')}}"></script>#}
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_simple.js')}}"></script>#}
 
         {# JS Routing FOS #}
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
@@ -115,7 +115,10 @@
 {% endblock %}
 <div id="container">
     {% block left_nav %}
-        {% include('html/common/nav_left.html.twig')%}
+        {{ render(controller(
+                'AppPolioDbBundle:TablesManager:menu'
+            ))
+        }}
     {% endblock %}
     <!-- End of Navigation left side -->
 

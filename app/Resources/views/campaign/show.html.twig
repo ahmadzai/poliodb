@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Campaign</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Campaignname</th>
+                <td>{{ campaign.campaignName }}</td>
+            </tr>
+            <tr>
+                <th>Campaigntype</th>
+                <td>{{ campaign.campaignType }}</td>
+            </tr>
+            <tr>
+                <th>Campaignstartdate</th>
+                <td>{{ campaign.campaignStartDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Campaignenddate</th>
+                <td>{{ campaign.campaignEndDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Entrydate</th>
+                <td>{% if campaign.entryDate %}{{ campaign.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Campaignyear</th>
+                <td>{{ campaign.campaignYear }}</td>
+            </tr>
+            <tr>
+                <th>Campaignmonth</th>
+                <td>{{ campaign.campaignMonth }}</td>
+            </tr>
+            <tr>
+                <th>Campaignid</th>
+                <td>{{ campaign.campaignId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('campaign_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('campaign_edit', { 'id': campaign.campaignId }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

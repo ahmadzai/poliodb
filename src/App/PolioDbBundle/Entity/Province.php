@@ -12,12 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Province
 {
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="province_region", type="string", length=10, nullable=true)
-     */
-    private $provinceRegion;
 
     /**
      * @var string
@@ -25,6 +19,15 @@ class Province
      * @ORM\Column(name="province_name", type="string", length=30, nullable=true)
      */
     private $provinceName;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="province_region", type="string", length=10, nullable=true)
+     */
+    private $provinceRegion;
+
 
     /**
      * @var string
@@ -208,7 +211,10 @@ class Province
     {
         return $this->entryDate;
     }
-
+    public function __construct()
+    {
+        $this->entryDate = new \DateTime();
+    }
     /**
      * Get provinceCode
      *
@@ -220,6 +226,6 @@ class Province
     }
 
     public function __toString() {
-    return $this->provinceRegion;
+    return (string) $this->provinceCode;
 }
 }

@@ -6,14 +6,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DataSourceType extends AbstractType
+class ProvinceType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('tableName')->add('tableLongName')->add('tableType')->add('source')->add('dashboard')->add('uploadForm')->add('entryForm')->add('downloadForm')->add('entryDate')->add('dataLevel')->add('sort_no')        ;
+        $builder->add('provinceName')->add('provinceRegion')->add('provinceNamePashtu')->add('provinceNameDari')->add('provinceRhizomeCode')->add('entryDate')        ;
     }
     
     /**
@@ -22,7 +22,7 @@ class DataSourceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\PolioDbBundle\Entity\DataSource'
+            'data_class' => 'App\PolioDbBundle\Entity\Province'
         ));
     }
 
@@ -31,7 +31,7 @@ class DataSourceType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'app_poliodbbundle_datasource';
+        return 'app_poliodbbundle_province';
     }
 
 

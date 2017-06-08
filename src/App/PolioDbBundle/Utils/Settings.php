@@ -94,5 +94,10 @@ class Settings
        }
     }
 
+//    public function dashboardMenu() {
+//        $menu = $this->em->getRepository('AppPolioDbBundle:TablesManager')->findAll();
+//        return $menu;
+//    }
+
 
 }

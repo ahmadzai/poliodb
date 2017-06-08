@@ -4,7 +4,7 @@ namespace App\PolioDbBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DataSourceControllerTest extends WebTestCase
+class DistrictControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class DataSourceControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/data_source/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /data_source/");
+        $crawler = $client->request('GET', '/district/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /district/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'app_poliodbbundle_datasource[field_name]'  => 'Test',
+            'app_poliodbbundle_district[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class DataSourceControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Update')->form(array(
-            'app_poliodbbundle_datasource[field_name]'  => 'Foo',
+            'app_poliodbbundle_district[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

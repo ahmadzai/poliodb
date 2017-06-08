@@ -3,6 +3,7 @@
 namespace App\PolioDbBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 /**
  * Campaign
@@ -27,16 +28,16 @@ class Campaign
     private $campaignType;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="campaign_start_date", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="campaign_start_date", type="date", nullable=false)
      */
     private $campaignStartDate;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="campaign_end_date", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="campaign_end_date", type="date", nullable=false)
      */
     private $campaignEndDate;
 
@@ -123,13 +124,13 @@ class Campaign
     /**
      * Set campaignStartDate
      *
-     * @param string $campaignStartDate
+     * @param \DateTime $campaignStartDate
      *
      * @return Campaign
      */
     public function setCampaignStartDate($campaignStartDate)
     {
-        $this->campaignStartDate = $campaignStartDate;
+        $this->campaignStartDate =  $campaignStartDate;
 
         return $this;
     }
@@ -137,7 +138,7 @@ class Campaign
     /**
      * Get campaignStartDate
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCampaignStartDate()
     {
@@ -147,13 +148,13 @@ class Campaign
     /**
      * Set campaignEndDate
      *
-     * @param string $campaignEndDate
+     * @param \DateTime $campaignEndDate
      *
      * @return Campaign
      */
     public function setCampaignEndDate($campaignEndDate)
     {
-        $this->campaignEndDate = $campaignEndDate;
+        $this->campaignEndDate =  $campaignEndDate;
 
         return $this;
     }
@@ -161,12 +162,13 @@ class Campaign
     /**
      * Get campaignEndDate
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCampaignEndDate()
     {
         return $this->campaignEndDate;
     }
+
 
     /**
      * Set entryDate
@@ -190,6 +192,13 @@ class Campaign
     public function getEntryDate()
     {
         return $this->entryDate;
+    }
+
+    public function __construct()
+    {
+        $date = new \DateTime();
+        $this->entryDate = $date;
+        $this->campaignStartDate = $this->campaignEndDate = $date->format('Y-m-d');
     }
 
     /**
@@ -239,6 +248,15 @@ class Campaign
     {
         return $this->campaignMonth;
     }
+
+    /**
+     * @param int $campaignId
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+    }
+
 
     /**
      * Get campaignId

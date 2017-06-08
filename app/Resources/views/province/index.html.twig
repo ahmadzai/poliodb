@@ -1,0 +1,56 @@
+{% extends 'main.html.twig' %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {##}
+{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/DT_bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/responsive/datatables.responsive.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Provinces</h1>
+
+    <table class="table table-striped table-bordered table-hover table-responsive datatable">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Region</th>
+                <th>Pashto Name</th>
+                <th>Dari Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for province in provinces %}
+            <tr>
+                <td>{{ province.provinceCode }}</td>
+                <td><a href="{{ path('province_show', { 'id': province.provinceCode }) }}">{{ province.provinceName }}</a></td>
+                <td>{{ province.provinceRegion }}</td>
+                <td>{{ province.provinceNamePashtu }}</td>
+                <td>{{ province.provinceNameDari }}</td>
+                <td>
+                    <ul style="list-style: none">
+                        <li>
+                            <a href="{{ path('province_show', { 'id': province.provinceCode }) }}"
+                            class="btn btn-success btn-xs">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('province_edit', { 'id': province.provinceCode }) }}"
+                               class="btn btn-info btn-xs">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('province_new') }}" class="btn btn-info">Create a new province</a>
+
+{% endblock %}
