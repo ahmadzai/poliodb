@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PolioDbBundle\Controller;
+namespace AppBundle\Controller;
 
 use App\PolioDbBundle\Entity\Province;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

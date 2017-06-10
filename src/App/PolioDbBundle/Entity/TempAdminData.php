@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="TempAdminData")
+ * @ORM\Table(name="temp_admin_data")
  */
 class TempAdminData
 {
