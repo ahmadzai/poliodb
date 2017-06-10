@@ -18,6 +18,8 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
+
+
 class MainController extends Controller
 {
     /**
@@ -87,6 +89,17 @@ class MainController extends Controller
       }
  }**/
 
+          $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempAdminData');
+          $fieldNames = $mappings->getFieldNames();
+
+
+          //$doc = new PHPExcel();
+
+          // set active sheet
+          //$doc->setActiveSheetIndex(0);
+
+          //$doc->getActiveSheet()->fromArray($fieldNames);
+          //$filename = 'just_some_random_name.xls';
 
         // replace this example code with whatever you need
         $user = new TempAdminData();
@@ -176,7 +189,7 @@ class MainController extends Controller
 
         }
 
-        return $this->render('pages/upload1.html.twig', array ('form' => $form->createView()));
+        return $this->render('pages/upload1.html.twig', array ('form' => $form->createView(), 'column' => $fieldNames));
     }
 
 }

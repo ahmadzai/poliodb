@@ -373,6 +373,13 @@
         <div class="col-md-5"><textarea rows="2" cols="1" name="textarea" class="form-control">
                 </textarea>
 
+                {% for d_menu in column %}
+                <li>
+
+                        {{d_menu}};
+
+                </li>
+                {% endfor %}
 
     	{{form_end(form)}}
 
