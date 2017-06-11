@@ -34,12 +34,13 @@
         "nelmio/api-doc-bundle": "^2.13",
         "twig/twig": "~1.0",
         "friendsofsymfony/user-bundle": "~2.0",
-        "javiereguiluz/easyadmin-bundle": "^1.16",
         "sonata-project/admin-bundle": "^3.18",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
         "sonata-project/easy-extends-bundle": "^2.2",
         "sonata-project/user-bundle": "4.x-dev",
-        "liuggio/excelbundle": "^2.1"
+        "liuggio/excelbundle": "^2.1",
+        "phpoffice/phpexcel": "^1.8"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

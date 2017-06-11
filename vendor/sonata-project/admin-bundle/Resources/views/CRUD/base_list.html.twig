@@ -11,14 +11,9 @@ file that was distributed with this source code.
 
 {% extends base_template %}
 
-{#{%- block actions -%}
-<div id="main" >
-  <div class="container-fluid">
-
-      <div class="row-fluid">
-
+{%- block actions -%}
     {% include 'SonataAdminBundle:CRUD:action_buttons.html.twig' %}
-{%- endblock -%} #}
+{%- endblock -%}
 
 {% block tab_menu %}{{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active', 'template': sonata_admin.adminPool.getTemplate('tab_menu_template')}, 'twig') }}{% endblock %}
 
@@ -230,9 +225,7 @@ file that was distributed with this source code.
     </div>
 {% endblock %}
 
-{# commented the filter of tables #}
-
-{#{% block list_filters_actions %}
+{% block list_filters_actions %}
     {%- if admin.datagrid.filters|length %}
         <ul class="nav navbar-nav navbar-right">
 
@@ -255,7 +248,7 @@ file that was distributed with this source code.
             </li>
         </ul>
     {% endif -%}
-{% endblock %}#}
+{% endblock %}
 
 {% block list_filters %}
     {% if admin.datagrid.filters %}

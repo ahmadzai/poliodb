@@ -83,7 +83,7 @@
                         {% if d_menu.dashboard == 1 %}
                         <li>
 
-                            <a href="form_components.html">
+                            <a href="{{ path('dashboard_'~d_menu.tableName) }}">
                                 <i class="icon-bar-chart"></i>
                                 Dashboard
                             </a>
@@ -92,7 +92,7 @@
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.entryForm == 1 %}
                                 <li>
-                                    <a href="form_layouts.html">
+                                    <a href="{{ path('entry_'~d_menu.tableName) }}">
                                         <i class="icon-edit"></i>
                                         Data Entry
                                     </a>
@@ -103,7 +103,7 @@
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
                             <li>
-                                <a href="form_layouts.html">
+                                <a href="{{ path('data_upload', {'table':d_menu.tableName}) }}">
                                     <i class="icon-cloud-upload"></i>
                                     Upload Data
                                 </a>
@@ -114,7 +114,7 @@
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
                                 <li>
-                                    <a href="form_layouts.html">
+                                    <a href="{{ path('data_download', {'table':d_menu.tableName}) }}">
                                         <i class="icon-cloud-download"></i>
                                         Download Data
                                     </a>
