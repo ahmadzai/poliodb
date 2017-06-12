@@ -31,6 +31,14 @@ class UploadController extends Controller
 
         $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempAdminData');
         $fieldNames = $mappings->getFieldNames();
+      /**  $upp = [];
+        foreach ($fieldNames as $value) {
+            $upp[] = ucfirst($value);
+        }*/
+
+
+
+
 
         $doc = $this->get('phpexcel')->createPHPExcelObject();
         $doc->setActiveSheetIndex(0);

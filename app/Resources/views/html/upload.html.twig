@@ -90,10 +90,14 @@
             <input type="submit" class="btn btn-success" value="Sync Data" name="sync_data">
         </div>
 
-        <div class="alert alert-info fade in">
+      {#  <div class="alert alert-info fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> The success or any message will apear here.
-        </div>
+        </div> #}
+
+        {#{% for name in names %}
+          {{name}}
+        {% endfor %}{{table}}#}
 
         {{ form_end(form) }}
     </div>

@@ -9,6 +9,11 @@ services:
     factory: ['App\PolioDbBundle\Utils\MyFactory', createChart]
     arguments: [ "@app.settings" ]
 
+  app.form.registration:
+    class: App\PolioDbBundle\Form\ProfileType
+    tags:
+        - { name: form.type, alias: app_user_profile }
+
   #admin.user:
     #class: App\PolioDbBundle\Admin\UserAdmin
     #arguments: [~, App\PolioDbBundle\Entity\User, ~]
@@ -16,12 +21,8 @@ services:
     #tags:
           #- { name: sonata.admin, manager_type: orm, label: User }
 
-  admin.data:
-    class: App\PolioDbBundle\Admin\AdminDataAdmin
-    arguments: [~, App\PolioDbBundle\Entity\AdminData, ~]
-    arguments: [ setUserManager, ["@fosuser.usermanager"]]
-    tags:
-          - { name: sonata.admin, manager_type: orm, label: AdminData }
+  #custom.sonata.security.handler.role:
+    #class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
 
   app.chart_manager:
     class: App\PolioDbBundle\Utils\Charts

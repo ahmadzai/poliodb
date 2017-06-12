@@ -1,16 +1,33 @@
-<div id="content" >
-    <div class="container-fluid">
-        <div class="page-header box">
-          <div class="box-title">
-            <h1 style="font-size:20px;line-height:24px;font-weight:400">Update User</h1>
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="row">
+    <!--=== Vertical Forms ===-->
+    <div class="col-md-12">
+        <div class="widget box">
+            <div class="widget-header">
+                <h4><i class="icon-reorder"></i>Profile</h4>
+            </div>
+            <div class="widget-content">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="list-group">
+                    <li class="list-group-item list-group-header">
+                      <span class="badge"></span>User Profiel Show
+                    </li>
+                    <a href="#" class="list-group-item basic-alert">{{ 'profile.show.username'|trans }}: {{ user.username }}</a>
+                    <a href="#" class="list-group-item confirm-dialog">{{ 'profile.show.email'|trans }}: {{ user.email }}</a>
+                    <a href="#" class="list-group-item multiple-buttons">{{ 'Firstname'|trans }}: {{ user.firstname }}</a>
+                    <a href="#" class="list-group-item multiple-dialogs">{{ 'Lastname'|trans }}: {{ user.lastname }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Title'|trans }}: {{ user.title }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Joblevel'|trans }}: {{ user.joblevel }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Region'|trans }}: {{ user.region }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Province'|trans }}: {{ user.province }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Phone'|trans }}: {{ user.phone }}</a>
+                  </div>
+               </div>
+            </div>
           </div>
         </div>
-        <div class="row-fluid">
-            <div class="fos_user_user_show">
-                <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-                <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
-
+</div> 
