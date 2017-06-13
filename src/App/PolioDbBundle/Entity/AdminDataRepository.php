@@ -117,20 +117,44 @@ class AdminDataRepository extends EntityRepository {
     public function regionAgg($campaign) {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT p.provinceRegion, 
+                "SELECT p.provinceRegion as Region, cmp.campaignStartDate as CDate, 
+                  cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth,
+                  sum(adm.targetPopulation) as TargetChild, sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+                  ((sum(adm.usedVials)*20 - sum(adm.child011+adm.child1259+adm.vaccAbsent+adm.vaccSleep+adm.vaccRefusal))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
                   sum(adm.targetPopulation) as TargetPopulation,
+                  sum(adm.child011+adm.child1259+adm.vaccAbsent+adm.vaccSleep+adm.vaccRefusal) as VaccChild,
+                  
+                  sum(
+                    CASE
+                      WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                      THEN adm.regAbsent ELSE 0
+                    END 
+                  ) as RegAbsent,
+                  sum(adm.vaccAbsent) as VaccAbsent,
+                  sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+                  
+                  sum(
+                    CASE
+                      WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                      THEN adm.regSleep ELSE 0
+                    END 
+                  ) as RegNSS,
+                  sum(adm.vaccSleep) as VaccNSS,
+                  sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+                  
                   sum(
                     CASE
                       WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
                       THEN adm.regRefusal ELSE 0
                     END 
                   ) as RegRefusal,
-                  sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as Refusal,
+                  sum(adm.vaccRefusal) as VaccRefusal,
+                  sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
                  
-                  cmp.campaignType
+                  sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
                   FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp 
-                  JOIN adm.districtCode d JOIN d.provinceCode p WHERE(adm.campaign = :camp)
-                  GROUP BY p.provinceRegion"
+                  JOIN adm.districtCode d JOIN d.provinceCode p WHERE(adm.campaign in (:camp))
+                  GROUP BY p.provinceRegion, CYear, CMonth"
             )-> setParameters(['camp'=>$campaign])
             ->getResult(Query::HYDRATE_SCALAR);
     }

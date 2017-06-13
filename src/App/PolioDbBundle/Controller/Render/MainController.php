@@ -52,7 +52,8 @@ class MainController extends Controller
         $em = $this->getDoctrine()->getManager();
         $data = $em->getRepository('AppPolioDbBundle:AdminData')
             //->adminDataAllByDay(1);
-            ->clusterAgg([9, 10], 3301);
+            //->clusterAgg([9, 10], 3301);
+            ->regionAgg([15, 16]);
         return new Response(json_encode($data));
     }
 
