@@ -85,22 +85,26 @@
                     <strong>Info!</strong> {{ message }}
                 {% endfor %}
             </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Sync Data" name="sync_data">
-        </div>
-
-      {#  <div class="alert alert-info fade in">
-            <i class="icon-remove close" data-dismiss="alert"></i>
-            <strong>Info!</strong> The success or any message will apear here.
-        </div> #}
-
-        {#{% for name in names %}
-          {{name}}
-        {% endfor %}{{table}}#}
-
         {{ form_end(form) }}
     </div>
 
+
+    {# form2 render #}
+    <div class="row">
+        {{form_start(form2)}}
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Sync" name="sync_data">
+        </div>
+
+        {% for message in app.session.flashBag.get('noticee') %}
+        <div class="alert alert-info fade in">
+            <i class="icon-remove close" data-dismiss="alert"></i>
+            <strong>Info!</strong> {{ message }}
+        {% endfor %}
+        </div>
+
+        {{ form_end(form2) }}
+    </div>
 </div>
 {% endblock %}
