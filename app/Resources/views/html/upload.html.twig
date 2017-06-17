@@ -16,6 +16,7 @@
 
             <li><a href="template.xlsx"><i class="icon-download"></i> Download Template</a></li>
 
+
         </ul>
         <!--
         <ul class="crumb-buttons">
@@ -79,26 +80,31 @@
             <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data">
         </div>
 
-                {% for message in app.session.flashBag.get('notice') %}
-            <div class="alert alert-info fade in">
+                {% for message in app.session.flashBag.get('exception') %}
+            <div class="alert alert-danger fade in">
                     <i class="icon-remove close" data-dismiss="alert"></i>
                     <strong>Info!</strong> {{ message }}
                 {% endfor %}
             </div>
+
+            {% for message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-info fade in">
+                <i class="icon-remove close" data-dismiss="alert"></i>
+                <strong>Info!</strong> {{ message }}
+            {% endfor %}
+        </div>
         {{ form_end(form) }}
-    </div>
 
 
-    {# form2 render #}
-    <div class="row">
+        {# form2 render #}
         {{form_start(form2)}}
 
         <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Sync" name="sync_data">
+            <input type="submit" class="btn btn-success" value="Sync to Master" name="sync_data">
         </div>
 
         {% for message in app.session.flashBag.get('noticee') %}
-        <div class="alert alert-info fade in">
+        <div class="alert alert-success fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> {{ message }}
         {% endfor %}

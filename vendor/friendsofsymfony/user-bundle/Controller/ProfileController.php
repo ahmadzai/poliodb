@@ -24,7 +24,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use App\PolioDbBundle\Entity\Province;
+use App\PolioDbBundle\Form\ProfileType;
 /**
  * Controller managing the user profile.
  *
@@ -74,6 +75,8 @@ class ProfileController extends Controller
         /** @var $formFactory FactoryInterface */
         $formFactory = $this->get('fos_user.profile.form.factory');
 
+        //$meetup = new Province();
+        //$form = $this->createForm(ProfileType::class, $meetup);
         $form = $formFactory->createForm();
         $form->setData($user);
 

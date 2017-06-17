@@ -18,6 +18,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use PHPExcel_IOFactory;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class UploadController extends Controller
 {
@@ -33,30 +34,27 @@ class UploadController extends Controller
        $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempAdminData');
        $fieldNames = $mappings->getFieldNames();
 
+       //remove id auto_increament field from template.
        $remvOption = array('id');
        $new_fields = array_diff($fieldNames, $remvOption);
 
-
+       //create dynamic template for data source.
        $doc = $this->get('phpexcel')->createPHPExcelObject();
        $doc->setActiveSheetIndex(0);
        $doc->getActiveSheet()->fromArray($new_fields);
 
        $objWriter = PHPExcel_IOFactory::createWriter($doc, 'Excel2007');
-       //$objWriter->save(str_replace(__FILE__,'C:\xampp\htdocs\poliodb\web\upload',__FILE__));
        $objWriter->save('upload/template.xlsx');
-
-
 
        $user = new TempAdminData();
 
-       //first form of the page.
+       //create first form of the page.
        $form = $this->createFormBuilder($user)
        ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
        ->getForm();
 
        //second form of the page.
        $form2 = $this->get('form.factory')->createNamedBuilder('form2')
-       //->add('submit', SubmitType::class, array('attr' => array('class' => 'btn btn-success')))
        ->getForm();
 
 
@@ -73,7 +71,6 @@ class UploadController extends Controller
              $em = $this->getDoctrine()->getManager();
 
              //READ EXCEL FILE CONTENT
-
              try {
 
                foreach($sheet as $i=>$row) {
@@ -81,25 +78,114 @@ class UploadController extends Controller
 
                    $user = new TempAdminData();
 
+                   if(is_null($row['A']))
+                   $user->setDistrictCode(NULL);
+                   else
                    $user->setDistrictCode(trim($row['A']));
-                   $user->setSubDistName(trim($row['B']));
+
+                   //check datatype of the filed.
+                   if(is_string($row['B']))
+                   echo "correct";
+                   else {
+
+                     $sql = "TRUNCATE temp_admin_data";
+                     $stmt = $em->getConnection()->query($sql);
+
+                     $request->getSession()->getFlashBag()->add('exception', "Check data type of column SubDistName");
+                     throw new \Doctrine\DBAL\DBALException;
+
+                   }
+
+                   if(is_null($row['B']))
+                   $user->setSubDistName(NULL);
+                   else
+                   $user->setSubDistName($row['B']);
+
+                   if(is_null($row['C']))
+                   $user->setClusterName(NULL);
+                   else
                    $user->setClusterName(trim($row['C']));
+
+                   if(is_null($row['D']))
+                   $user->setClusterNo(NULL);
+                   else
                    $user->setClusterNo(trim($row['D']));
+
+                   if(is_null($row['E']))
+                   $user->setCluster(NULL);
+                   else
                    $user->setCluster(trim($row['E']));
+
+                   if(is_null($row['F']))
+                   $user->setTargetPop(NULL);
+                   else
                    $user->setTargetPop(trim($row['F']));
+
+                   if(is_null($row['G']))
+                   $user->setGivenVials(NULL);
+                   else
                    $user->setGivenVials(trim($row['G']));
+
+                   if(is_null($row['H']))
+                   $user->setUsedVials(NULL);
+                   else
                    $user->setUsedVials(trim($row['H']));
+
+                   if(is_null($row['I']))
+                   $user->setChild011(NULL);
+                   else
                    $user->setChild011(trim($row['I']));
+
+                   if(is_null($row['J']))
+                   $user->setChild1259(NULL);
+                   else
                    $user->setChild1259(trim($row['J']));
+
+                   if(is_null($row['K']))
+                   $user->setRegAbsent(NULL);
+                   else
                    $user->setRegAbsent(trim($row['K']));
+
+                   if(is_null($row['L']))
+                   $user->setVaccAbsent(NULL);
+                   else
                    $user->setVaccAbsent(trim($row['L']));
+
+                   if(is_null($row['M']))
+                   $user->setRegSleep(NULL);
+                   else
                    $user->setRegSleep(trim($row['M']));
+
+                   if(is_null($row['N']))
+                   $user->setVaccSleep(NULL);
+                   else
                    $user->setVaccSleep(trim($row['N']));
+
+                   if(is_null($row['O']))
+                   $user->setRegRefusal(NULL);
+                   else
                    $user->setRegRefusal(trim($row['O']));
+
+                   if(is_null($row['P']))
+                   $user->setVaccRefusal(NULL);
+                   else
                    $user->setVaccRefusal(trim($row['P']));
+
+                   if(is_null($row['Q']))
+                   $user->setNewPolioCase(NULL);
+                   else
                    $user->setNewPolioCase(trim($row['Q']));
+
+                   if(is_null($row['R']))
+                   $user->setVaccDay(NULL);
+                   else
                    $user->setVaccDay(trim($row['R']));
+
+                   if(is_null($row['S']))
+                   $user->setCampaignId(NULL);
+                   else
                    $user->setCampaignId(trim($row['S']));
+
                    //... and so on
 
                    $em->persist($user);
@@ -107,14 +193,13 @@ class UploadController extends Controller
                  }
                }//end of foreach
 
-               //$this->get('session')->addFlash('flash_key',"Add done!");
                $request->getSession()->getFlashBag()->add('notice', "Add done!");
 
              } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
                $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
              }
              catch (\Doctrine\DBAL\DBALException $e) {
-               $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
+               //$request->getSession()->getFlashBag()->add('notice', $e->getMessage());
              }
            }
 
@@ -135,11 +220,11 @@ class UploadController extends Controller
              $stmt = $em->getConnection()->query($sql);
              $stmtt = $em->getConnection()->query($sql1);
 
-             $request->getSession()->getFlashBag()->add('noticee', "Add done!");
+             $request->getSession()->getFlashBag()->add('noticee', "Sync to Master done!");
 
-           } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
+            } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
              $request->getSession()->getFlashBag()->add('noticee', $e->getMessage());
-           }
+            }
 
          }//end of second form.
        }
