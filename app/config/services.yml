@@ -7,7 +7,7 @@ services:
   app.chart:
     class: App\PolioDbBundle\Utils\Charts
     factory: ['App\PolioDbBundle\Utils\MyFactory', createChart]
-    arguments: [ "@app.settings" ]
+    arguments: [ "@doctrine.orm.entity_manager" ]
 
   app.form.registration:
     class: App\PolioDbBundle\Form\ProfileType
@@ -28,7 +28,7 @@ services:
     class: App\PolioDbBundle\Utils\Charts
     # call a method on the specified service
     factory: ['@app.my_factory', createChart]
-    arguments: [ "@app.settings" ]
+    arguments: [ "@doctrine.orm.entity_manager" ]
 
   app.settings:
     class: App\PolioDbBundle\Utils\Settings

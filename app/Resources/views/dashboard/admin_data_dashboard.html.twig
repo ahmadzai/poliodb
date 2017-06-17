@@ -1,0 +1,211 @@
+{% extends 'main.html.twig' %}
+{% block content %}
+<div class="container">
+    <!-- Breadcrumbs line -->
+    <div class="crumbs" role="">
+        <ul id="breadcrumbs" class="breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="{{ path('home_admin_data') }}">Dashboard</a>
+            </li>
+            {#<li class="current">#}
+                {#<a href="pages_calendar.html" title="">Calendar</a>#}
+            {#</li>#}
+        </ul>
+        <!--
+        <ul class="crumb-buttons">
+            <li><a href="charts.html" title=""><i class="icon-signal"></i><span>Statistics</span></a></li>
+            <li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-tasks"></i><span>Users <strong>(+3)</strong></span><i class="icon-angle-down left-padding"></i></a>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="form_components.html" title=""><i class="icon-plus"></i>Add new User</a></li>
+                    <li><a href="tables_dynamic.html" title=""><i class="icon-reorder"></i>Overview</a></li>
+                </ul>
+            </li>
+            <li class="range">
+                <a href="#">
+                    <i class="icon-calendar"></i>
+                    <span></span>
+                    <i class="icon-angle-down"></i>
+                </a>
+            </li>
+        </ul>
+        -->
+    </div>
+    <!-- /Breadcrumbs line -->
+    <!--=== Page Header ===-->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>Dashboard</h3>
+            <span>Hello, {{app.user.username|capitalize}}!</span>
+        </div>
+
+        <!-- Page Stats -->
+
+        <ul class="page-stats">
+            <li>
+                <div class="summary">
+                    <span>Vaccinated U5</span>
+                    <h3>{{ lastCampData[0]['VaccChild']|number_format(0, '.', ',') }}</h3>
+                </div>
+                <div id="sparkline-pie-vaccinated" class="graph hidden-xs"></div>
+
+            </li>
+            <li>
+                <div class="summary">
+                    <span>Remaining U5</span>
+                    <h3>{{ lastCampData[0]['TotalRemaining']|number_format(0, '.', ',') }}</h3>
+                </div>
+                <div id="sparkline-pie-remaining" class="graph hidden-xs"></div>
+            </li>
+        </ul>
+
+        <!-- /Page Stats -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-reorder"></i> Remaining Children</h4>
+                </div>
+                <script src="{{ asset('/js/js/highcharts.js') }}"></script>
+                <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
+                <script src="{{ asset('/js/js/modules/grouped-categories.js') }}"></script>
+                <div class="widget-content">
+                    <div id="chart1" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-reorder"></i> Vaccine Usage</h4>
+                </div>
+                <div class="widget-content">
+                    <div id="chart2" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script_end %}
+    {{parent()}}
+    <script src="{{ asset('/js/charts.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+
+            var myFirstChart = {apiUrl:'api_get_admin_data_by_campaign_indicator',
+                urlParams: {campaign:0, indicator:'remaining'},
+                renderTo:'chart1',
+                chartData: '{{chart1data|raw}}',
+                menu:[{chart:'normal', title:'Stack Chart'},
+                    {chart: '', title:'Back to Normal'}],
+                stacking:'',
+                yAxisTitle: 'No of Missed Children',
+                combination:[{type:'pie', method:'sum'}],
+                label:{title:'Total Vaccine Usage',
+                    position:{top:'18px', left:'170px'}}};
+            columnChart(myFirstChart);
+
+            var vaccineUsage = {apiUrl:'api_get_admin_data_by_campaign_indicator',
+                urlParams: {campaign:13, indicator:'vaccines'},
+                renderTo:'chart2',
+                chartData: '{{ chartVaccineUsage|raw }}',
+                legend: {
+                    layout: 'vertical',
+                    align: 'left',
+                    vAlign: 'top',
+                    x: 80,
+                    y: 55,
+                    color: '#FFFFFF'
+                },
+                yAxises: [
+
+
+                    {
+                        format:'',
+                        color:'#048aff',
+                        opposite: false,
+                        title:'Received Vaccine',
+                        indicator:'ReceivedVials',
+                        type: 'column',
+                        tooltip: '',
+                        yAxis: 1,
+                        lineWidth: 1
+                    },
+                    {
+                        format:'',
+                        color:'#43AB0D',
+                        opposite: true,
+                        title:'Used Vaccine',
+                        indicator:'UsedVials',
+                        type: 'spline',
+                        tooltip: '',
+                        marker: true,
+
+                    },
+                    {
+                        format:' %',
+                        color:'#F00000',
+                        opposite: true,
+                        title:'Wastage Percentage',
+                        indicator:'Wastage',
+                        yAxis: 2,
+                        type: 'spline',
+                        tooltip: ' %',
+                        marker: false,
+                        lineWidth: 0
+                    },
+
+
+                ]
+            };
+            multiAxisColumnChart(vaccineUsage);
+
+            $("#sparkline-pie-vaccinated").sparkline(['{{ lastCampData[0]['Child011'] }}',
+                                           '{{ lastCampData[0]['Child1259'] }}',
+                                           '{{ lastCampData[0]['MissedVaccinated'] }}'
+                                          ], {
+                type: 'pie',
+                width: '40px',
+                height: '40px',
+                sliceColors: ['#43AB0D', '#048aff', '#B844F0'],
+                {% verbatim %}
+                tooltipFormat: '{{offset:offset}} ({{percent.1}}%)',
+                tooltipValueLookups: {
+                    'offset': {
+                        0: 'Child-011M',
+                        1: 'Child-1259',
+                        2: 'MissedVacc'
+                    }
+                }
+                {% endverbatim %}
+            });
+            $("#sparkline-pie-remaining").sparkline(['{{ lastCampData[0]['RemainingAbsent'] }}',
+                '{{ lastCampData[0]['RemainingNSS'] }}',
+                '{{ lastCampData[0]['RemainingRefusal'] }}'
+            ], {
+                type: 'pie',
+                width: '40px',
+                height: '40px',
+                sliceColors: ['#FFFF00', '#C99900', '#FF0000'],
+                {% verbatim %}
+                tooltipFormat: '{{offset:offset}} ({{percent.1}}%)',
+                tooltipValueLookups: {
+                    'offset': {
+                        0: 'Absent',
+                        1: 'NSS',
+                        2: 'Refusal'
+                    }
+                }
+                {% endverbatim %}
+            });
+        });
+
+
+    </script>
+
+{% endblock %}

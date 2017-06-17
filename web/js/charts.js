@@ -1,7 +1,9 @@
 /**
  * Created by Wazir Khan Ahmadzai on 1/25/2017.
  */
-$(function () {
+    
+
+//$(function () {
 
     globalOptions = {
         chart: {
@@ -54,7 +56,11 @@ $(function () {
             }
         },
         colors: ['#FF0000', '#C99900', '#FFFF00'],
-        series:[{}]
+        series: [
+            {
+                'data': 'test'
+            }
+        ]
     };
 
     /*
@@ -74,7 +80,7 @@ $(function () {
     */
 
     //console.log(globalOptions.exporting.buttons.contextButton.menuItems);
-
+/*
     var chart1 = {apiUrl:'api_get_admin_data_by_campaign_indicator',
         urlParams: {campaign:0, indicator:'remaining'},
         renderTo:'cont_reg_trend_last_camp',
@@ -84,7 +90,7 @@ $(function () {
         combination:[{type:'pie', method:'sum'}],
         label:{title:'Total Remaining Children',
             position:{top:'18px', left:'170px'}}};
-    columnChart(chart1);
+    //columnChart(chart1);
 
     var chart2 = {apiUrl:'api_get_admin_data_by_campaign_indicator',
         urlParams: {campaign:13, indicator:'vaccinated'},
@@ -95,7 +101,7 @@ $(function () {
         yAxisTitle : 'Total Vaccinated Children',
         colors:['#3DE2FF', '#048AFF'],
         combination:[{type:'spline', method:'sum'}]};
-    columnChart(chart2);
+    //columnChart(chart2);
 
     var chart3 = {apiUrl:'api_get_admin_data_by_campaign_indicator',
                     urlParams: {campaign:13, indicator:'vaccines'},
@@ -148,7 +154,7 @@ $(function () {
 
                     ]
                 };
-    multiAxisColumnChart(chart3);
+    //multiAxisColumnChart(chart3);
 
     var chart4 = {apiUrl:'api_get_admin_data_by_indicator',
         urlParams: {indicator:'vaccines'},
@@ -163,7 +169,7 @@ $(function () {
         yAxisTitle:'Vaccine Usage Last 3 Campaigns'
 
         };
-    lineChart(chart4);
+    //lineChart(chart4);
 
     var last3CampRemChildColumnChart = {apiUrl:'api_get_admin_data_by_indicator',
         urlParams: {indicator:'vaccinated'},
@@ -175,7 +181,7 @@ $(function () {
         colors:['#3DE2FF', '#048AFF'],
         legend: {align:'right', vAlign:'top', x:-30, y:5, floating:true}
         };
-    columnChart(last3CampRemChildColumnChart);
+    //columnChart(last3CampRemChildColumnChart);
 
     //console.log(globalOptions.exporting.buttons.contextButton.menuItems);
     var pieChartRefusal = {
@@ -193,9 +199,10 @@ $(function () {
         }}
     };
 
-    pieChart(pieChartRefusal);
+    //pieChart(pieChartRefusal);
 
-});
+//});
+*/
 
 
 /*
@@ -407,7 +414,7 @@ function multiAxisColumnChart(settings) {
     }
 
     // set the data of the chart to what assigned from TWIG
-    var dataObj = settings.data;
+    var dataObj = JSON.parse(settings.chartData);
     // if the data wasn't sett in the loading, call the ajax then
     if(dataObj == null) {
         $.ajax({
@@ -433,6 +440,7 @@ function multiAxisColumnChart(settings) {
     options.xAxis.categories = dataObj.categories;
     // set the data/series
     var dataSeries = dataObj.series;
+    console.log(dataSeries);
     //console.log('We are here above the if');
     if (settings.hasOwnProperty('yAxises')) {
         //console.log('We are here in the right location');
@@ -476,6 +484,9 @@ function columnChart(settings) {
     var settings = jQuery.extend(true, {}, settings);
     var options = jQuery.extend(true, {}, globalOptions);
 
+    //options.series = [];
+
+    //console.log(options);
     // set the element where the chart should be rendered
     options.chart.renderTo = settings.renderTo;
 
@@ -546,9 +557,12 @@ function columnChart(settings) {
     }
 
     // set the data of the chart to what assigned from TWIG
-    var dataObj = settings.data;
+    //console.log(JSON.parse(settings.chartData));
+    var dataObj = JSON.parse(settings.chartData);
+    //console.log(dataObj);
     // if the data wasn't sett in the loading, call the ajax then
     if(dataObj == null) {
+        //console.log("We are in the ajax block");
         $.ajax({
             url: Routing.generate(settings.apiUrl, settings.urlParams),
             beforeSend: function () {
@@ -571,7 +585,7 @@ function columnChart(settings) {
     options.xAxis.categories = dataObj.categories;
     // set the data/series
     options.series = dataObj.series;
-
+    console.log(dataObj["series"]);
     // check for the combined chart request
     if (settings.hasOwnProperty('combination')) {
         var secondCharts = settings.combination;
@@ -580,7 +594,7 @@ function columnChart(settings) {
             if (secondCharts.hasOwnProperty('colors')) {
                 colors = secondCharts.colors;
             }
-            var newSettings = secondChart(data, secondCharts[i], colors);
+            var newSettings = secondChart(dataObj, secondCharts[i], colors);
             options.series.push(newSettings);
         }
     }
@@ -683,7 +697,7 @@ function lineChart(settings) {
     options.xAxis.categories = dataObj.categories;
     // set the data/series
     options.series = dataObj.series;
-
+    console.log(options.series);
     // check for the combined chart request
     if (settings.hasOwnProperty('combination')) {
         var secondCharts = settings.combination;
@@ -772,7 +786,7 @@ function toggleLabels(renderTo) {
 this function create the combined charts.
  */
 function secondChart(sData, sOptions, sColors) {
-    var data = JSON.parse(sData);
+    var data = sData;
     var mData = data.series;
     if(sOptions.type == 'pie' && sOptions.method == 'sum') {
         var tempData = [];

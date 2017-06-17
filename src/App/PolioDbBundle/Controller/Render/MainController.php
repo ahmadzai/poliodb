@@ -36,11 +36,37 @@ class MainController extends Controller
      */
     public function homeAdminDataAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        // this function returns latest campaign, can work for all data sources that have relation with campaign
+        $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
+        // this function takes two parameters 1:table name to be joined with campaign table, 2: how many campaigns
+        // to be returned (optional) by default it returns the last 3 campaigns (only ids)
+        $campaignIds = $this->get('app.settings')->lastFewCampaigns('AdminData');
 
-        $data = $em->getRepository('AppPolioDbBundle:ProvinceData')
-            ->selectAllRegions();
-        return $this->render("html/admin_data.html.twig", ['ajax_url_var'=>'all', 'data' => $data]);
+        /**
+         * The below method call is a dynamic function returning the data from different data-sources
+         * however, you have to define a callMe() function in your Repository Class with the same structure as below
+         * Then you would not need to call that function with Doctrine EntityManager, you just call chartData and pass
+         * the tableName, functionName, and parameters for the original function in your repository
+         */
+        $regionAdminData = $this->get('app.chart')->chartData('AdminData', 'regionAgg', $campaignIds);
+        $lastCampAdminData = $this->get('app.chart')->chartData('AdminData', 'regionAgg', [$lastCamp[0]['campaignId']]);
+        // Category 1 (name must be in the result set)
+        // Category 2 (name must be in the result set)
+        // Array of columns to show on chart (the index is the label and the value is the column name in the result set
+        // Data returned above
+        $missedChildChart = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
+            ['Refusal'=>'RemainingRefusal',
+                'NSS' => 'RemainingNSS', 'Absent' => 'RemainingAbsent'], $regionAdminData);
+        $missedChildChart['title'] = "Remaining children by category in selected campaigns";
+
+        $lastCampVaccUsageChart = $this->get('app.chart')->chartData1Category('Region',
+                                    ['ReceivedVials'=>'RVials',
+                                    'UsedVials' => 'UVials', 'Wastage' => 'VaccWastage'], $lastCampAdminData);
+        $lastCampVaccUsageChart['title'] = "Vaccine usage during last campaign";
+        return $this->render("dashboard/admin_data_dashboard.html.twig",
+                            ['chart1data' => json_encode($missedChildChart),
+                             'chartVaccineUsage' => json_encode($lastCampVaccUsageChart),
+                             'lastCampData' => $lastCampAdminData]);
     }
 
     /**
@@ -49,11 +75,17 @@ class MainController extends Controller
      */
     public function testQuery()
     {
-        $em = $this->getDoctrine()->getManager();
-        $data = $em->getRepository('AppPolioDbBundle:AdminData')
-            //->adminDataAllByDay(1);
-            //->clusterAgg([9, 10], 3301);
-            ->regionAgg([15, 16]);
+
+        // $this->get('app.chart')->chartData('entityName', 'functionName', 'parametersArray');
+        $data = $this->get('app.chart')->chartData('AdminData', 'regionAgg', [14, 15]);
+        // Category 1 (name must be in the result set)
+        // Category 2 (name must be in the result set)
+        // Array of columns to show on chart (the index is the label and the value is the column name in the result set
+        // Data returned above
+        $data = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
+            ['ReceivedVials'=>'RVials',
+                'UsedVials' => 'UVials', 'VaccWastage' => 'VaccWastage'], $data);
+        $data = $this->get('app.settings')->campaignLatest('AdminData', 0);
         return new Response(json_encode($data));
     }
 

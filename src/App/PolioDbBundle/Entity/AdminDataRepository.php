@@ -6,6 +6,15 @@ use Doctrine\ORM\Query;
 
 class AdminDataRepository extends EntityRepository {
 
+    /**
+     * @param $function the function must be pre-defined
+     * @param $parameters the parameters must be defined in the function
+     * @return mixed
+     */
+    public function callMe($function, $parameters) {
+        return call_user_func(array($this, $function), $parameters);
+    }
+
     public function monthsYear($count = 4, $type = 'all') {
         $curr_y = date('Y');
         $curr_m = date('F');
@@ -123,7 +132,8 @@ class AdminDataRepository extends EntityRepository {
                   ((sum(adm.usedVials)*20 - sum(adm.child011+adm.child1259+adm.vaccAbsent+adm.vaccSleep+adm.vaccRefusal))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
                   sum(adm.targetPopulation) as TargetPopulation,
                   sum(adm.child011+adm.child1259+adm.vaccAbsent+adm.vaccSleep+adm.vaccRefusal) as VaccChild,
-                  
+                  sum(adm.child011) as Child011, sum(adm.child1259) as Child1259, 
+                  sum(adm.vaccAbsent+adm.vaccSleep+adm.vaccRefusal) as MissedVaccinated,
                   sum(
                     CASE
                       WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
