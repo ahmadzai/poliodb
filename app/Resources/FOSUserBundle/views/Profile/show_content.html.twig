@@ -1,5 +1,20 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<div class="container">
+  <div class="crumbs" role="">
+    <ul id="breadcrumbs" class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{ path('home_admin_data') }}">Dashboard</a>
+        </li>
+    </ul>
+    <ul class="crumb-buttons">
+
+        <li><a href="{{ path('fos_user_change_password')}}"><i class=" icon-cog"></i> Change Password</a></li>
+        <li><a href="{{ path('fos_user_profile_edit')}}"><i class="icon-user"></i> Edit Profile </a></li>
+    </ul>
+  </div><br><br>
+
 <div class="row">
     <!--=== Vertical Forms ===-->
     <div class="col-md-12">
@@ -30,4 +45,4 @@
         </div>
       </div>
     </div>
-</div> 
+</div>

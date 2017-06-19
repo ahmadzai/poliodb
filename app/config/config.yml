@@ -126,7 +126,8 @@ sonata_block:
 
 sonata_admin:
     templates:
-        layout: "::standard_layout.html.twig"
+        layout: Sonata\standard_layout.html.twig
+        list: Sonata\base_list.html.twig
         #ajax:   SonataAdminBundle::ajax_layout.html.twig
     security:
        handler: sonata.admin.security.handler.role

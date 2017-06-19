@@ -109,8 +109,7 @@
                     <i class="icon-caret-down small"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ path('fos_user_profile_edit')}}"><i class="icon-user"></i> My Profile</a></li>
-                    <li><a href="{{ path('fos_user_change_password')}}"><i class=" icon-cog"></i> Change Password</a></li>
+                    <li><a href="{{ path('fos_user_profile_show')}}"><i class="icon-user"></i> My Profile</a></li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <li><a href="{{ path('admin_sonata_user_user_list') }}"><i class="icon-cogs"></i> Account Settings </a> </li>
                     <li><a href="{{ path('admin_sonata_user_user_create') }}"><i class="icon-plus-sign"></i> Create User </a> </li>
