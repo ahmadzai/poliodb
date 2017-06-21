@@ -20,9 +20,14 @@ services:
     #arguments: [ setUserManager, ["@fosuser.usermanager"]]
     #tags:
           #- { name: sonata.admin, manager_type: orm, label: User }
+  admin.admindata:
+      class: App\PolioDbBundle\Admin\AdminDataAdmin
+      arguments: [~, App\PolioDbBundle\Entity\AdminData, ~]
+      tags:
+          - { name: sonata.admin, manager_type: orm, label: AdminData }
 
-  #custom.sonata.security.handler.role:
-    #class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
+  custom.sonata.security.handler.role:
+    class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
 
   app.chart_manager:
     class: App\PolioDbBundle\Utils\Charts

@@ -1,81 +1,100 @@
 <?php
 
 namespace App\PolioDbBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TempCatchupData
+ * @ORM\Entity
+ * @ORM\Table(name="temp_catchup_data")
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\TempCatchupDataRepository")
  */
 class TempCatchupData
 {
-    /**
-     * @var string
-     */
+  /**
+   * @ORM\Column(type="string", nullable=true)
+   */
     private $subDistrictName;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $districtCode;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $clusterName;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", nullable=true)
      */
     private $clusterNo;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $regAbsent;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $vaccAbsent;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $regSleep;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $vaccSleep;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $regRefusal;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $vaccRefusal;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $newMissed;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $newVaccinated;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $campaignId;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    private $file;
+
+    public function getFile()
+    {
+      return $this->file;
+    }
+
+    public function setFile($file)
+    {
+       $this->file = $file;
+
+       return $this;
+     }
 
 
     /**
@@ -400,4 +419,3 @@ class TempCatchupData
         return $this->id;
     }
 }
-

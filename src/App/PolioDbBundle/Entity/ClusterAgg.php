@@ -421,4 +421,382 @@ class ClusterAgg
 
 
 
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return ClusterAgg
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Set province
+     *
+     * @param string $province
+     *
+     * @return ClusterAgg
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceCode
+     *
+     * @param integer $provinceCode
+     *
+     * @return ClusterAgg
+     */
+    public function setProvinceCode($provinceCode)
+    {
+        $this->provinceCode = $provinceCode;
+
+        return $this;
+    }
+
+    /**
+     * Set district
+     *
+     * @param string $district
+     *
+     * @return ClusterAgg
+     */
+    public function setDistrict($district)
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * Set subDistrict
+     *
+     * @param string $subDistrict
+     *
+     * @return ClusterAgg
+     */
+    public function setSubDistrict($subDistrict)
+    {
+        $this->subDistrict = $subDistrict;
+
+        return $this;
+    }
+
+    /**
+     * Set cluster
+     *
+     * @param string $cluster
+     *
+     * @return ClusterAgg
+     */
+    public function setCluster($cluster)
+    {
+        $this->cluster = $cluster;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignDate
+     *
+     * @param string $campaignDate
+     *
+     * @return ClusterAgg
+     */
+    public function setCampaignDate($campaignDate)
+    {
+        $this->campaignDate = $campaignDate;
+
+        return $this;
+    }
+
+    /**
+     * Set lpd
+     *
+     * @param integer $lpd
+     *
+     * @return ClusterAgg
+     */
+    public function setLpd($lpd)
+    {
+        $this->lpd = $lpd;
+
+        return $this;
+    }
+
+    /**
+     * Set dcode
+     *
+     * @param integer $dcode
+     *
+     * @return ClusterAgg
+     */
+    public function setDcode($dcode)
+    {
+        $this->dcode = $dcode;
+
+        return $this;
+    }
+
+    /**
+     * Set cType
+     *
+     * @param string $cType
+     *
+     * @return ClusterAgg
+     */
+    public function setCType($cType)
+    {
+        $this->cType = $cType;
+
+        return $this;
+    }
+
+    /**
+     * Set cYear
+     *
+     * @param integer $cYear
+     *
+     * @return ClusterAgg
+     */
+    public function setCYear($cYear)
+    {
+        $this->cYear = $cYear;
+
+        return $this;
+    }
+
+    /**
+     * Set cMonth
+     *
+     * @param string $cMonth
+     *
+     * @return ClusterAgg
+     */
+    public function setCMonth($cMonth)
+    {
+        $this->cMonth = $cMonth;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignId
+     *
+     * @param integer $campaignId
+     *
+     * @return ClusterAgg
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingAbsent
+     *
+     * @param integer $remainingAbsent
+     *
+     * @return ClusterAgg
+     */
+    public function setRemainingAbsent($remainingAbsent)
+    {
+        $this->remainingAbsent = $remainingAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set receivedVials
+     *
+     * @param integer $receivedVials
+     *
+     * @return ClusterAgg
+     */
+    public function setReceivedVials($receivedVials)
+    {
+        $this->receivedVials = $receivedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set usedVials
+     *
+     * @param integer $usedVials
+     *
+     * @return ClusterAgg
+     */
+    public function setUsedVials($usedVials)
+    {
+        $this->usedVials = $usedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set child0To11
+     *
+     * @param integer $child0To11
+     *
+     * @return ClusterAgg
+     */
+    public function setChild0To11($child0To11)
+    {
+        $this->child0To11 = $child0To11;
+
+        return $this;
+    }
+
+    /**
+     * Set child12To59
+     *
+     * @param integer $child12To59
+     *
+     * @return ClusterAgg
+     */
+    public function setChild12To59($child12To59)
+    {
+        $this->child12To59 = $child12To59;
+
+        return $this;
+    }
+
+    /**
+     * Set regAbsent
+     *
+     * @param integer $regAbsent
+     *
+     * @return ClusterAgg
+     */
+    public function setRegAbsent($regAbsent)
+    {
+        $this->regAbsent = $regAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccAbsent
+     *
+     * @param integer $vaccAbsent
+     *
+     * @return ClusterAgg
+     */
+    public function setVaccAbsent($vaccAbsent)
+    {
+        $this->vaccAbsent = $vaccAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set regSleep
+     *
+     * @param integer $regSleep
+     *
+     * @return ClusterAgg
+     */
+    public function setRegSleep($regSleep)
+    {
+        $this->regSleep = $regSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccSleep
+     *
+     * @param integer $vaccSleep
+     *
+     * @return ClusterAgg
+     */
+    public function setVaccSleep($vaccSleep)
+    {
+        $this->vaccSleep = $vaccSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingSleep
+     *
+     * @param integer $remainingSleep
+     *
+     * @return ClusterAgg
+     */
+    public function setRemainingSleep($remainingSleep)
+    {
+        $this->remainingSleep = $remainingSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set regRefusal
+     *
+     * @param integer $regRefusal
+     *
+     * @return ClusterAgg
+     */
+    public function setRegRefusal($regRefusal)
+    {
+        $this->regRefusal = $regRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccRefusal
+     *
+     * @param integer $vaccRefusal
+     *
+     * @return ClusterAgg
+     */
+    public function setVaccRefusal($vaccRefusal)
+    {
+        $this->vaccRefusal = $vaccRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingRefusal
+     *
+     * @param integer $remainingRefusal
+     *
+     * @return ClusterAgg
+     */
+    public function setRemainingRefusal($remainingRefusal)
+    {
+        $this->remainingRefusal = $remainingRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return ClusterAgg
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

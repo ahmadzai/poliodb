@@ -345,4 +345,312 @@ class ProvinceAgg
     }
 
 
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return ProvinceAgg
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Set province
+     *
+     * @param string $province
+     *
+     * @return ProvinceAgg
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignDate
+     *
+     * @param string $campaignDate
+     *
+     * @return ProvinceAgg
+     */
+    public function setCampaignDate($campaignDate)
+    {
+        $this->campaignDate = $campaignDate;
+
+        return $this;
+    }
+
+    /**
+     * Set pcode
+     *
+     * @param integer $pcode
+     *
+     * @return ProvinceAgg
+     */
+    public function setPcode($pcode)
+    {
+        $this->pcode = $pcode;
+
+        return $this;
+    }
+
+    /**
+     * Set cType
+     *
+     * @param string $cType
+     *
+     * @return ProvinceAgg
+     */
+    public function setCType($cType)
+    {
+        $this->cType = $cType;
+
+        return $this;
+    }
+
+    /**
+     * Set cYear
+     *
+     * @param integer $cYear
+     *
+     * @return ProvinceAgg
+     */
+    public function setCYear($cYear)
+    {
+        $this->cYear = $cYear;
+
+        return $this;
+    }
+
+    /**
+     * Set cMonth
+     *
+     * @param string $cMonth
+     *
+     * @return ProvinceAgg
+     */
+    public function setCMonth($cMonth)
+    {
+        $this->cMonth = $cMonth;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignId
+     *
+     * @param integer $campaignId
+     *
+     * @return ProvinceAgg
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingAbsent
+     *
+     * @param integer $remainingAbsent
+     *
+     * @return ProvinceAgg
+     */
+    public function setRemainingAbsent($remainingAbsent)
+    {
+        $this->remainingAbsent = $remainingAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set receivedVials
+     *
+     * @param integer $receivedVials
+     *
+     * @return ProvinceAgg
+     */
+    public function setReceivedVials($receivedVials)
+    {
+        $this->receivedVials = $receivedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set usedVials
+     *
+     * @param integer $usedVials
+     *
+     * @return ProvinceAgg
+     */
+    public function setUsedVials($usedVials)
+    {
+        $this->usedVials = $usedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set child0To11
+     *
+     * @param integer $child0To11
+     *
+     * @return ProvinceAgg
+     */
+    public function setChild0To11($child0To11)
+    {
+        $this->child0To11 = $child0To11;
+
+        return $this;
+    }
+
+    /**
+     * Set child12To59
+     *
+     * @param integer $child12To59
+     *
+     * @return ProvinceAgg
+     */
+    public function setChild12To59($child12To59)
+    {
+        $this->child12To59 = $child12To59;
+
+        return $this;
+    }
+
+    /**
+     * Set regAbsent
+     *
+     * @param integer $regAbsent
+     *
+     * @return ProvinceAgg
+     */
+    public function setRegAbsent($regAbsent)
+    {
+        $this->regAbsent = $regAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccAbsent
+     *
+     * @param integer $vaccAbsent
+     *
+     * @return ProvinceAgg
+     */
+    public function setVaccAbsent($vaccAbsent)
+    {
+        $this->vaccAbsent = $vaccAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set regSleep
+     *
+     * @param integer $regSleep
+     *
+     * @return ProvinceAgg
+     */
+    public function setRegSleep($regSleep)
+    {
+        $this->regSleep = $regSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccSleep
+     *
+     * @param integer $vaccSleep
+     *
+     * @return ProvinceAgg
+     */
+    public function setVaccSleep($vaccSleep)
+    {
+        $this->vaccSleep = $vaccSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingSleep
+     *
+     * @param integer $remainingSleep
+     *
+     * @return ProvinceAgg
+     */
+    public function setRemainingSleep($remainingSleep)
+    {
+        $this->remainingSleep = $remainingSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set regRefusal
+     *
+     * @param integer $regRefusal
+     *
+     * @return ProvinceAgg
+     */
+    public function setRegRefusal($regRefusal)
+    {
+        $this->regRefusal = $regRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccRefusal
+     *
+     * @param integer $vaccRefusal
+     *
+     * @return ProvinceAgg
+     */
+    public function setVaccRefusal($vaccRefusal)
+    {
+        $this->vaccRefusal = $vaccRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingRefusal
+     *
+     * @param integer $remainingRefusal
+     *
+     * @return ProvinceAgg
+     */
+    public function setRemainingRefusal($remainingRefusal)
+    {
+        $this->remainingRefusal = $remainingRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return ProvinceAgg
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

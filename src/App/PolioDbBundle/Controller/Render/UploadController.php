@@ -19,15 +19,17 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use PHPExcel_IOFactory;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use App\PolioDbBundle\Entity\TempIcmData;
+use App\PolioDbBundle\Entity\TempCatchupData;
+
 
 class UploadController extends Controller
 {
 
     /**
-     * @Route("/upload/{table}", name="data_upload")
-     * @param $table
+     * @Route("/upload/admin_data", name="admin_data_upload")
      */
-     public function uploadAction(Request $request, $table)
+     public function adminUploadAction(Request $request)
      {
 
        //mapping Db table TempAdminData
@@ -44,7 +46,8 @@ class UploadController extends Controller
        $doc->getActiveSheet()->fromArray($new_fields);
 
        $objWriter = PHPExcel_IOFactory::createWriter($doc, 'Excel2007');
-       $objWriter->save('upload/template.xlsx');
+       $objWriter->save('upload/admin_data_template.xlsx');
+       $datasource = "admin_data";
 
        $user = new TempAdminData();
 
@@ -85,7 +88,7 @@ class UploadController extends Controller
 
                    //check datatype of the filed.
                    if(is_string($row['B']))
-                   echo "correct";
+                   echo "";
                    else {
 
                      $sql = "TRUNCATE temp_admin_data";
@@ -209,27 +212,377 @@ class UploadController extends Controller
 
            $form2->handleRequest($request);
 
-           $sql = "
-           INSERT INTO admin_data(district_code, sub_district_name, cluster_name, cluster_no, cluster, target_population, used_vials, child_0_11, child_12_59, reg_absent, vacc_absent, reg_sleep, vacc_sleep, reg_refusal,vacc_refusal, new_polio_case, vacc_day, campaign_id) SELECT districtCode, subDistName, clusterName, clusterNo, cluster, targetPop, usedVials, child011, child1259, regAbsent, vaccAbsent, regSleep, vaccSleep,regRefusal, vaccRefusal, newPolioCase, vaccDay, campaignId FROM temp_admin_data
-           ";
-           $sql1 = "TRUNCATE temp_admin_data";
-
            try {
-
              $em = $this->getDoctrine()->getManager();
-             $stmt = $em->getConnection()->query($sql);
-             $stmtt = $em->getConnection()->query($sql1);
+             $stmt = $em->getRepository('AppPolioDbBundle:TempAdminData')
+             ->adminSyncToMaster();
+             $stmtt = $em->getRepository('AppPolioDbBundle:TempAdminData')
+             ->truncatTempAdminData();
 
              $request->getSession()->getFlashBag()->add('noticee', "Sync to Master done!");
 
             } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
              $request->getSession()->getFlashBag()->add('noticee', $e->getMessage());
             }
+            catch (\Doctrine\DBAL\DBALException $e) {
+              $request->getSession()->getFlashBag()->add('masterexception', "Please check you data on CompaignId and districtCode, upload your file again.");
+              $stmtt = $em->getRepository('AppPolioDbBundle:TempAdminData')
+              ->truncatTempAdminData();
+            }
 
          }//end of second form.
        }
 
-       return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView()));
+       return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
      }
+
+     /**
+      * @Route("/upload/icm_data", name="icm_data_upload")
+      */
+      public function icmUploadAction(Request $request)
+      {
+
+        //mapping Db table TempAdminData
+        $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempIcmData');
+        $fieldNames = $mappings->getFieldNames();
+
+        //remove id auto_increament field from template.
+        $remvOption = array('data_id');
+        $new_fields = array_diff($fieldNames, $remvOption);
+
+        //create dynamic template for data source.
+        $doc = $this->get('phpexcel')->createPHPExcelObject();
+        $doc->setActiveSheetIndex(0);
+        $doc->getActiveSheet()->fromArray($new_fields);
+
+        $objWriter = PHPExcel_IOFactory::createWriter($doc, 'Excel2007');
+        $objWriter->save('upload/icm_data_template.xlsx');
+        $datasource = "icm_data";
+
+        $icmobj = new TempIcmData();
+
+        //create first form of the page.
+        $form = $this->createFormBuilder($icmobj)
+        ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
+        ->getForm();
+
+        //second form of the page.
+        $form2 = $this->get('form.factory')->createNamedBuilder('form2')
+        ->getForm();
+
+
+        if('POST' === $request->getMethod()) {
+
+          if ($request->request->has('form')) {
+
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+
+              $path_file = $icmobj->getFile();
+              $excelObj = $this->get('phpexcel')->createPHPExcelObject($path_file);
+              $sheet = $excelObj->getActiveSheet()->toArray(null,true,true,true);
+              $em = $this->getDoctrine()->getManager();
+
+              //READ EXCEL FILE CONTENT
+              try {
+
+                foreach($sheet as $i=>$row) {
+                  if($i !== 1) {
+
+                    $user = new TempIcmData();
+
+                    if(is_null($row['A']))
+                    $user->setDistrictCode(NULL);
+                    else
+                    $user->setDistrictCode(trim($row['A']));
+
+                    if(is_null($row['B']))
+                    $user->setNoTeamMonitored(NULL);
+                    else
+                    $user->setNoTeamMonitored($row['B']);
+
+                    if(is_null($row['C']))
+                    $user->setTeamResidentArea(NULL);
+                    else
+                    $user->setTeamResidentArea(trim($row['C']));
+
+                    if(is_null($row['D']))
+                    $user->setVaccinatorTrained(NULL);
+                    else
+                    $user->setVaccinatorTrained(trim($row['D']));
+
+                    if(is_null($row['E']))
+                    $user->setVaccStage3(NULL);
+                    else
+                    $user->setVaccStage3(trim($row['E']));
+
+                    if(is_null($row['F']))
+                    $user->setTeamSupervised(NULL);
+                    else
+                    $user->setTeamSupervised(trim($row['F']));
+
+                    if(is_null($row['G']))
+                    $user->setTeamWithChw(NULL);
+                    else
+                    $user->setTeamWithChw(trim($row['G']));
+
+                    if(is_null($row['H']))
+                    $user->setTeamWithFemale(NULL);
+                    else
+                    $user->setTeamWithFemale(trim($row['H']));
+
+                    if(is_null($row['I']))
+                    $user->setTeamAccomSm(NULL);
+                    else
+                    $user->setTeamAccomSm(trim($row['I']));
+
+                    if(is_null($row['J']))
+                    $user->setNoMissedNoTeamVisit(NULL);
+                    else
+                    $user->setNoMissedNoTeamVisit(trim($row['J']));
+
+                    if(is_null($row['K']))
+                    $user->setNoChildSeen(NULL);
+                    else
+                    $user->setNoChildSeen(trim($row['K']));
+
+                    if(is_null($row['L']))
+                    $user->setNoChildWithFm(NULL);
+                    else
+                    $user->setNoChildWithFm(trim($row['L']));
+
+                    if(is_null($row['M']))
+                    $user->setNoMissedChild(NULL);
+                    else
+                    $user->setNoMissedChild(trim($row['M']));
+
+                    if(is_null($row['N']))
+                    $user->setNoMissed10(NULL);
+                    else
+                    $user->setNoMissed10(trim($row['N']));
+
+                    if(is_null($row['O']))
+                    $user->setCampaignId(NULL);
+                    else
+                    $user->setCampaignId(trim($row['O']));
+                    //... and so on
+
+                    $em->persist($user);
+                    $em->flush();
+
+                  }
+                }//end of foreach
+
+                $request->getSession()->getFlashBag()->add('notice', "Add done!");
+
+              } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
+                $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
+              }
+              catch (\Doctrine\DBAL\DBALException $e) {
+                $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
+              }
+            }
+
+          }//end of handling first form.
+
+          if ($request->request->has('form2')) {
+
+            $form2->handleRequest($request);
+
+            try {
+              $em = $this->getDoctrine()->getManager();
+              $stmt = $em->getRepository('AppPolioDbBundle:TempIcmData')
+              ->icmSyncToMaster();
+              $stmtt = $em->getRepository('AppPolioDbBundle:TempIcmData')
+              ->truncatTempIcmData();
+
+              $request->getSession()->getFlashBag()->add('noticee', "Sync to Master done!");
+
+             } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
+              $request->getSession()->getFlashBag()->add('noticee', $e->getMessage());
+             }
+             catch (\Doctrine\DBAL\DBALException $e) {
+               $request->getSession()->getFlashBag()->add('masterexception', "Please check you data on CompaignId and districtCode, upload your file again.");
+               $stmtt = $em->getRepository('AppPolioDbBundle:TempIcmData')
+               ->truncatTempIcmData();
+             }
+
+          }//end of second form.
+        }
+
+        return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
+
+      }
+
+      /**
+       * @Route("/upload/catchup_data", name="catchup_data_upload")
+       */
+       public function catchupUploadAction(Request $request)
+       {
+
+         //mapping Db table TempAdminData
+         $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempCatchupData');
+         $fieldNames = $mappings->getFieldNames();
+
+         //remove id auto_increament field from template.
+         $remvOption = array('id');
+         $new_fields = array_diff($fieldNames, $remvOption);
+
+         //create dynamic template for data source.
+         $doc = $this->get('phpexcel')->createPHPExcelObject();
+         $doc->setActiveSheetIndex(0);
+         $doc->getActiveSheet()->fromArray($new_fields);
+
+         $objWriter = PHPExcel_IOFactory::createWriter($doc, 'Excel2007');
+         $objWriter->save('upload/catchup_data_template.xlsx');
+         $datasource = "catchup_data";
+
+         $icmobj = new TempCatchupData();
+
+         //create first form of the page.
+         $form = $this->createFormBuilder($icmobj)
+         ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
+         ->getForm();
+
+         //second form of the page.
+         $form2 = $this->get('form.factory')->createNamedBuilder('form2')
+         ->getForm();
+
+
+         if('POST' === $request->getMethod()) {
+
+           if ($request->request->has('form')) {
+
+             $form->handleRequest($request);
+
+             if($form->isSubmitted() && $form->isValid()){
+
+               $path_file = $icmobj->getFile();
+               $excelObj = $this->get('phpexcel')->createPHPExcelObject($path_file);
+               $sheet = $excelObj->getActiveSheet()->toArray(null,true,true,true);
+               $em = $this->getDoctrine()->getManager();
+
+               //READ EXCEL FILE CONTENT
+               try {
+
+                 foreach($sheet as $i=>$row) {
+                   if($i !== 1) {
+
+                     $user = new TempCatchupData();
+
+                     if(is_null($row['A']))
+                     $user->setSubDistrictName(NULL);
+                     else
+                     $user->setSubDistrictName(trim($row['A']));
+
+                     if(is_null($row['B']))
+                     $user->setDistrictCode(NULL);
+                     else
+                     $user->setDistrictCode($row['B']);
+
+                     if(is_null($row['C']))
+                     $user->setClusterName(NULL);
+                     else
+                     $user->setClusterName(trim($row['C']));
+
+                     if(is_null($row['D']))
+                     $user->setClusterNo(NULL);
+                     else
+                     $user->setClusterNo(trim($row['D']));
+
+                     if(is_null($row['E']))
+                     $user->setRegAbsent(NULL);
+                     else
+                     $user->setRegAbsent(trim($row['E']));
+
+                     if(is_null($row['F']))
+                     $user->setVaccAbsent(NULL);
+                     else
+                     $user->setVaccAbsent(trim($row['F']));
+
+                     if(is_null($row['G']))
+                     $user->setRegSleep(NULL);
+                     else
+                     $user->setRegSleep(trim($row['G']));
+
+                     if(is_null($row['H']))
+                     $user->setVaccSleep(NULL);
+                     else
+                     $user->setVaccSleep(trim($row['H']));
+
+                     if(is_null($row['I']))
+                     $user->setRegRefusal(NULL);
+                     else
+                     $user->setRegRefusal(trim($row['I']));
+
+                     if(is_null($row['J']))
+                     $user->setVaccRefusal(NULL);
+                     else
+                     $user->setVaccRefusal(trim($row['J']));
+
+                     if(is_null($row['K']))
+                     $user->setNewMissed(NULL);
+                     else
+                     $user->setNewMissed(trim($row['K']));
+
+                     if(is_null($row['L']))
+                     $user->setNewVaccinated(NULL);
+                     else
+                     $user->setNewVaccinated(trim($row['L']));
+
+                     if(is_null($row['M']))
+                     $user->setCampaignId(NULL);
+                     else
+                     $user->setCampaignId(trim($row['M']));
+
+                     //... and so on
+
+                     $em->persist($user);
+                     $em->flush();
+
+                   }
+                 }//end of foreach
+
+                 $request->getSession()->getFlashBag()->add('notice', "Add done!");
+
+               } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
+                 $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
+               }
+               catch (\Doctrine\DBAL\DBALException $e) {
+                 //$request->getSession()->getFlashBag()->add('notice', $e->getMessage());
+               }
+             }
+
+           }//end of handling first form.
+
+           if ($request->request->has('form2')) {
+
+             $form2->handleRequest($request);
+
+             try {
+               $em = $this->getDoctrine()->getManager();
+               $stmt = $em->getRepository('AppPolioDbBundle:TempCatchupData')
+               ->catchupSyncToMaster();
+               $stmtt = $em->getRepository('AppPolioDbBundle:TempCatchupData')
+               ->truncatTempCatchupData();
+
+               $request->getSession()->getFlashBag()->add('noticee', "Sync to Master done!");
+
+              } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
+               $request->getSession()->getFlashBag()->add('noticee', $e->getMessage());
+              }
+              catch (\Doctrine\DBAL\DBALException $e) {
+                $request->getSession()->getFlashBag()->add('masterexception', "Please check you data on CompaignId and districtCode, upload your file again.");
+                $stmtt = $em->getRepository('AppPolioDbBundle:TempCatchupData')
+                ->truncatTempCatchupData();
+              }
+
+           }//end of second form.
+         }
+
+         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
+
+       }
 
 }

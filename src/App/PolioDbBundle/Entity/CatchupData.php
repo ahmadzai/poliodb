@@ -2,103 +2,154 @@
 
 namespace App\PolioDbBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * CatchupData
+ *
+ * @ORM\Table(name="catchup_data", indexes={@ORM\Index(name="fk_dist_catchup_idx", columns={"district_code"}), @ORM\Index(name="fk_camp_catchup_idx", columns={"campaign_id"})})
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\CatchupDataRepository")
  */
 class CatchupData
 {
-    /**
-     * @var string
-     */
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="cluster_name", type="text", length=65535, nullable=true)
+   */
     private $clusterName;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="cluster_no", type="text", length=65535, nullable=true)
      */
     private $clusterNo;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="sub_district_name", type="text", length=65535, nullable=true)
      */
     private $subDistrictName;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="reg_absent", type="integer", nullable=true)
      */
     private $regAbsent;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="vacc_absent", type="integer", nullable=true)
      */
     private $vaccAbsent;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="reg_sleep", type="integer", nullable=true)
      */
     private $regSleep;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="vacc_sleep", type="integer", nullable=true)
      */
     private $vaccSleep;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="reg_refusal", type="integer", nullable=true)
      */
     private $regRefusal;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="vacc_refusal", type="integer", nullable=true)
      */
     private $vaccRefusal;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="new_missed", type="integer", nullable=true)
      */
     private $newMissed;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="new_vaccinated", type="integer", nullable=true)
      */
     private $newVaccinated;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
     private $entryDate = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var integer
+     * @var \App\PolioDbBundle\Entity\District
+     *
+     * @ORM\ManyToOne(targetEntity="App\PolioDbBundle\Entity\District")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="district_code", referencedColumnName="district_code")
+     * })
      */
     private $districtCode;
 
     /**
-     * @var integer
+     * @var \App\PolioDbBundle\Entity\Campaign
+     *
+     * @ORM\ManyToOne(targetEntity="App\PolioDbBundle\Entity\Campaign")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="campaign_id", referencedColumnName="campaign_id")
+     * })
      */
-    private $campaignId;
+    private $campaign;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="missed", type="integer", nullable=true)
      */
     private $missed;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="sleep", type="integer", nullable=true)
      */
     private $sleep;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="refusal", type="integer", nullable=true)
      */
     private $refusal;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="new_remaining", type="integer", nullable=true)
      */
     private $newRemaining;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
@@ -544,5 +595,28 @@ class CatchupData
     {
         return $this->id;
     }
-}
 
+    /**
+     * Set campaign
+     *
+     * @param \App\PolioDbBundle\Entity\Campaign $campaign
+     *
+     * @return CatchupData
+     */
+    public function setCampaign(\App\PolioDbBundle\Entity\Campaign $campaign = null)
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    /**
+     * Get campaign
+     *
+     * @return \App\PolioDbBundle\Entity\Campaign
+     */
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+}

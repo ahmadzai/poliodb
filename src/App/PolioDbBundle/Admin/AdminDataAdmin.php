@@ -11,6 +11,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 class AdminDataAdmin extends AbstractAdmin
 {
+
+    protected $baseRoutePattern = 'adminadata';
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {

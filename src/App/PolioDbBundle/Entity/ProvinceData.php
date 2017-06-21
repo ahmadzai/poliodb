@@ -65,4 +65,46 @@ class ProvinceData
     {
         return $this->provinceCode;
     }
+
+    /**
+     * Set provinceRegion
+     *
+     * @param string $provinceRegion
+     *
+     * @return ProvinceData
+     */
+    public function setProvinceRegion($provinceRegion)
+    {
+        $this->provinceRegion = $provinceRegion;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceName
+     *
+     * @param string $provinceName
+     *
+     * @return ProvinceData
+     */
+    public function setProvinceName($provinceName)
+    {
+        $this->provinceName = $provinceName;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceCode
+     *
+     * @param integer $provinceCode
+     *
+     * @return ProvinceData
+     */
+    public function setProvinceCode($provinceCode)
+    {
+        $this->provinceCode = $provinceCode;
+
+        return $this;
+    }
 }

@@ -241,4 +241,214 @@ class AdminData4
 
 
 
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return AdminData4
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Set province
+     *
+     * @param string $province
+     *
+     * @return AdminData4
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Set district
+     *
+     * @param string $district
+     *
+     * @return AdminData4
+     */
+    public function setDistrict($district)
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * Set clusterName
+     *
+     * @param string $clusterName
+     *
+     * @return AdminData4
+     */
+    public function setClusterName($clusterName)
+    {
+        $this->clusterName = $clusterName;
+
+        return $this;
+    }
+
+    /**
+     * Set clusterNo
+     *
+     * @param string $clusterNo
+     *
+     * @return AdminData4
+     */
+    public function setClusterNo($clusterNo)
+    {
+        $this->clusterNo = $clusterNo;
+
+        return $this;
+    }
+
+    /**
+     * Set subDistrict
+     *
+     * @param string $subDistrict
+     *
+     * @return AdminData4
+     */
+    public function setSubDistrict($subDistrict)
+    {
+        $this->subDistrict = $subDistrict;
+
+        return $this;
+    }
+
+    /**
+     * Set lpd
+     *
+     * @param integer $lpd
+     *
+     * @return AdminData4
+     */
+    public function setLpd($lpd)
+    {
+        $this->lpd = $lpd;
+
+        return $this;
+    }
+
+    /**
+     * Set dcode
+     *
+     * @param integer $dcode
+     *
+     * @return AdminData4
+     */
+    public function setDcode($dcode)
+    {
+        $this->dcode = $dcode;
+
+        return $this;
+    }
+
+    /**
+     * Set cType
+     *
+     * @param string $cType
+     *
+     * @return AdminData4
+     */
+    public function setCType($cType)
+    {
+        $this->cType = $cType;
+
+        return $this;
+    }
+
+    /**
+     * Set cYear
+     *
+     * @param integer $cYear
+     *
+     * @return AdminData4
+     */
+    public function setCYear($cYear)
+    {
+        $this->cYear = $cYear;
+
+        return $this;
+    }
+
+    /**
+     * Set cMonth
+     *
+     * @param string $cMonth
+     *
+     * @return AdminData4
+     */
+    public function setCMonth($cMonth)
+    {
+        $this->cMonth = $cMonth;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingAbsent
+     *
+     * @param integer $remainingAbsent
+     *
+     * @return AdminData4
+     */
+    public function setRemainingAbsent($remainingAbsent)
+    {
+        $this->remainingAbsent = $remainingAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingSleep
+     *
+     * @param integer $remainingSleep
+     *
+     * @return AdminData4
+     */
+    public function setRemainingSleep($remainingSleep)
+    {
+        $this->remainingSleep = $remainingSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingRefusal
+     *
+     * @param integer $remainingRefusal
+     *
+     * @return AdminData4
+     */
+    public function setRemainingRefusal($remainingRefusal)
+    {
+        $this->remainingRefusal = $remainingRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return AdminData4
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }
