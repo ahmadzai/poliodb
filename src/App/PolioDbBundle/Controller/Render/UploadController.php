@@ -56,6 +56,8 @@ class UploadController extends Controller
        ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
        ->getForm();
 
+       $buttonbool = "disabled";
+
        //second form of the page.
        $form2 = $this->get('form.factory')->createNamedBuilder('form2')
        ->getForm();
@@ -197,6 +199,7 @@ class UploadController extends Controller
                }//end of foreach
 
                $request->getSession()->getFlashBag()->add('notice', "Add done!");
+               $buttonbool = "";
 
              } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
                $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
@@ -233,7 +236,8 @@ class UploadController extends Controller
          }//end of second form.
        }
 
-       return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
+       return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
+       'syncbutt' => $buttonbool));
      }
 
      /**
@@ -265,6 +269,8 @@ class UploadController extends Controller
         $form = $this->createFormBuilder($icmobj)
         ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
         ->getForm();
+
+        $buttonbool = "disabled";
 
         //second form of the page.
         $form2 = $this->get('form.factory')->createNamedBuilder('form2')
@@ -375,6 +381,7 @@ class UploadController extends Controller
                 }//end of foreach
 
                 $request->getSession()->getFlashBag()->add('notice', "Add done!");
+                $buttonbool = "";
 
               } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
                 $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
@@ -411,7 +418,8 @@ class UploadController extends Controller
           }//end of second form.
         }
 
-        return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
+        return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
+        'syncbutt' => $buttonbool));
 
       }
 
@@ -444,6 +452,8 @@ class UploadController extends Controller
          $form = $this->createFormBuilder($icmobj)
          ->add('file', FileType::class, array('label' => 'Choose File or Drop-Zone'))
          ->getForm();
+
+         $buttonbool = "disabled";
 
          //second form of the page.
          $form2 = $this->get('form.factory')->createNamedBuilder('form2')
@@ -545,6 +555,7 @@ class UploadController extends Controller
                  }//end of foreach
 
                  $request->getSession()->getFlashBag()->add('notice', "Add done!");
+                 $buttonbool = "";
 
                } catch (\Symfony\Component\Debug\Exception\ContextErrorException $e) {
                  $request->getSession()->getFlashBag()->add('notice', $e->getMessage());
@@ -581,7 +592,8 @@ class UploadController extends Controller
            }//end of second form.
          }
 
-         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource));
+         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
+         'syncbutt' => $buttonbool));
 
        }
 

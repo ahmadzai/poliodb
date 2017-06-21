@@ -174,7 +174,7 @@
         {{form_start(form2)}}
 
         <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Sync to Master" name="sync_data">
+            <input type="submit" class="btn btn-success" value="Sync to Master" name="sync_data" {{syncbutt}}>
         </div>
 
         {% for message in app.session.flashBag.get('noticee') %}
