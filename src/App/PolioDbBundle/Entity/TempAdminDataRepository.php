@@ -28,4 +28,6 @@ class TempAdminDataRepository extends EntityRepository
       $em = $this->getEntityManager();
       return $em->getConnection()->query($sql);
     }
+
+    
 }

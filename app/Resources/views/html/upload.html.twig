@@ -151,22 +151,33 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data">
+            <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data" {{uploadbutt}}>
         </div>
 
                 {% for message in app.session.flashBag.get('exception') %}
             <div class="alert alert-danger fade in">
                     <i class="icon-remove close" data-dismiss="alert"></i>
-                    <strong>Info!</strong> {{ message }}
-                {% endfor %}
+                    <strong>Notice!</strong> {{ ' Your file template is not correct. Please make sure that your template is the same as data source
+                    template availabe in the top menu of the page.'}}
             </div>
+                {% endfor %}
+
 
             {% for message in app.session.flashBag.get('notice') %}
         <div class="alert alert-info fade in">
                 <i class="icon-remove close" data-dismiss="alert"></i>
                 <strong>Info!</strong> {{ message }}
-            {% endfor %}
         </div>
+            {% endfor %}
+
+
+       {% for message in app.session.flashBag.get('datatype_exception') %}
+    <div class="alert alert-danger fade in">
+            <i class="icon-remove close" data-dismiss="alert"></i>
+            <strong>Notice!</strong> {{ message }}
+    </div>
+        {% endfor %} 
+
         {{ form_end(form) }}
 
 
@@ -183,7 +194,7 @@
             <strong>Info!</strong> {{ message }}
         {% endfor %}
         {% for message in app.session.flashBag.get('masterexception') %}
-    <div class="alert alert-danger fade in">
+        <div class="alert alert-danger fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> {{ message }}
         {% endfor %}

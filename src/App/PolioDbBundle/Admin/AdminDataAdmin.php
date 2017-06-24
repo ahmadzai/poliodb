@@ -35,6 +35,7 @@ class AdminDataAdmin extends AbstractAdmin
        $datagridMapper
             ->add('clusterName')
             ->add('targetPopulation')
+             ->add('region')
        ;
     }
 
@@ -53,7 +54,8 @@ class AdminDataAdmin extends AbstractAdmin
     {
         $showMapper
            ->add('clusterName')
-           ->add('targetPopulation  ')
+           ->add('targetPopulation')
+
        ;
     }
 }
