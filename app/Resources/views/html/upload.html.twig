@@ -37,83 +37,76 @@
         </ul>
         -->
     </div>
+  <div class="row">
     <!-- /Breadcrumbs line -->
     <!--=== Page Header ===-->
     <div class="page-header">
         <div class="page-title">
                 {% if table == "admin_data" %}
-              {% block admin_desc %}
-
-              <div class="widget-content">
-                <div class="panel-group" id="accordion">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h3 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                          Admin Data Upload </a>
-                      </h3>
-                    </div>
-                  <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                       Welcome to admin data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-              {% endblock %}
+                  {% block admin_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Admin Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to admin data uploading page. please check your file template before uploading. After successful uploading,
+                                 you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  {% endblock %}
                 {% endif %}
 
                 {% if table == "catchup_data" %}
-              {% block catchup_desc %}
-
-              <div class="widget-content">
-                <div class="panel-group" id="accordion">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h3 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                          Catchup Data Upload </a>
-                      </h3>
-                    </div>
-                  <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                       Welcome to Catchup data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-              {% endblock %}
+                    {% block catchup_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Catchup Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to Catchup data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endblock %}
                 {% endif %}
 
                 {% if table == "icm_data" %}
-              {% block icm_desc %}
-
-              <div class="widget-content">
-                <div class="panel-group" id="accordion">
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h3 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                          Icm Data Upload </a>
-                      </h3>
-                    </div>
-                  <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                       Welcome to Icm data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-              {% endblock %}
+                    {% block icm_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Icm Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to Icm data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endblock %}
                 {% endif %}
 
             {# <span>Good morning, {{app.user.username|capitalize}}!</span> #}
@@ -144,7 +137,7 @@
         <!-- /Page Stats -->
     </div>
 
-    <div class="row">
+
         {{form_start(form)}}
         <div class="form-group">
             {{ form_row(form.file) }}
@@ -176,7 +169,7 @@
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Notice!</strong> {{ message }}
     </div>
-        {% endfor %} 
+        {% endfor %}
 
         {{ form_end(form) }}
 
