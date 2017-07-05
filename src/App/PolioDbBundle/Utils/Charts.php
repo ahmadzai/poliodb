@@ -1,5 +1,7 @@
 <?php
 namespace App\PolioDbBundle\Utils;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 /**
  * Created by PhpStorm.
  * User: wakhan
@@ -8,336 +10,302 @@ namespace App\PolioDbBundle\Utils;
  */
 class Charts
 {
-
-    /***
-     * @param $data array()
-     * @param $config array()
-     * @return array
-     * Data should be an array of data having the following keys:
-     * legend: The legend name
-     * xAxis: month name as xAxis
-     * yAxis: the values
-     * config: this array should have the settings information, e.g. chart title, etc.
+    protected $em;
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+    /**
+     * @param $entity Entity Class Name (within the current bundle)
+     * @param $function function in that entity
+     * @param $parameters parameters for that function
+     * @return mixed
      */
-    protected $setting;
-
-    public function __construct(Settings $s)
-    {
-        $this->setting = $s;
+    public function chartData($entity, $function, $parameters, $secondParam = null) {
+        $data = $this->em->getRepository('AppPolioDbBundle:'.$entity)
+            ->callMe($function, $parameters, $secondParam);
+        return $data;
     }
-
-    public function lineChart($data, $config = array())
+    /***
+     * @param $months array of months
+     * @return order_months
+     */
+    function orderMonths($months) {
+        $order_months = array();
+        if(is_array($months) && count($months) > 0) {
+            $temp = array();
+            foreach($months as $month) {
+                $m = date_parse($month);
+                $temp[$m['month']] = $month;
+            }
+            ksort($temp);
+            $order_months = $temp;
+        }
+        return $order_months;
+    }
+    function shortMonth($month) {
+        $months = array('January'=>'Jan',
+            'February'=>'Feb',
+            'March'=>'Mar',
+            'April'=>'Apr',
+            'May'=>'May',
+            'June'=>'Jun',
+            'July'=>'Jul',
+            'August'=>'Aug',
+            'September'=>'Sept',
+            'October'=>'Oct',
+            'November'=>'Nov',
+            'December'=>'Dec');
+        return array_key_exists($month, $months) ? $months[$month] : $month;
+    }
+    function shortYear($year)
     {
-        $channel = array();
+        return strlen($year) == 4 ? substr($year, 2, 2) : $year;
+    }
+    /***
+     * @param mixed: $cat1 array('column'=>'NameOfColumn', 'substitute'=>'Substitute') top level category, only array of length 2
+     * @param mixed: $cat2 array('column'=>'NameOfColumn', 'substitute'=>'Substitute') level category, the substitute should be an
+     * array which max length should be 3, the first index name will be col1, the second should be col2 and the third one should be short:true/false.
+     * it's possible to have only one index: e.g. col1.
+     * @param mixed: $indicators array('column'=>'NameOfColumn', 'substitute'=>'Substitute') string array indicators
+     * @param mixed: $data
+     * @param bool: $sortCategories
+     * @return mixed: formatted array
+     */
+    function chartData2Categories($cat1, $cat2, $indicators, $data, $sortCategories = true) {
+        // check if all the parameters are okay
+        if(count($data) > 0 && count($cat1)>0 && count($cat2)>0 && count($indicators)>0) {
+            // as the data is flat we have to find first the two categories
+            $tmp_top_cat = array();
+            $tmp_second_cat = array();
+            foreach($data as $temp_d) {
+                $tmp_top_cat[] = $temp_d[$cat1['column']]; // $cat1/2[0] must be the column name of the categories
+                $tmp_second_cat[] = $temp_d[$cat2['column']];
+            }
+            // we just need the unique categories
+            $top_cat = array_unique($tmp_top_cat);
+            $second_cat = array_unique($tmp_second_cat);
+            // by default the categories will be sorted ASC
+            if($sortCategories) {
+                sort($top_cat);
+                sort($second_cat);
+            }
+            // the data that should be returned
+            $r_data = array();
+            // this array will keep the data for each indicator
+            $data_indicators = array();
+            // temp variable for keeping the category
+            $temp_cat = array();
+            foreach ($top_cat as $t_c) {
+                $sub_cat = array();
+                // set the substitute for cat1
+                $top_cat_substitute = $t_c;
+                foreach ($second_cat as $s_c) {
+                    //$sub_cat = array();
+                    foreach ($data as $val) {
+                        if ($val[$cat1['column']] === $t_c && $val[$cat2['column']] === $s_c) {
+                            $top_cat_substitute = array_key_exists('substitute',$cat1) && !is_array($cat1['substitute'])
+                                ? $val[$cat1['substitute']] : $t_c;
+                            $substitue = array_key_exists('substitute', $cat2)?$cat2['substitute']:$s_c;
+                            $col1 = is_array($substitue) ? (array_key_exists('col1', $substitue)? $substitue['col1'] : null) : $substitue;
+                            $col2 = is_array($substitue) ? (array_key_exists('col2', $substitue)? $substitue['col2'] : null) : null;
+                            $short = is_array($substitue) ? (array_key_exists('short', $substitue)? $substitue['short'] : null) : null;
+                            // the value of short should be: my (month/year), m(month), y(year)
+                            $second_part = $col2!==null?"-".($short=='my'||$short=='y'?$this->shortYear($val[$col2]):$val[$col2]):'';
+                            $first_part = ($short=='my'||$short=='m'? $this->shortMonth($val[$col1]):$val[$col1]);
+                            $sub_cat[] = $first_part.$second_part;
+                            //
+                            foreach($indicators as $key=>$indicator) {
+                                $data_indicators[$key][] = $val[$key] == 'null' ? null : (int)$val[$key];
+                            }
+                        }
+                    }
+                }
+                $temp_cat[] = array('name' => $top_cat_substitute, 'categories' => $sub_cat);
+            }
+            //$cat['categories'] = $temp_cat;
+            $r_data['categories'] = $temp_cat;
+//            $data['series'] = array(array('name'=>'Refusal', 'data' => $refusal),
+//                array('name'=>'Sleep_NewBorn', 'data'=>$sleep),
+//                array('name'=>'Missed', 'data' => $remaining));
+            $ser = array();
+            foreach ($indicators as $key=>$ind) {
+                $ser[] = array('name'=>ucfirst($ind), 'data' => $data_indicators[$key]);
+            }
+            $r_data['series'] = $ser;
+            return $r_data;
+        }
+        else
+            return ['data'=>null];
+    }
+    /***
+     * @param mixed: $cat1 array('column'=>'NameOfColumn', 'substitute'=>'Substitute') top level category, only array of length 2
+     * @param mixed: $cat2 array('column'=>'NameOfColumn', 'substitute'=>'Substitute')
+     * @param mixed: $cat3 array('column'=>'NameOfColumn', 'substitute'=>'Substitute') level category, the substitute should be an
+     * array which max length should be 3, the first index name will be col1, the second should be col2 and the third one should be short:true/false.
+     * it's possible to have only one index: e.g. col1.
+     * @param mixed: $indicators array('column'=>'NameOfColumn', 'substitute'=>'Substitute') string array indicators
+     * @param mixed: $data
+     * @param bool: $sortCategories
+     * @return mixed: formatted array
+     */
+    function chartData3Categories($cat1, $cat2, $cat3, $indicators, $data, $sortCategories = true) {
+        // check if all the parameters are okay
+        if(count($data) > 0 && count($cat1)>0 && count($cat2)>0 && count($indicators)>0 && count($cat3)>0) {
+            // as the data is flat we have to find first the two categories
+            $tmp_top_cat = array();
+            $tmp_second_cat = array();
+            $temp_first_cat = array();
+            foreach($data as $temp_d) {
+                $tmp_top_cat[] = $temp_d[$cat2['column']]; // $cat1/2[0] must be the column name of the categories
+                $temp_first_cat[] = $temp_d[$cat1['column']];
+                $tmp_second_cat[] = $temp_d[$cat3['column']];
+            }
+            // we just need the unique categories
+            $first_cat = array_unique($temp_first_cat);
+            $top_cat = array_unique($tmp_top_cat);
+            $second_cat = array_unique($tmp_second_cat);
+            // by default the categories will be sorted ASC
+            if($sortCategories) {
+                sort($first_cat);
+                sort($top_cat);
+                sort($second_cat);
+            }
+            // the data that should be returned
+            $r_data = array();
+            // this array will keep the data for each indicator
+            $data_indicators = array();
+            // temp variable for keeping the category
+            $final_cat = array();
+            foreach ($first_cat as $f_c) {
+                $temp_cat = array();
+                $first_cat_substitute = $f_c;
+                foreach ($top_cat as $t_c) {
+                    $sub_cat = array();
+                    // set the substitute for cat1
+                    $top_cat_substitute = $t_c;
+                    foreach ($second_cat as $s_c) {
+                        //$sub_cat = array();
+                        foreach ($data as $val) {
+                            if ($val[$cat1['column']] == $f_c && $val[$cat2['column']] === $t_c && $val[$cat3['column']] === $s_c) {
+                                $top_cat_substitute = array_key_exists('substitute', $cat2) && !is_array($cat2['substitute'])
+                                    ? $val[$cat2['substitute']] : $t_c;
+                                $first_cat_substitute = array_key_exists('substitute', $cat1) && !is_array($cat1['substitute'])
+                                    ? $val[$cat1['substitute']] : $f_c;
+                                $substitue = array_key_exists('substitute', $cat3) ? $cat3['substitute'] : $s_c;
+                                $col1 = is_array($substitue) ? (array_key_exists('col1', $substitue) ? $substitue['col1'] : null) : $substitue;
+                                $col2 = is_array($substitue) ? (array_key_exists('col2', $substitue) ? $substitue['col2'] : null) : null;
+                                $short = is_array($substitue) ? (array_key_exists('short', $substitue) ? $substitue['short'] : null) : null;
+                                // the value of short should be: my (month/year), m(month), y(year)
+                                $second_part = $col2 !== null ? "-" . ($short == 'my' || $short == 'y' ? $this->shortYear($val[$col2]) : $val[$col2]) : '';
+                                $first_part = ($short == 'my' || $short == 'm' ? $this->shortMonth($val[$col1]) : $val[$col1]);
+                                $sub_cat[] = $first_part . $second_part;
+                                //
+                                foreach ($indicators as $key => $indicator) {
+                                    $data_indicators[$key][] = $val[$key] == 'null' ? null : (int)$val[$key];
+                                }
+                            }
+                        }
+                    }
+                    $temp_cat[] = array('name' => $top_cat_substitute, 'categories' => $sub_cat);
+                }
+                $final_cat[] = array('name'=>$first_cat_substitute, 'categories'=>$temp_cat);
+            }
+            //$cat['categories'] = $temp_cat;
+            $r_data['categories'] = $final_cat;
+//            $data['series'] = array(array('name'=>'Refusal', 'data' => $refusal),
+//                array('name'=>'Sleep_NewBorn', 'data'=>$sleep),
+//                array('name'=>'Missed', 'data' => $remaining));
+            $ser = array();
+            foreach ($indicators as $key=>$ind) {
+                $ser[] = array('name'=>ucfirst($ind), 'data' => $data_indicators[$key]);
+            }
+            $r_data['series'] = $ser;
+            return $r_data;
+        }
+        else
+            return ['data'=>null];
+    }
+    /***
+     * @param mixed: $cat1 array('column'=>'NameOfColumn', 'substitute'=>'Substitute') top level category
+     * @param mixed: $indicators array('column'=>'NameOfColumn', 'substitute'=>'Substitute') string array indicators
+     * @param mixed: $data
+     * @return mixed: formatted array
+     */
+    function chartData1Category($cat1, $indicators, $data) {
         if(count($data) > 0) {
-            unset($channel);
-            $xAxis = array();
-            $legend = array();
-            foreach ($data as $value) {
-                # code...
-                $xAxis[] = $value['xAxis'];
-                $legend[] = $value['legend'];
+            $tmp_top_cat = array();
+            foreach($data as $temp_d) {
+                $tmp_top_cat[] = $temp_d[$cat1];
             }
-
-            $xAxis_ = array_unique($xAxis);
-            $xAxiss = array();
-            foreach ($xAxis_ as $k => $val)
-                $xAxiss[] = $val;
-            $legends = array_unique($legend);
-            unset($xAxiss_);
-            //var_dump($xAxiss);
-            $series = array();
-            foreach ($legends as $value) {
-                # code...
-                $dat = array();
-
+            $top_cat = array_unique($tmp_top_cat);
+            $r_data = array();
+            //$cat = array();
+            $data_indicators = array();
+            $temp_cat = array();
+            foreach ($top_cat as $t_c) {
+                //$sub_cat = array();
                 foreach ($data as $val) {
-                    # code...
-                    if ($value === $val['legend']) {
-                        $dat[] = (int)$val['yAxis'];
+                    if ($val[$cat1] === $t_c) {
+                        foreach($indicators as $indicator) {
+                            $data_indicators[$indicator][] = $val[$indicator] == 'null' ? null : (int)$val[$indicator];
+                        }
                     }
                 }
-                $series[] = array('name' => "$value", 'data' => $dat);
+                $temp_cat[] = $t_c;
             }
-            $channel = array(
-                'categories' => $xAxiss,
-                'series' => $series
-            );
+            //$cat['categories'] = $temp_cat;
+            $r_data['categories'] = $temp_cat;
+            $ser = array();
+            foreach ($indicators as $key=>$ind) {
+                $ser[] = array('name'=>ucfirst($key), 'data' => $data_indicators[$ind]);
+            }
+            $r_data['series'] = $ser;
+            return $r_data;
         }
-        return $channel;
-
+        else
+            return ['data'=>null];
     }
-
-    public function pieChart($data)
-    {
-        $dat = array();
-        foreach ($data as $value) {
-            $dat[] = array($value['legend'], (int) $value['total']);
-            //echo $value->form."<br>";
-        }
-        $series = array("type"=>"pie", "name"=>"Form Submission", "data" => $dat);
-        $channel = array(
-            'series' => $series
-        );
-
-        return $channel;
-    }
-
-    public function columnChart($data)
-    {
-
-    }
-
-    public function stackChart($data, $type) {
-        $ret_data = array();
-        if($type == "province" && count($data) > 0) {
-            $ret_data = $this->makeDataProvinceDistrict($data);
-        } elseif ($type == 'region') {
-            $ret_data = $this->makeDataRegion($data);
-            //$ret_data['title'] = "Remaining Children By Region";
-        } elseif ($type == 'district')
-            $ret_data = $this->makeDataProvinceDistrict($data, 'district');
-
-        return $ret_data;
-    }
-
-    function makeDataRegionsProvince($array, $region) {
-        $prov = array();
-        $month = array();
-        foreach ($array as $value) {
-            $prov[] = $value['d_province'];
-            $month[] = $value['d_cMonth'];
-        }
-        $prov = array_unique($prov);
-        $provs = array();
-        foreach ($prov as $p) {
-            $provs[] = $p;
-        }
-        unset($prov);
-
-        $month = array_unique($month);
-        $months = array();
-        foreach ($month as $m)
-            $months[] = $m;
-        unset($month);
-        //$this->setting = new Settings();
-        $months = $this->setting->orderMonths($months);
-        //$months = $this->orderMonths($months);
-        $data = array();
-        $cat = array('name'=>$region);
-        $remaining = array();
-        $sleep = array();
-        $refusal = array();
-        $temp_cat = array();
-        foreach ($provs as $prov) {
-            $sub_cat = array();
-            foreach ($months as $month) {
+    /***
+     * @param $cat1 top level category string name, where together with d_ it should be a column name
+     * @param $indicator string array indicators
+     * @param $data
+     * @return $r_data  formated array
+     */
+    function pieData1Category($cat1, $indicator, $substitute, $data) {
+        if(count($data) > 0) {
+            $tmp_top_cat = array();
+            foreach($data as $temp_d) {
+                $tmp_top_cat[] = $temp_d[$cat1];
+            }
+            $top_cat = array_unique($tmp_top_cat);
+            $r_data = array();
+            $data_indicators = array();
+            foreach ($top_cat as $t_c) {
                 //$sub_cat = array();
-                foreach ($array as $val) {
-                    if ($val['d_province'] === $prov && $val['d_cMonth'] === $month) {
-                        $sub_cat[] = $month;
-                        $remaining[] = $val['d_remainingAbsent'] == 'null' ? null : (int)$val['d_remainingAbsent'];
-                        $sleep[] = $val['d_remainingSleep'] == 'null' ? null : (int)$val['d_remainingSleep'];
-                        $refusal[] = $val['d_remainingRefusal'] == 'null' ? null : (int)$val['d_remainingRefusal'];
-
-
+                foreach ($data as $val) {
+                    if ($val[$cat1] === $t_c) {
+                        //foreach($indicators as $indicator) {
+                        $data_indicators[] = array('name'=>$t_c, 'y'=>$val[$indicator] == 'null' ? null : (int)$val[$indicator]);
+                        //}
                     }
-
                 }
+                //$temp_cat[] = $t_c;
             }
-            $temp_cat[] = array('name' => $prov, 'categories' => $sub_cat);
+            //$cat['categories'] = $temp_cat;
+            //$r_data['categories'] = $temp_cat;
+            $ser[] = array('type'=>'pie', 'name'=>ucfirst($substitute), 'data' => $data_indicators);
+            $r_data['series'] = $ser;
+            return $r_data;
         }
-        $cat['categories'] = $temp_cat;
-        $data['categories'] = $cat;
-        $data['remaining'] = $remaining;
-        $data['sleep'] = $sleep;
-        $data['refusal'] = $refusal;
-
-        return $data;
-
+        else
+            return ['data'=>null];
     }
-
-    function makeDataProvinceDistrict($array, $type = 'province') {
-        $prov = array();
-        $month = array();
-        foreach ($array as $value) {
-            $prov[] = $value['d_'.$type];
-            $month[] = $value['d_cMonth'];
-        }
-        $prov = array_unique($prov);
-        $provs = array();
-        foreach ($prov as $p) {
-            $provs[] = $p;
-        }
-        unset($prov);
-
-        $month = array_unique($month);
-        $months = array();
-        foreach ($month as $m)
-            $months[] = $m;
-        unset($month);
-        $months = $this->orderMonths($months);
-        $data = array();
-        $remaining = array();
-        $sleep = array();
-        $refusal = array();
-        $temp_cat = array();
-        foreach ($provs as $prov) {
-            $sub_cat = array();
-            foreach ($months as $month) {
-                //$sub_cat = array();
-                foreach ($array as $val) {
-                    if ($val['d_'.$type] === $prov && $val['d_cMonth'] === $month) {
-                        $sub_cat[] = $month;
-                        $remaining[] = $val['d_remainingAbsent'] == 'null' ? null : (int)$val['d_remainingAbsent'];
-                        $sleep[] = $val['d_remainingSleep'] == 'null' ? null : (int)$val['d_remainingSleep'];
-                        $refusal[] = $val['d_remainingRefusal'] == 'null' ? null : (int)$val['d_remainingRefusal'];
-
-
-                    }
-
-                }
-            }
-            $temp_cat[] = array('name' => $prov, 'categories' => $sub_cat);
-        }
-        //$cat['categories'] = $temp_cat;
-        $data['categories'] = $temp_cat;
-        $data['series'] = array(array('name'=>'Refusal', 'data' => $refusal),
-            array('name'=>'Sleep_NewBorn', 'data'=>$sleep),
-            array('name'=>'Missed', 'data' => $remaining));
-
-        return $data;
-
-    }
-
-    function makeDataRegion($array) {
-        $reg = array();
-        $month = array();
-        foreach ($array as $value) {
-            $reg[] = $value['d_region'];
-            $month[] = $value['d_cMonth'];
-        }
-        $reg = array_unique($reg);
-        $region = array();
-        foreach ($reg as $r) {
-            $region[] = $r;
-        }
-        unset($reg);
-
-        $month = array_unique($month);
-        $months = array();
-        foreach ($month as $m)
-            $months[] = $m;
-        unset($month);
-        $months = $this->orderMonths($months);
-        $data = array();
-        $cat = array();
-        $remaining = array();
-        $sleep = array();
-        $refusal = array();
-        $temp_cat = array();
-        foreach ($region as $reg) {
-            $sub_cat = array();
-            foreach ($months as $month) {
-                //$sub_cat = array();
-                foreach ($array as $val) {
-                    if ($val['d_region'] === $reg && $val['d_cMonth'] === $month) {
-                        $sub_cat[] = $month;
-                        $remaining[] = $val['d_remainingAbsent'] == 'null' ? null : (int)$val['d_remainingAbsent'];
-                        $sleep[] = $val['d_remainingSleep'] == 'null' ? null : (int)$val['d_remainingSleep'];
-                        $refusal[] = $val['d_remainingRefusal'] == 'null' ? null : (int)$val['d_remainingRefusal'];
-
-
-                    }
-
-                }
-            }
-            $temp_cat[] = array('name' => $reg, 'categories' => $sub_cat);
-        }
-        //$cat['categories'] = $temp_cat;
-        $data['categories'] = $temp_cat;
-        $data['series'] = array(array('name'=>'Refusal', 'data' => $refusal),
-                                array('name'=>'Sleep', 'data'=>$sleep),
-                                array('name'=>'Missed', 'data' => $remaining));
-
-        return $data;
-
-    }
-
-    function regionProvince3LevelStackChart($data, $region) {
-        $cr = array();
-        $sr = array();
-        $ser = array();
-        $wr = array();
-        $er = array();
-
-        foreach ($data as $value) {
-            if($value['d_region'] == "ER")
-                $er[] = $value;
-            elseif ($value['d_region'] == "WR")
-                $wr[] = $value;
-            elseif ($value['d_region'] == "SR")
-                $sr[] = $value;
-            elseif ($value['d_region'] == "SER")
-                $ser[] = $value;
-            elseif ($value['d_region'] == "CR")
-                $cr[] = $value;
-        }
-
-        $east_r = count($er) > 0 ? $this->makeDataRegionsProvince($er, 'ER') : null;
-        //$retdata = $east_r;
-        $south_r = count($sr) > 0 ? $this->makeDataRegionsProvince($sr, 'SR') : null;
-        $south_east_r = count($ser) > 0 ? $this->makeDataRegionsProvince($ser, 'SER') : null;
-        $central_r = count($cr) > 0 ? $this->makeDataRegionsProvince($cr, 'CR') : null;
-        $west_r = count($wr) > 0 ? $this->makeDataRegionsProvince($wr, 'WR') : null;
-
-        $cat = array();
-        $series = array();
-        if(is_array($east_r)) {
-            $cat[] = $east_r['categories'];
-            $series['er_remaining'] = $east_r['remaining'];
-            $series['er_sleep'] = $east_r['sleep'];
-            $series['er_refusal'] = $east_r['refusal'];
-        }
-        if(is_array($south_r)) {
-            $cat[] = $south_r['categories'];
-            $series['sr_remaining'] = $south_r['remaining'];
-            $series['sr_sleep'] = $south_r['sleep'];
-            $series['sr_refusal'] = $south_r['refusal'];
-        }
-        if(is_array($south_east_r)) {
-            $cat[] = $south_east_r['categories'];
-            $series['ser_remaining'] = $south_east_r['remaining'];
-            $series['ser_sleep'] = $south_east_r['sleep'];
-            $series['ser_refusal'] = $south_east_r['refusal'];
-        }
-        if(is_array($central_r)) {
-            $cat[] = $central_r['categories'];
-            $series['cr_remaining'] = $central_r['remaining'];
-            $series['cr_sleep'] = $central_r['sleep'];
-            $series['cr_refusal'] = $central_r['refusal'];
-        }
-        if(is_array($west_r)) {
-            $cat[] = $west_r['categories'];
-            $series['wr_remaining'] = $west_r['remaining'];
-            $series['wr_sleep'] = $west_r['sleep'];
-            $series['wr_refusal'] = $west_r['refusal'];
-        }
-
-        $retdata['categories'] = $cat;
-        $rem = array_merge($series['er_remaining'], $series['sr_remaining'], $series['ser_remaining'],
-            $series['cr_remaining'], $series['wr_remaining']);
-        $sleep = array_merge($series['er_sleep'], $series['sr_sleep'], $series['ser_sleep'],
-            $series['cr_sleep'], $series['wr_sleep']);
-        $ref = array_merge($series['er_refusal'], $series['sr_refusal'], $series['ser_refusal'],
-            $series['cr_refusal'], $series['wr_refusal']);
-        $retdata['series'] = array(array('name'=>'Refusal', 'data' => $ref),
-            array('name'=>'Sleep', 'data'=>$sleep),
-            array('name'=>'Missed', 'data' => $rem));
-
-    }
-
-    function makeClusterData($array) {
+    /**
+     * @param $array
+     * @return array
+     */
+    function clusterDataForTable($array) {
         if(is_array($array)) {
             $month = array();
             foreach ($array as $value) {
@@ -358,8 +326,8 @@ class Charts
                     if($month == $value['d_cMonth']) {
                         $index = ($value['d_subDistrict']!= null || $value['d_subDistrict']!= "")? $value['d_subDistrict']."_".$value['d_cluster']:$value['d_cluster'];
                         $d[$index] = ['absent'=>$value['d_remainingAbsent'],
-                                                   'sleep'=>$value['d_remainingSleep'],
-                                                   'refusal'=>$value['d_remainingRefusal']];
+                            'sleep'=>$value['d_remainingSleep'],
+                            'refusal'=>$value['d_remainingRefusal']];
                         $c_data = $d;
                     }
                 }
@@ -376,7 +344,6 @@ class Charts
                 $columns[] = ['title'=>'Absent'];
                 $columns[] = ['title'=>'Sleep'];
                 $columns[] = ['title'=>'Refusal'];
-
             }
             $large = $data[$large_key];
             //die(count($large));
@@ -411,204 +378,13 @@ class Charts
                 $row[] = "<span class='absent'>".implode(",", $t_absent)."</span> <span class='sleep'>".implode(",", $t_sleep)."</span> <span class='refusal'>".implode(",", $t_refusal)."</span>";
                 //$row[] = array('absent'=>$t_absent, 'sleep'=>$t_sleep, 'refusal'=>$t_refusal);
                 $rows[] = $row;
-
             }
-
             $final_data = array('top_cols'=>$columns_top, 'cols'=>$columns, 'data'=>$rows);
             return $final_data;
             //return $large;
-
-
 //            $data['larger_key'] = $key;
 //            return $data;
         }
         else return ['error'=>'No data'];
     }
-
-    /***
-     * @param $months array of months
-     * @return order_months
-     */
-    function orderMonths($months) {
-        $order_months = array();
-        if(is_array($months) && count($months) > 0) {
-            $temp = array();
-            foreach($months as $month) {
-                $m = date_parse($month);
-                $temp[$m['month']] = $month;
-            }
-            ksort($temp);
-            $order_months = $temp;
-        }
-
-        return $order_months;
-    }
-
-    /***
-     * @param $cat1 top level category string name, where together with d_ it should be a column name
-     * @param $cat2 second level category
-     * @param $indicators string array indicators
-     * @param $data
-     * @return $r_data  formated array
-     */
-    function chartData2Categories($cat1, $cat2, $indicators, $data) {
-
-        if(count($data) > 0) {
-            $tmp_top_cat = array();
-            $tmp_second_cat = array();
-            foreach($data as $temp_d) {
-                $tmp_top_cat[] = $temp_d[$cat1];
-                $tmp_second_cat[] = $temp_d[$cat2];
-            }
-
-            $top_cat = array_unique($tmp_top_cat);
-            $second_cat = array_unique($tmp_second_cat);
-            $second_cat = sort($second_cat);
-            if($cat2 == 'd_cMonth' || $cat2 == 'd_month')
-                $second_cat = $this->orderMonths($tmp_second_cat);
-
-            $r_data = array();
-            //$cat = array();
-            $data_indicators = array();
-            $temp_cat = array();
-            foreach ($top_cat as $t_c) {
-                $sub_cat = array();
-                foreach ($second_cat as $s_c) {
-                    //$sub_cat = array();
-                    foreach ($data as $val) {
-                        if ($val[$cat1] === $t_c && $val[$cat2] === $s_c) {
-                            $sub_cat[] = $s_c;
-                            foreach($indicators as $indicator) {
-                                $data_indicators[$indicator][] = $val[$indicator] == 'null' ? null : (int)$val[$indicator];
-                            }
-
-                        }
-
-                    }
-                }
-                $temp_cat[] = array('name' => $t_c, 'categories' => $sub_cat);
-            }
-            //$cat['categories'] = $temp_cat;
-            $r_data['categories'] = $temp_cat;
-//            $data['series'] = array(array('name'=>'Refusal', 'data' => $refusal),
-//                array('name'=>'Sleep_NewBorn', 'data'=>$sleep),
-//                array('name'=>'Missed', 'data' => $remaining));
-            $ser = array();
-            foreach ($indicators as $key=>$ind) {
-                $ser[] = array('name'=>ucfirst($key), 'data' => $data_indicators[$ind]);
-            }
-
-            $r_data['series'] = $ser;
-
-            return $r_data;
-        }
-
-        else
-            return ['data'=>null];
-    }
-
-    /***
- * @param $cat1 top level category string name, where together with d_ it should be a column name
- * @param $indicators string array indicators
- * @param $data
- * @return $r_data  formated array
- */
-    function chartData1Category($cat1, $indicators, $data) {
-
-        if(count($data) > 0) {
-            $tmp_top_cat = array();
-            foreach($data as $temp_d) {
-                $tmp_top_cat[] = $temp_d[$cat1];
-            }
-
-            $top_cat = array_unique($tmp_top_cat);
-
-            $r_data = array();
-            //$cat = array();
-            $data_indicators = array();
-            $temp_cat = array();
-            foreach ($top_cat as $t_c) {
-
-
-                //$sub_cat = array();
-                foreach ($data as $val) {
-                    if ($val[$cat1] === $t_c) {
-
-                        foreach($indicators as $indicator) {
-                            $data_indicators[$indicator][] = $val[$indicator] == 'null' ? null : (int)$val[$indicator];
-                        }
-
-                    }
-
-                }
-
-                $temp_cat[] = $t_c;
-            }
-            //$cat['categories'] = $temp_cat;
-            $r_data['categories'] = $temp_cat;
-            $ser = array();
-            foreach ($indicators as $key=>$ind) {
-                $ser[] = array('name'=>ucfirst($key), 'data' => $data_indicators[$ind]);
-            }
-
-            $r_data['series'] = $ser;
-
-            return $r_data;
-        }
-
-        else
-            return ['data'=>null];
-    }
-
-
-    /***
-     * @param $cat1 top level category string name, where together with d_ it should be a column name
-     * @param $indicator string array indicators
-     * @param $data
-     * @return $r_data  formated array
-     */
-    function pieData1Category($cat1, $indicator, $substitute, $data) {
-
-        if(count($data) > 0) {
-            $tmp_top_cat = array();
-            foreach($data as $temp_d) {
-                $tmp_top_cat[] = $temp_d[$cat1];
-            }
-
-            $top_cat = array_unique($tmp_top_cat);
-
-            $r_data = array();
-            $data_indicators = array();
-            foreach ($top_cat as $t_c) {
-
-
-                //$sub_cat = array();
-                foreach ($data as $val) {
-                    if ($val[$cat1] === $t_c) {
-
-                        //foreach($indicators as $indicator) {
-                            $data_indicators[] = array('name'=>$t_c, 'y'=>$val[$indicator] == 'null' ? null : (int)$val[$indicator]);
-                        //}
-
-                    }
-
-                }
-
-                //$temp_cat[] = $t_c;
-            }
-            //$cat['categories'] = $temp_cat;
-            //$r_data['categories'] = $temp_cat;
-            $ser[] = array('type'=>'pie', 'name'=>ucfirst($substitute), 'data' => $data_indicators);
-
-            $r_data['series'] = $ser;
-
-            return $r_data;
-        }
-
-        else
-            return ['data'=>null];
-    }
-
-
-
 }

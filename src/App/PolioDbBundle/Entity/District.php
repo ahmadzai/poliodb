@@ -1,66 +1,62 @@
 <?php
-
 namespace App\PolioDbBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * District
  *
- * @ORM\Table(name="district", uniqueConstraints={@ORM\UniqueConstraint(name="district_code_UNIQUE", columns={"district_code"}), @ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})}, indexes={@ORM\Index(name="fk_d_p_idx", columns={"province_code"})})
- * @ORM\Entity
+ * @ORM\Table(name="district", uniqueConstraints={@ORM\UniqueConstraint(name="district_code_UNIQUE", columns={"district_code"})}, indexes={@ORM\Index(name="fk_d_p_idx", columns={"province_code"})})
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\DistrictRepository")
  */
 class District
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     */
-    private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="district_name", type="text", length=65535, nullable=true)
      */
     private $districtName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="district_name_alt", type="text", length=65535, nullable=true)
      */
     private $districtNameAlt;
-
     /**
      * @var string
      *
      * @ORM\Column(name="district_name_pashtu", type="text", length=65535, nullable=true)
      */
     private $districtNamePashtu;
-
     /**
      * @var string
      *
      * @ORM\Column(name="district_name_dari", type="text", length=65535, nullable=true)
      */
     private $districtNameDari;
-
     /**
      * @var string
      *
      * @ORM\Column(name="district_lpd_status", type="text", length=65535, nullable=true)
      */
     private $districtLpdStatus;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="district_risk_status", type="text", length=5, nullable=true)
+     */
+    private $districtRiskStatus;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="district_icn_status", type="text", length=20, nullable=true)
+     */
+    private $districtIcnStatus;
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
     private $entryDate = 'CURRENT_TIMESTAMP';
-
     /**
      * @var integer
      *
@@ -68,7 +64,6 @@ class District
      * @ORM\Id
      */
     private $districtCode;
-
     /**
      * @var \App\PolioDbBundle\Entity\Province
      *
@@ -78,33 +73,6 @@ class District
      * })
      */
     private $provinceCode;
-
-
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return District
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
      * Set districtName
      *
@@ -115,10 +83,8 @@ class District
     public function setDistrictName($districtName)
     {
         $this->districtName = $districtName;
-
         return $this;
     }
-
     /**
      * Get districtName
      *
@@ -128,7 +94,6 @@ class District
     {
         return $this->districtName;
     }
-
     /**
      * Set districtNameAlt
      *
@@ -139,10 +104,8 @@ class District
     public function setDistrictNameAlt($districtNameAlt)
     {
         $this->districtNameAlt = $districtNameAlt;
-
         return $this;
     }
-
     /**
      * Get districtNameAlt
      *
@@ -152,7 +115,6 @@ class District
     {
         return $this->districtNameAlt;
     }
-
     /**
      * Set districtNamePashtu
      *
@@ -163,10 +125,8 @@ class District
     public function setDistrictNamePashtu($districtNamePashtu)
     {
         $this->districtNamePashtu = $districtNamePashtu;
-
         return $this;
     }
-
     /**
      * Get districtNamePashtu
      *
@@ -176,7 +136,6 @@ class District
     {
         return $this->districtNamePashtu;
     }
-
     /**
      * Set districtNameDari
      *
@@ -187,10 +146,8 @@ class District
     public function setDistrictNameDari($districtNameDari)
     {
         $this->districtNameDari = $districtNameDari;
-
         return $this;
     }
-
     /**
      * Get districtNameDari
      *
@@ -200,7 +157,6 @@ class District
     {
         return $this->districtNameDari;
     }
-
     /**
      * Set districtLpdStatus
      *
@@ -211,10 +167,36 @@ class District
     public function setDistrictLpdStatus($districtLpdStatus)
     {
         $this->districtLpdStatus = $districtLpdStatus;
-
         return $this;
     }
-
+    /**
+     * @return string
+     */
+    public function getDistrictRiskStatus()
+    {
+        return $this->districtRiskStatus;
+    }
+    /**
+     * @param string $districtRiskStatus
+     */
+    public function setDistrictRiskStatus($districtRiskStatus)
+    {
+        $this->districtRiskStatus = $districtRiskStatus;
+    }
+    /**
+     * @return string
+     */
+    public function getDistrictIcnStatus()
+    {
+        return $this->districtIcnStatus;
+    }
+    /**
+     * @param string $districtIcnStatus
+     */
+    public function setDistrictIcnStatus($districtIcnStatus)
+    {
+        $this->districtIcnStatus = $districtIcnStatus;
+    }
     /**
      * Get districtLpdStatus
      *
@@ -224,7 +206,6 @@ class District
     {
         return $this->districtLpdStatus;
     }
-
     /**
      * Set entryDate
      *
@@ -235,10 +216,8 @@ class District
     public function setEntryDate($entryDate)
     {
         $this->entryDate = $entryDate;
-
         return $this;
     }
-
     /**
      * Get entryDate
      *
@@ -248,7 +227,10 @@ class District
     {
         return $this->entryDate;
     }
-
+    public function __construct()
+    {
+        $this->entryDate = new \DateTime();
+    }
     /**
      * Get districtCode
      *
@@ -258,7 +240,13 @@ class District
     {
         return $this->districtCode;
     }
-
+    /**
+     * @param int $districtCode
+     */
+    public function setDistrictCode($districtCode)
+    {
+        $this->districtCode = $districtCode;
+    }
     /**
      * Set provinceCode
      *
@@ -269,10 +257,8 @@ class District
     public function setProvinceCode(\App\PolioDbBundle\Entity\Province $provinceCode = null)
     {
         $this->provinceCode = $provinceCode;
-
         return $this;
     }
-
     /**
      * Get provinceCode
      *

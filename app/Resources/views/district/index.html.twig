@@ -1,0 +1,62 @@
+{% extends 'main.html.twig' %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {##}
+{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/DT_bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/responsive/datatables.responsive.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Districts</h1>
+
+    <table class="table table-striped table-bordered table-hover table-responsive datatable">
+        <thead>
+            <tr>
+                <th>DCODE</th>
+                <th>District</th>
+                <th>Alt Name</th>
+                <th>Pashto Name</th>
+                <th>Dari Name</th>
+                <th>Risk Status</th>
+                <th>ICN Status</th>
+                <th>Province</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for district in districts %}
+            <tr>
+                <td>{{ district.districtCode }}</td>
+                <td><a href="{{ path('district_show', { 'id': district.districtCode }) }}">{{ district.districtName }}</a></td>
+                <td>{{ district.districtNameAlt }}</td>
+                <td>{{ district.districtNamePashtu }}</td>
+                <td>{{ district.districtNameDari }}</td>
+                <td>{{ district.districtRiskStatus }}</td>
+                <td>{{ district.districtIcnStatus }}</td>
+                <td>{{ district.provinceCode.provinceName }}</td>
+                <td>
+                    <ul style="list-style: none">
+                        <li>
+                            <a href="{{ path('district_show', { 'id': district.districtCode }) }}"
+                               class="btn btn-success btn-xs">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('district_edit', { 'id': district.districtCode }) }}"
+                               class="btn btn-info btn-xs">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('district_new') }}" class="btn btn-info">Create a new district</a>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tablesmanager</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tablesManager.id }}</td>
+            </tr>
+            <tr>
+                <th>Tablename</th>
+                <td>{{ tablesManager.tableName }}</td>
+            </tr>
+            <tr>
+                <th>Tablelongname</th>
+                <td>{{ tablesManager.tableLongName }}</td>
+            </tr>
+            <tr>
+                <th>Tabletype</th>
+                <td>{{ tablesManager.tableType }}</td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>{{ tablesManager.source }}</td>
+            </tr>
+            <tr>
+                <th>Dashboard</th>
+                <td>{{ tablesManager.dashboard }}</td>
+            </tr>
+            <tr>
+                <th>Uploadform</th>
+                <td>{{ tablesManager.uploadForm }}</td>
+            </tr>
+            <tr>
+                <th>Entryform</th>
+                <td>{{ tablesManager.entryForm }}</td>
+            </tr>
+            <tr>
+                <th>Downloadform</th>
+                <td>{{ tablesManager.downloadForm }}</td>
+            </tr>
+            <tr>
+                <th>Datalevel</th>
+                <td>{{ tablesManager.dataLevel }}</td>
+            </tr>
+            <tr>
+                <th>Sort_no</th>
+                <td>{{ tablesManager.sortno }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ tablesManager.enabled }}</td>
+            </tr>
+            <tr>
+                <th>Entrydate</th>
+                <td>{% if tablesManager.entryDate %}{{ tablesManager.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('data_source_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('data_source_edit', { 'id': tablesManager.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

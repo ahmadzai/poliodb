@@ -1,5 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<<<<<<< HEAD
 
 <div id="main" >
   <div class="container-fluid">
@@ -15,4 +16,51 @@
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
 </div>
 </div>
+=======
+<div class="container">
+  <div class="crumbs" role="">
+    <ul id="breadcrumbs" class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{ path('home_admin_data') }}">Dashboard</a>
+        </li>
+    </ul>
+    <ul class="crumb-buttons">
+
+        <li><a href="{{ path('fos_user_change_password')}}"><i class=" icon-cog"></i> Change Password</a></li>
+        <li><a href="{{ path('fos_user_profile_edit')}}"><i class="icon-user"></i> Edit Profile </a></li>
+    </ul>
+  </div><br><br>
+
+<div class="row">
+    <!--=== Vertical Forms ===-->
+    <div class="col-md-12">
+        <div class="widget box">
+            <div class="widget-header">
+                <h4><i class="icon-reorder"></i>Profile</h4>
+            </div>
+            <div class="widget-content">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="list-group">
+                    <li class="list-group-item list-group-header">
+                      <span class="badge"></span>User Profiel Show
+                    </li>
+                    <a href="#" class="list-group-item basic-alert">{{ 'profile.show.username'|trans }}: {{ user.username }}</a>
+                    <a href="#" class="list-group-item confirm-dialog">{{ 'profile.show.email'|trans }}: {{ user.email }}</a>
+                    <a href="#" class="list-group-item multiple-buttons">{{ 'Firstname'|trans }}: {{ user.firstname }}</a>
+                    <a href="#" class="list-group-item multiple-dialogs">{{ 'Lastname'|trans }}: {{ user.lastname }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Title'|trans }}: {{ user.title }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Joblevel'|trans }}: {{ user.joblevel }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Region'|trans }}: {{ user.region }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Province'|trans }}: {{ user.province }}</a>
+                    <a href="#" class="list-group-item programmatic-close">{{ 'Phone'|trans }}: {{ user.phone }}</a>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> charts_filter
 </div>

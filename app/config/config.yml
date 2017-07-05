@@ -3,6 +3,10 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@AppPolioDbBundle/Resources/config/services.yml" }
+<<<<<<< HEAD
+=======
+    #- { resource: "@AppPolioDbBundle/Resources/config/admindata.xml" }
+>>>>>>> charts_filter
 
 
     # Put parameters here that don't need to change on each machine where the app is deployed
@@ -38,6 +42,12 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+<<<<<<< HEAD
+=======
+    form_themes:
+        - bootstrap_3_layout.html.twig
+
+>>>>>>> charts_filter
 
 # Doctrine Configuration
 doctrine:
@@ -89,6 +99,12 @@ fos_user:
     registration:
         confirmation:
             enabled: true
+<<<<<<< HEAD
+=======
+    profile:
+        form:
+            type: App\PolioDbBundle\Form\ProfileType
+>>>>>>> charts_filter
 
     group:
         group_class:   Application\Sonata\UserBundle\Entity\Group
@@ -118,6 +134,7 @@ sonata_block:
             contexts: [admin]
 
 sonata_admin:
+<<<<<<< HEAD
     title: PolioDb
     #title_logo: web\img\logo-big.png
     security:
@@ -160,6 +177,31 @@ sonata_admin:
 
 sonata_user:
     security_acl: false
+=======
+    templates:
+        layout: Sonata\standard_layout.html.twig
+        list: Sonata\base_list.html.twig
+        #ajax:   SonataAdminBundle::ajax_layout.html.twig
+    security:
+       handler: sonata.admin.security.handler.role
+       # acl security information
+#       information:
+#          #GUEST:    [VIEW, LIST]
+#          STAFF:    [EDIT, LIST, CREATE]
+#          EDITOR:   [OPERATOR, EXPORT]
+#          ADMIN:    [MASTER, ROLE_SUPER_ADMIN]
+#          ROOT:   [SUPER_ADMIN]
+
+        # permissions not related to an object instance and also to be available when objects do not exist
+        # the DELETE admin permission means the user is allowed to batch delete objects
+       #admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+
+        # permission related to the objects
+       #object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+
+sonata_user:
+    security_acl: true
+>>>>>>> charts_filter
     manager_type: orm # can be orm or mongodb
 
 

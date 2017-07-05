@@ -1,0 +1,9 @@
+<service id="app.admin.admin.data" class="App\PolioDbBundle\Admin\AdminDataAdmin">
+    <tag name="sonata.admin" manager_type="orm" group="Content" label="AdminData" />
+    <argument />
+    <argument>App\PolioDbBundle\Entity\AdminData</argument>
+    <argument />
+    <call method="setTranslationDomain">
+        <argument>App\PolioDbBundle</argument>
+    </call>
+</service>

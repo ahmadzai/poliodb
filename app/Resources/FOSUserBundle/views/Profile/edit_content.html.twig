@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 <div id="main" >
@@ -19,3 +20,74 @@
     </div>
     </div>
 {{ form_end(form) }}
+=======
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="row">
+    <!--=== Vertical Forms ===-->
+    <div class="col-md-12">
+        <div class="widget box">
+            <div class="widget-header">
+                <h4><i class="icon-reorder"></i> Update Profile</h4>
+            </div>
+            <div class="widget-content">
+            {{ form_start(form, { 'action': path('fos_user_profile_edit'),
+                'attr': { 'class': 'form-vertical row-border' } }) }}
+                <div class="form-group">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username) }}
+                    {{ form_errors(form.username) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.current_password) }}
+                    {{ form_widget(form.current_password) }}
+                    {{ form_errors(form.current_password) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.firstname) }}
+                    {{ form_widget(form.firstname) }}
+                    {{ form_errors(form.firstname) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.lastname) }}
+                    {{ form_widget(form.lastname) }}
+                    {{ form_errors(form.lastname) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.joblevel) }}
+                    {{ form_widget(form.joblevel) }}
+                    {{ form_errors(form.joblevel) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.region) }}
+                    {{ form_widget(form.region) }}
+                    {{ form_errors(form.region) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.province) }}
+                    {{ form_widget(form.province) }}
+                    {{ form_errors(form.province) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.phone) }}
+                    {{ form_widget(form.phone) }}
+                    {{ form_errors(form.phone) }}
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="{{ 'profile.edit.submit'|trans }}" class="btn btn-info" />
+                </div>
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> charts_filter

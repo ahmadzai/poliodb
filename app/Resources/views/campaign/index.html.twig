@@ -1,0 +1,60 @@
+{% extends 'main.html.twig' %}
+{#{% block stylesheets %}#}
+    {#{{ parent() }}#}
+    {##}
+{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/DT_bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('template/plugins/datatables/responsive/datatables.responsive.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Campaigns</h1>
+
+    <table class="table table-striped table-bordered table-hover table-responsive datatable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr>
+
+                <td>{{ campaign.campaignId }}</td>
+                <td><a href="{{ path('campaign_show', { 'id': campaign.campaignId }) }}">{{ campaign.campaignName }}</a></td>
+                <td>{{ campaign.campaignType }}</td>
+                <td>{{ campaign.campaignStartDate|date('Y-m-d') }}</td>
+                <td>{{ campaign.campaignEndDate|date('Y-m-d') }}</td>
+                <td>{{ campaign.campaignYear }}</td>
+                <td>{{ campaign.campaignMonth }}</td>
+                <td>
+                    <ul style="list-style: none">
+                        <li>
+                            <a href="{{ path('campaign_show', { 'id': campaign.campaignId }) }}"
+                            class="btn btn-xs btn-success">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('campaign_edit', { 'id': campaign.campaignId }) }}"
+                            class="btn btn-info btn-xs">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('campaign_new') }}" class="btn btn-info">Create a new campaign</a>
+{% endblock %}

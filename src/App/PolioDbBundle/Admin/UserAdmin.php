@@ -22,7 +22,10 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $listMapper)
     {
+<<<<<<< HEAD
 
+=======
+>>>>>>> charts_filter
         $listMapper->addIdentifier('username');
     }
 
@@ -33,6 +36,7 @@ class UserAdmin extends AbstractAdmin
     }
 
     public function setUserManager(UserManagerInterface $userManager)
+<<<<<<< HEAD
     {
         $this->userManager = $userManager;
     }
@@ -40,5 +44,14 @@ class UserAdmin extends AbstractAdmin
     public function getUserManager()
     {
         return $this->userManager;
+=======
+        {
+            $this->userManager = $userManager;
+        }
+
+    public function getUserManager()
+    {
+            return $this->userManager;
+>>>>>>> charts_filter
     }
 }

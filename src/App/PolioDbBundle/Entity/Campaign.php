@@ -1,9 +1,7 @@
 <?php
-
 namespace App\PolioDbBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 /**
  * Campaign
  *
@@ -18,49 +16,42 @@ class Campaign
      * @ORM\Column(name="campaign_name", type="text", length=65535, nullable=true)
      */
     private $campaignName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="campaign_type", type="text", length=65535, nullable=true)
      */
     private $campaignType;
-
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="campaign_start_date", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="campaign_start_date", type="date", nullable=false)
      */
     private $campaignStartDate;
-
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="campaign_end_date", type="text", length=65535, nullable=true)
+     * @ORM\Column(name="campaign_end_date", type="date", nullable=false)
      */
     private $campaignEndDate;
-
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
     private $entryDate = 'CURRENT_TIMESTAMP';
-
     /**
      * @var integer
      *
      * @ORM\Column(name="campaign_year", type="integer", nullable=true)
      */
     private $campaignYear;
-
     /**
      * @var string
      *
      * @ORM\Column(name="campaign_month", type="string", length=20, nullable=true)
      */
     private $campaignMonth;
-
     /**
      * @var integer
      *
@@ -68,10 +59,7 @@ class Campaign
      * @ORM\Id
      */
     private $campaignId;
-
 //@ORM\GeneratedValue(strategy="IDENTITY")
-
-
     /**
      * Set campaignName
      *
@@ -82,10 +70,8 @@ class Campaign
     public function setCampaignName($campaignName)
     {
         $this->campaignName = $campaignName;
-
         return $this;
     }
-
     /**
      * Get campaignName
      *
@@ -95,7 +81,6 @@ class Campaign
     {
         return $this->campaignName;
     }
-
     /**
      * Set campaignType
      *
@@ -106,10 +91,8 @@ class Campaign
     public function setCampaignType($campaignType)
     {
         $this->campaignType = $campaignType;
-
         return $this;
     }
-
     /**
      * Get campaignType
      *
@@ -119,55 +102,48 @@ class Campaign
     {
         return $this->campaignType;
     }
-
     /**
      * Set campaignStartDate
      *
-     * @param string $campaignStartDate
+     * @param \DateTime $campaignStartDate
      *
      * @return Campaign
      */
     public function setCampaignStartDate($campaignStartDate)
     {
-        $this->campaignStartDate = $campaignStartDate;
-
+        $this->campaignStartDate =  $campaignStartDate;
         return $this;
     }
-
     /**
      * Get campaignStartDate
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCampaignStartDate()
     {
         return $this->campaignStartDate;
     }
-
     /**
      * Set campaignEndDate
      *
-     * @param string $campaignEndDate
+     * @param \DateTime $campaignEndDate
      *
      * @return Campaign
      */
     public function setCampaignEndDate($campaignEndDate)
     {
-        $this->campaignEndDate = $campaignEndDate;
-
+        $this->campaignEndDate =  $campaignEndDate;
         return $this;
     }
-
     /**
      * Get campaignEndDate
      *
-     * @return string
+     * @return \DateTime
      */
     public function getCampaignEndDate()
     {
         return $this->campaignEndDate;
     }
-
     /**
      * Set entryDate
      *
@@ -178,10 +154,8 @@ class Campaign
     public function setEntryDate($entryDate)
     {
         $this->entryDate = $entryDate;
-
         return $this;
     }
-
     /**
      * Get entryDate
      *
@@ -191,7 +165,12 @@ class Campaign
     {
         return $this->entryDate;
     }
-
+    public function __construct()
+    {
+        $date = new \DateTime();
+        $this->entryDate = $date;
+        $this->campaignStartDate = $this->campaignEndDate = $date->format('Y-m-d');
+    }
     /**
      * Set campaignYear
      *
@@ -202,10 +181,8 @@ class Campaign
     public function setCampaignYear($campaignYear)
     {
         $this->campaignYear = $campaignYear;
-
         return $this;
     }
-
     /**
      * Get campaignYear
      *
@@ -215,7 +192,6 @@ class Campaign
     {
         return $this->campaignYear;
     }
-
     /**
      * Set campaignMonth
      *
@@ -226,10 +202,8 @@ class Campaign
     public function setCampaignMonth($campaignMonth)
     {
         $this->campaignMonth = $campaignMonth;
-
         return $this;
     }
-
     /**
      * Get campaignMonth
      *
@@ -239,7 +213,13 @@ class Campaign
     {
         return $this->campaignMonth;
     }
-
+    /**
+     * @param int $campaignId
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+    }
     /**
      * Get campaignId
      *

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+
+    {% block stylesheets %}
+
+	    <link href="{{ asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!--[if lt IE 9]>
+        <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/jquery-ui/jquery.ui.1.10.2.ie.css')}}" />
+        <![endif]-->
+
+        <link href="{{ asset('template/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('template/assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('template/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('template/plugins/bootstrap-multiselect/css/bootstrap-multiselect.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('template/assets/css/fontawesome/font-awesome.min.css')}}">
+
+        <!--[if IE 7]>
+        <link rel="stylesheet" href="{{ asset('template/assets/css/fontawesome/font-awesome-ie7.min.css')}}">
+        <![endif]-->
+
+        <!--[if IE 8]>
+        <link href="{{ asset('template/assets/css/ie8.css')}}" rel="stylesheet" type="text/css" />
+        <![endif]-->
+	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+
+    {% endblock %}
+
+    {% block javascripts %}
+
+        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/libs/jquery-1.10.2.min.js') }}"></script>#}
+        <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery.ui.core.min.js')}}"></script>
+
+        <script type="text/javascript" src="{{ asset('template/bootstrap/js/bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/assets/js/libs/lodash.compat.min.js')}}"></script>
+
+        <!--[if lt IE 9]>
+        <script src="{{ asset('template/assets/js/libs/html5shiv.js')}}"></script>
+        <![endif]-->
+        {# Smartphone touch events #}
+        <script type="text/javascript" src="{{ asset('template/plugins/touchpunch/jquery.ui.touch-punch.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.move.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.swipe.js')}}"></script>
+
+        {# General JavaScript #}
+        <script type="text/javascript" src="{{ asset('template/assets/js/libs/breakpoints.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/respond/respond.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/cookie/jquery.cookie.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/slimscroll/jquery.slimscroll.horizontal.min.js')}}"></script>
+
+        <!--[if lt IE 9]>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/excanvas.min.js')}}"></script>
+        <![endif]-->
+
+        <script type="text/javascript" src="{{ asset('template/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.resize.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.time.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.growraf.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/easy-pie-chart/jquery.easy-pie-chart.min.js')}}"></script>
+
+        <script type="text/javascript" src="{{ asset('template/plugins/daterangepicker/moment.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/daterangepicker/daterangepicker.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/blockui/jquery.blockUI.min.js')}}"></script>
+
+        <script type="text/javascript" src="{{ asset('template/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
+
+        {# Noty #}
+        <script type="text/javascript" src="{{ asset('template/plugins/noty/jquery.noty.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/noty/layouts/top.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/noty/themes/default.js')}}"></script>
+
+        {# Form #}
+        <script type="text/javascript" src="{{ asset('template/plugins/uniform/jquery.uniform.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/select2/select2.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/plugins/bootstrap-multiselect/js/bootstrap-multiselect.js') }}"></script>
+
+        {# App #}
+        <script type="text/javascript" src="{{ asset('template/assets/js/app.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/assets/js/plugins.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('template/assets/js/plugins.form-components.js')}}"></script>
+
+        <script>
+            $(document).ready(function(){
+                "use strict";
+
+                App.init(); // Init layout and core plugins
+                Plugins.init(); // Init all plugins
+                FormComponents.init(); // Init all form-specific plugins
+            });
+        </script>
+        {# Demo #}
+        <script type="text/javascript" src="{{ asset('template/assets/js/custom.js')}}"></script>
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/pages_calendar.js')}}"></script>#}
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_filled_blue.js')}}"></script>#}
+        {#<script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_simple.js')}}"></script>#}
+
+        {# JS Routing FOS #}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    {% endblock %}
+
+
+</head>
+<body>
+{% block nav %}
+    {% include 'html/common/nav_top_filter.html.twig' %}
+{% endblock %}
+<div id="container">
+    {% block left_nav %}
+        {{ render(controller(
+                'AppPolioDbBundle:TablesManager:menu'
+            ))
+        }}
+    {% endblock %}
+    <!-- End of Navigation left side -->
+
+    <!-- Content Main -->
+    <div id="content">
+    {% block content %}{% endblock %}
+    </div>
+</div>
+{% block script_end %}{% endblock %}
+<!-- End of content -->
+</body>
+
+</html>

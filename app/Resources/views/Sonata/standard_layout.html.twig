@@ -1,0 +1,263 @@
+<!doctype html>
+
+
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% set _preview = block('preview') is defined ? block('preview')|trim : null %}
+{% set _form = block('form') is defined ? block('form')|trim : null %}
+{% set _show = block('show') is defined ? block('show')|trim : null %}
+{% set _list_table = block('list_table') is defined ? block('list_table')|trim : null %}
+{% set _list_filters = block('list_filters') is defined ? block('list_filters')|trim : null %}
+{% set _tab_menu = block('tab_menu') is defined ? block('tab_menu')|trim : null %}
+{% set _content = block('content') is defined ? block('content')|trim : null %}
+{% set _title = block('title') is defined ? block('title')|trim : null %}
+{% set _breadcrumb = block('breadcrumb') is defined ? block('breadcrumb')|trim : null %}
+{% set _actions = block('actions') is defined ? block('actions')|trim : null %}
+{% set _navbar_title = block('navbar_title') is defined ? block('navbar_title')|trim : null %}
+{% set _list_filters_actions = block('list_filters_actions') is defined ? block('list_filters_actions')|trim : null %}
+
+
+<html {% block html_attributes %}class="no-js"{% endblock %}>
+    <head>
+        {% block meta_tags %}
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta charset="UTF-8">
+            <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        {% endblock %}
+
+        {% block stylesheets %}
+
+            <link href="{{ asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+
+            <!--[if lt IE 9]>
+            <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/jquery-ui/jquery.ui.1.10.2.ie.css')}}" />
+            <![endif]-->
+
+            <link href="{{ asset('template/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('template/assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('template/assets/css/icons.css')}}" rel="stylesheet" type="text/css" />
+
+            <link rel="stylesheet" href="{{ asset('template/assets/css/fontawesome/font-awesome.min.css')}}">
+
+            <!--[if IE 7]>
+            <link rel="stylesheet" href="{{ asset('template/assets/css/fontawesome/font-awesome-ie7.min.css')}}">
+            <![endif]-->
+
+            <!--[if IE 8]>
+            <link href="{{ asset('template/assets/css/ie8.css')}}" rel="stylesheet" type="text/css" />
+            <![endif]-->
+            {#<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>#}
+
+            {#{% for stylesheet in sonata_admin.adminPool.getOption('stylesheets', []) %}#}
+                {#<link rel="stylesheet" href="{{ asset(stylesheet) }}">#}
+            {#{% endfor %}#}
+            {#<link href="{{ asset('bundles/sonataadmin/vendor/iCheck/skins/square/blue.css') }}">#}
+            {#<link href="{{ asset('bundles/sonataadmin/css/styles.css') }}">#}
+            {#<link href="{{ asset('bundles/sonataadmin/css/colors.css') }}">#}
+            {#<link href="{{ asset('bundles/sonataadmin/css/layout.css') }}">#}
+            {#<link href="{{ asset('bundles/sonataadmin/css/tree.css') }}">#}
+
+            <link rel="stylesheet" href="{{ asset('template/bootstrap/css/bootstrap-customized.css')}}">
+            <link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/components-font-awesome/css/font-awesome.min.css')}}">
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/ionicons/css/ionicons.min.css')}}">#}
+            <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/admin-lte/dist/css/AdminLTE.min.css')}}">
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css')}}">#}
+            <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/iCheck/skins/square/blue.css')}}">
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}">#}
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css')}}">#}
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/select2/select2.css')}}">#}
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css')}}">#}
+            {#<link rel="stylesheet" href="{{ asset('bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css')}}">#}
+            <link href="{{ asset('bundles/sonataadmin/css/styles.css') }}">
+            <link href="{{ asset('bundles/sonataadmin/css/layout.css') }}">
+            <link href="{{ asset('bundles/sonataadmin/css/tree.css') }}">
+
+
+        {% endblock %}
+
+        {% block javascripts %}
+
+            <script type="text/javascript" src="{{ asset('template/assets/js/libs/jquery-1.10.2.min.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js')}}"></script>
+
+            <script type="text/javascript" src="{{ asset('template/bootstrap/js/bootstrap.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/libs/lodash.compat.min.js')}}"></script>
+
+            <!--[if lt IE 9]>
+            <script src="{{ asset('template/assets/js/libs/html5shiv.js')}}"></script>
+            <![endif]-->
+            {# Smartphone touch events #}
+            <script type="text/javascript" src="{{ asset('template/plugins/touchpunch/jquery.ui.touch-punch.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.move.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.swipe.js')}}"></script>
+
+            {# General JavaScript #}
+            <script type="text/javascript" src="{{ asset('template/assets/js/libs/breakpoints.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/respond/respond.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/cookie/jquery.cookie.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/slimscroll/jquery.slimscroll.horizontal.min.js')}}"></script>
+
+            <!--[if lt IE 9]>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/excanvas.min.js')}}"></script>
+            <![endif]-->
+
+            <script type="text/javascript" src="{{ asset('template/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.tooltip.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.resize.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.time.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/flot/jquery.flot.growraf.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/easy-pie-chart/jquery.easy-pie-chart.min.js')}}"></script>
+
+            <script type="text/javascript" src="{{ asset('template/plugins/daterangepicker/moment.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/daterangepicker/daterangepicker.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/blockui/jquery.blockUI.min.js')}}"></script>
+
+            <script type="text/javascript" src="{{ asset('template/plugins/fullcalendar/fullcalendar.min.js')}}"></script>
+
+            {# Noty #}
+            <script type="text/javascript" src="{{ asset('template/plugins/noty/jquery.noty.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/noty/layouts/top.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/noty/themes/default.js')}}"></script>
+
+            {# Form #}
+            <script type="text/javascript" src="{{ asset('template/plugins/uniform/jquery.uniform.min.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/plugins/select2/select2.min.js')}}"></script>
+
+            {# App #}
+            <script type="text/javascript" src="{{ asset('template/assets/js/app.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/plugins.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/plugins.form-components.js')}}"></script>
+
+            <script>
+                $(document).ready(function(){
+                    "use strict";
+
+                    App.init(); // Init layout and core plugins
+                    Plugins.init(); // Init all plugins
+                    FormComponents.init(); // Init all form-specific plugins
+                });
+            </script>
+            {# Demo #}
+            <script type="text/javascript" src="{{ asset('template/assets/js/custom.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/demo/pages_calendar.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_filled_blue.js')}}"></script>
+            <script type="text/javascript" src="{{ asset('template/assets/js/demo/charts/chart_simple.js')}}"></script>
+
+            {# JS Routing FOS #}
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+        {% endblock %}
+
+        <title>
+        {% block sonata_head_title %}
+            {{ 'Admin'|trans({}, 'SonataAdminBundle') }}
+
+            {% if _title is not empty %}
+                {{ _title|raw }}
+            {% else %}
+                {% if action is defined %}
+                    -
+                    {% for menu in breadcrumbs_builder.breadcrumbs(admin, action) %}
+                        {% if not loop.first %}
+                            {% if loop.index != 2 %}
+                                &gt;
+                            {% endif %}
+
+                            {%- set translation_domain = menu.extra('translation_domain', 'messages') -%}
+                            {%- set label = menu.label -%}
+                            {%- if translation_domain is not same as(false) -%}
+                                {%- set label = label|trans(menu.extra('translation_params', {}), translation_domain) -%}
+                            {%- endif -%}
+
+                            {{ label }}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+        {% endblock %}
+        </title>
+    </head>
+    <body>
+    {% block nav %}
+        {% include 'html/common/nav_top.html.twig' %}
+    {% endblock %}
+    <div id="container">
+
+        {% block left_nav %}
+            {{ render(controller(
+            'AppPolioDbBundle:TablesManager:menu'
+            ))
+            }}
+        {% endblock %}
+        <div id="content">
+
+        {% block sonata_wrapper %}
+
+            <div class="container">
+                {% block sonata_page_content %}
+
+                    <div class="content">
+                        {% block sonata_admin_content %}
+                        <div class="row" >
+                          <div class="col-md-12">
+                              <div class="row-fluid">
+                                <table class="table table-colored-header">
+                                    {% block notice %}
+                                        {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+                                    {% endblock notice %}
+
+                                    {% if _preview is not empty %}
+                                        {{ _preview|raw }}
+                                    {% endif %}
+                                    {% if _content is not empty %}
+                                      <td>  {{ _content|raw }} </td>
+                                    {% endif %}
+                                    {% if _show is not empty %}
+                                        {{ _show|raw }}
+                                    {% endif %}
+                                    {% if _form is not empty %}
+                                      {{ _form|raw }}
+                                    {% endif %}
+                                    {% if _list_filters is not empty %}
+                                            {{ _list_filters|raw }}
+                                    {% endif %}
+
+                                    {% if _list_table is not empty %}
+
+                                            {{ _list_table|raw }}
+                                    {% endif %}
+                                </table>
+                          </div>
+                        </div>
+                        {% endblock sonata_admin_content %}
+                    </div>
+                {% endblock sonata_page_content %}
+            </div>
+        {% endblock sonata_wrapper %}
+    </div>
+    </div>
+    </div>
+    {% if sonata_admin.adminPool.getOption('use_bootlint') %}
+        {% block bootlint %}
+            {# Bootlint - https://github.com/twbs/bootlint#in-the-browser #}
+            <script type="text/javascript">
+                javascript:(function(){var s=document.createElement("script");s.onload=function(){bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});};s.src="https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";document.body.appendChild(s)})();
+            </script>
+        {% endblock %}
+    {% endif %}
+
+    </body>
+</html>

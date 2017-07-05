@@ -24,7 +24,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+<<<<<<< HEAD
 
+=======
+use App\PolioDbBundle\Entity\Province;
+use App\PolioDbBundle\Form\ProfileType;
+>>>>>>> charts_filter
 /**
  * Controller managing the user profile.
  *
@@ -74,6 +79,11 @@ class ProfileController extends Controller
         /** @var $formFactory FactoryInterface */
         $formFactory = $this->get('fos_user.profile.form.factory');
 
+<<<<<<< HEAD
+=======
+        //$meetup = new Province();
+        //$form = $this->createForm(ProfileType::class, $meetup);
+>>>>>>> charts_filter
         $form = $formFactory->createForm();
         $form->setData($user);
 

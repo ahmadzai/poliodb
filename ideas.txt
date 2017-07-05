@@ -1,0 +1,40 @@
+### Upload Functionality
+# Dynamic upload for every data-source: the table name should be taken as tempTableName and the filter will work based
+  on it's upload level.
+
+# Dynamic form:
+
+
+ public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+
+//        $builder->add('id', IntegerType::class, array('label'=>'ID'));
+        $builder->add('provinceCode', 'entity', array(
+                     'class' => 'AppPolioDbBundle:Province',
+                     'choice_label' => 'provinceName',
+                     'choice_value' => 'provinceCode',
+                     'label' => 'Province',
+                     'placeholder' => 'Select province'
+                 ));
+        $builder->add('districtCode', IntegerType::class, array('label'=>'District Code'));
+        $builder->add('districtName', TextType::class, array('label'=>'District Name'))
+                ->add('districtNameAlt', TextType::class, array('label'=>'Alternative Name', 'required'=>false))
+                ->add('districtNamePashtu', TextType::class, array('label'=>'Pashto Name', 'required'=>false))
+                ->add('districtNameDari', TextType::class, array('label'=>'Dari Name', 'required'=>false))
+                ->add('districtLpdStatus', ChoiceType::class, array(
+                    'choices' => array(
+                        'Non-LPD' => null,
+                        'LPD-1' => 1,
+                        'LPD-2' => 2,
+                        'LPD-3' => 3
+                    ),
+                    'label' => 'LPD Status'
+                ));
+
+    }
+
+    Charts:
+    RemainingAbsent, RemainingRefusal, RemainingNSS
+
+    Conversion of Remaining Children During Campaign (all type)
+

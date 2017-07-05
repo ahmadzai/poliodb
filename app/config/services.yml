@@ -7,20 +7,28 @@ services:
   app.chart:
     class: App\PolioDbBundle\Utils\Charts
     factory: ['App\PolioDbBundle\Utils\MyFactory', createChart]
-    arguments: ["@app.settings"]
+    arguments: [ "@doctrine.orm.entity_manager" ]
+
+  app.form.registration:
+    class: App\PolioDbBundle\Form\ProfileType
+    tags:
+        - { name: form.type, alias: app_user_profile }
 
   #admin.user:
-  #  class: App\PolioDbBundle\Admin\UserAdmin
+    #class: App\PolioDbBundle\Admin\UserAdmin
     #arguments: [~, App\PolioDbBundle\Entity\User, ~]
     #arguments: [ setUserManager, ["@fosuser.usermanager"]]
     #tags:
-      #    - { name: sonata.admin, manager_type: orm, label: User }
+          #- { name: sonata.admin, manager_type: orm, label: User }
+
+  #custom.sonata.security.handler.role:
+    #class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
 
   app.chart_manager:
     class: App\PolioDbBundle\Utils\Charts
     # call a method on the specified service
     factory: ['@app.my_factory', createChart]
-    arguments: [ "@app.settings" ]
+    arguments: [ "@doctrine.orm.entity_manager" ]
 
   app.settings:
     class: App\PolioDbBundle\Utils\Settings
@@ -36,5 +44,5 @@ services:
   app.my_factory:
     class: App\PolioDbBundle\Utils\MyFactory
 
-  security.acl.permission.map:
-    class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap
+  #security.acl.permission.map:
+  #  class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap

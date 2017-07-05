@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 {% extends 'template.html.twig' %}
 
 
 
 {% block content %}
         <div>
+=======
+{% extends 'main.html.twig' %}
+
+{#comment flash msgs.#}
+
+{% block content %}
+      {#  <div>
+>>>>>>> charts_filter
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
                 <a href="{{ path('fos_user_security_logout') }}">
@@ -20,7 +29,11 @@
                     {{ message|trans({}, 'FOSUserBundle') }}
                 </div>
             {% endfor %}
+<<<<<<< HEAD
         {% endfor %}
+=======
+        {% endfor %}#}
+>>>>>>> charts_filter
 
         <div>
             {% block fos_user_content %}

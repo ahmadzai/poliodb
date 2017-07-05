@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>District</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ district.districtName }}</td>
+            </tr>
+            <tr>
+                <th>Alt-name</th>
+                <td>{{ district.districtNameAlt }}</td>
+            </tr>
+            <tr>
+                <th>Pashto Name</th>
+                <td>{{ district.districtNamePashtu }}</td>
+            </tr>
+            <tr>
+                <th>Dari Name</th>
+                <td>{{ district.districtNameDari }}</td>
+            </tr>
+            <tr>
+                <th>Risk Status</th>
+                <td>{{ district.districtRiskStatus }}</td>
+            </tr>
+            <tr>
+                <th>ICN Status</th>
+                <td>{{ district.districtIcnStatus }}</td>
+            </tr>
+            <tr>
+                <th>Entry date</th>
+                <td>{% if district.entryDate %}{{ district.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>District code</th>
+                <td>{{ district.districtCode }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('district_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('district_edit', { 'id': district.districtCode }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

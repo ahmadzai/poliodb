@@ -15,6 +15,7 @@ use Sonata\BlockBundle\Model\BlockInterface;
 
 interface BlockContextInterface
 {
+<<<<<<< HEAD
 
     public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
@@ -23,6 +24,8 @@ interface BlockContextInterface
             'settings'  => $blockContext->getSettings()
         ), $response);
     }
+=======
+>>>>>>> charts_filter
     /**
      * @return BlockInterface
      */
