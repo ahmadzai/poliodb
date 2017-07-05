@@ -24,10 +24,12 @@ class UploadController extends Controller
 {
 
     /**
-     * @Route("/upload/{table}", name="data_upload")
+     * @Route("/upload/admin_data", name="data_upload")
      * @param $table
+     * @param $request
+     * @return response
      */
-     public function uploadAction(Request $request, $table)
+     public function uploadAction(Request $request)
      {
 
        //mapping Db table TempAdminData

@@ -32,7 +32,7 @@ class MainController extends Controller
 
     /**
      * @return Response
-     * @Route("/", name="home_admin_data")
+     * @Route("/deprecated", name="home_admin_data")
      */
     public function homeAdminDataAction()
     {
@@ -57,14 +57,31 @@ class MainController extends Controller
         $missedChildChart = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
             ['Refusal'=>'RemainingRefusal',
                 'NSS' => 'RemainingNSS', 'Absent' => 'RemainingAbsent'], $regionAdminData);
-        $missedChildChart['title'] = "Remaining children by category in selected campaigns";
-
-        $lastCampVaccUsageChart = $this->get('app.chart')->chartData1Category('Region',
+        $missedChildChart['title'] = "Remaining children by reasons";
+        // For absent children
+        $chartDataAbsent = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
+            ['Remaining Absent'=>'RemainingAbsent',
+                'Vacc Absent' => 'VaccAbsent'], $regionAdminData);
+        $chartDataAbsent['title'] = "Recovering absent children during campaign";
+        // For NSS
+        $chartDataNss = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
+            ['Remaining NSS'=>'RemainingNSS',
+                'Vacc NSS' => 'VaccNSS'], $regionAdminData);
+        $chartDataNss['title'] = "Recovering New born, sleep and sick children during campaign";
+        // For Refusal
+        $chartDataRefusal = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
+            ['Remaining Refusal'=>'RemainingRefusal',
+                'Vacc Refusal' => 'VaccRefusal'], $regionAdminData);
+        $chartDataRefusal['title'] = "Recovering refusal children during campaign";
+        $lastCampVaccUsageChart = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
                                     ['ReceivedVials'=>'RVials',
-                                    'UsedVials' => 'UVials', 'Wastage' => 'VaccWastage'], $lastCampAdminData);
+                                    'UsedVials' => 'UVials', 'Wastage' => 'VaccWastage'], $regionAdminData);
         $lastCampVaccUsageChart['title'] = "Vaccine usage during last campaign";
         return $this->render("dashboard/admin_data_dashboard.html.twig",
                             ['chart1data' => json_encode($missedChildChart),
+                             'chartDataAbsent' => json_encode($chartDataAbsent),
+                             'chartDataNss' => json_encode($chartDataNss),
+                             'chartDataRefusal' => json_encode($chartDataRefusal),
                              'chartVaccineUsage' => json_encode($lastCampVaccUsageChart),
                              'lastCampData' => $lastCampAdminData]);
     }
@@ -77,15 +94,15 @@ class MainController extends Controller
     {
 
         // $this->get('app.chart')->chartData('entityName', 'functionName', 'parametersArray');
-        $data = $this->get('app.chart')->chartData('AdminData', 'regionAgg', [14, 15]);
+        $data = $this->get('app.chart')->chartData('AdminData', 'clusterAgg', [14, 15], [3301,3302]);
         // Category 1 (name must be in the result set)
         // Category 2 (name must be in the result set)
         // Array of columns to show on chart (the index is the label and the value is the column name in the result set
         // Data returned above
-        $data = $this->get('app.chart')->chartData2Categories('Region', 'CMonth',
-            ['ReceivedVials'=>'RVials',
-                'UsedVials' => 'UVials', 'VaccWastage' => 'VaccWastage'], $data);
-        $data = $this->get('app.settings')->campaignLatest('AdminData', 0);
+//        $data = $this->get('app.chart')->chartData2Categories('Region', 'CID',
+//            ['ReceivedVials'=>'RVials',
+//                'UsedVials' => 'UVials', 'VaccWastage' => 'VaccWastage'], $data);
+        //$data = $this->get('app.settings')->campaignLatest('AdminData', 0);
         return new Response(json_encode($data));
     }
 

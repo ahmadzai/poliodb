@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * District
  *
  * @ORM\Table(name="district", uniqueConstraints={@ORM\UniqueConstraint(name="district_code_UNIQUE", columns={"district_code"})}, indexes={@ORM\Index(name="fk_d_p_idx", columns={"province_code"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\DistrictRepository")
  */
 class District
 {
@@ -47,6 +47,20 @@ class District
      * @ORM\Column(name="district_lpd_status", type="text", length=65535, nullable=true)
      */
     private $districtLpdStatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="district_risk_status", type="text", length=5, nullable=true)
+     */
+    private $districtRiskStatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="district_icn_status", type="text", length=20, nullable=true)
+     */
+    private $districtIcnStatus;
 
     /**
      * @var \DateTime
@@ -184,6 +198,40 @@ class District
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getDistrictRiskStatus()
+    {
+        return $this->districtRiskStatus;
+    }
+
+    /**
+     * @param string $districtRiskStatus
+     */
+    public function setDistrictRiskStatus($districtRiskStatus)
+    {
+        $this->districtRiskStatus = $districtRiskStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDistrictIcnStatus()
+    {
+        return $this->districtIcnStatus;
+    }
+
+    /**
+     * @param string $districtIcnStatus
+     */
+    public function setDistrictIcnStatus($districtIcnStatus)
+    {
+        $this->districtIcnStatus = $districtIcnStatus;
+    }
+
+
 
     /**
      * Get districtLpdStatus

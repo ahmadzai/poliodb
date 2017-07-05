@@ -8,8 +8,11 @@ namespace App\PolioDbBundle\Utils;
  */
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class Settings
 {
+    //const VISITED_URL = 'dashboard_main';
 
     protected $em;
 
@@ -17,6 +20,11 @@ class Settings
     {
         $this->em = $entityManager;
 
+    }
+
+    public function trackUrl($url = 'dashboard_main') {
+        $session = new Session();
+        $session->set('visited_url', $url);
     }
 
     /***

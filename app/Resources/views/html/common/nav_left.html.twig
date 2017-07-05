@@ -8,7 +8,7 @@
                     <i class="icon-search"></i>
                 </button>
                 <span>
-                    <input type="text" placeholder="Search...">
+                    <input type="text" placeholder="Search ...">
                 </span>
             </div>
         </form>
@@ -67,21 +67,25 @@
 
         <!--=== Navigation ===-->
         <ul id="nav">
-            <li class="current">
-                <a href="{{ path('home_admin_data') }}">
+            <li class="{% if(app.session.get('visited_url') == 'dashboard_main') %}current{% endif %}">
+                <a href="{{ path('dashboard_main') }}">
                     <i class="icon-dashboard"></i>
                     Dashboard
                 </a>
             </li>
             {% for d_menu in menu %}
-                <li>
+                <li {% if app.session.get('visited_url') == 'dashboard_'~d_menu.tableName %}
+                           class="current open"
+                           {% endif %}>
                     <a href="javascript:void(0);">
                         <i class="icon-plus"></i>
                         {{ d_menu.tableLongName }}
                     </a>
                     <ul class="sub-menu">
                         {% if d_menu.dashboard == 1 %}
-                        <li>
+                        <li {% if app.session.get('visited_url') == 'dashboard_'~d_menu.tableName %}
+                            class="current"
+                                {% endif %}>
 
                             <a href="{{ path('dashboard_'~d_menu.tableName) }}">
                                 <i class="icon-bar-chart"></i>
@@ -91,7 +95,9 @@
                         </li>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.entryForm == 1 %}
-                                <li>
+                                <li {% if app.session.get('visited_url') == 'entry_'~d_menu.tableName %}
+                                    class="current"
+                                        {% endif %}>
                                     <a href="{{ path('entry_'~d_menu.tableName) }}">
                                         <i class="icon-edit"></i>
                                         Data Entry
@@ -102,18 +108,22 @@
                         {% endif %}
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
-                            <li>
-                                <a href="{{ path('data_upload', {'table':d_menu.tableName}) }}">
-                                    <i class="icon-cloud-upload"></i>
-                                    Upload Data
-                                </a>
-                            </li>
+                                <li {% if app.session.get('visited_url') == 'data_upload_'~d_menu.tableName %}
+                                    class="current"
+                                        {% endif %}>
+                                    <a href="{{ path('data_upload', {'table':d_menu.tableName}) }}">
+                                        <i class="icon-cloud-upload"></i>
+                                        Upload Data
+                                    </a>
+                                </li>
                             {% endif %}
                         {% endif %}
 
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
-                                <li>
+                                <li {% if app.session.get('visited_url') == 'data_download_'~d_menu.tableName %}
+                                    class="current"
+                                        {% endif %}>
                                     <a href="{{ path('data_download', {'table':d_menu.tableName}) }}">
                                         <i class="icon-cloud-download"></i>
                                         Download Data

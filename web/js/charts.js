@@ -8,7 +8,8 @@
     globalOptions = {
         chart: {
             renderTo:'',
-            type: ''
+            type: '',
+            zoomType: 'xy'
         },
         exporting: {
             sourceWidth: 800,
@@ -391,21 +392,21 @@ function multiAxisColumnChart(settings) {
 
      }
      */
-    if(settings.hasOwnProperty('yAxises')) {
-        var yAxises = settings.yAxises;
+    if(settings.hasOwnProperty('axises')) {
+        var axises = settings.axises;
         var axis = [];
-        for(var i = 0; i<yAxises.length; i++) {
+        for(var i = 0; i<axises.length; i++) {
             var tmpAxis = {
                 labels: {
-                    format: '{value}'+yAxises[i].format,
-                    style: {color:yAxises[i].color}
+                    format: '{value}'+axises[i].format,
+                    style: {color:axises[i].color}
                 },
                 title: {
-                    text:yAxises[i].title,
-                    style:{color:yAxises[i].color}
+                    text:axises[i].title,
+                    style:{color:axises[i].color}
                 },
-                opposite:yAxises[i].opposite,
-                gridLineWidth: yAxises[i].lineWidth,
+                opposite:axises[i].opposite,
+                gridLineWidth: axises[i].lineWidth,
 
             }
             axis.push(tmpAxis);
@@ -440,7 +441,7 @@ function multiAxisColumnChart(settings) {
     options.xAxis.categories = dataObj.categories;
     // set the data/series
     var dataSeries = dataObj.series;
-    console.log(dataSeries);
+    //console.log(dataSeries);
     //console.log('We are here above the if');
     if (settings.hasOwnProperty('yAxises')) {
         //console.log('We are here in the right location');
@@ -450,7 +451,7 @@ function multiAxisColumnChart(settings) {
         for (var i = 0; i < newSeries.length; i++) {
 
             for (var x = 0; x < dataSeries.length; x++) {
-                if (dataSeries[x].name == newSeries[i].indicator) {
+                if (dataSeries[x].name.toLowerCase() == newSeries[i].indicator.toLowerCase()) {
                     var tempSeries = {};
                     tempSeries['name'] = dataSeries[x].name;
                     tempSeries['type'] = newSeries[i].type;
@@ -585,7 +586,7 @@ function columnChart(settings) {
     options.xAxis.categories = dataObj.categories;
     // set the data/series
     options.series = dataObj.series;
-    console.log(dataObj["series"]);
+    //console.log(dataObj["series"]);
     // check for the combined chart request
     if (settings.hasOwnProperty('combination')) {
         var secondCharts = settings.combination;
@@ -621,7 +622,7 @@ function lineChart(settings) {
     // set the type of chart, static in this case
     options.chart.type = settings.type;
 
-    // set the plat option, empty, normal, percent
+    // set the plot option, empty, normal, percent
     options['plotOptions'] = {column:{stacking:settings.stacking}};
 
     if(settings.hasOwnProperty('yAxisTitle'))

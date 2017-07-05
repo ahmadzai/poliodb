@@ -30,15 +30,22 @@ class DistrictType extends AbstractType
             ->add('districtNameAlt', TextType::class, array('label'=>'Alternative Name', 'required'=>false))
             ->add('districtNamePashtu', TextType::class, array('label'=>'Pashto Name', 'required'=>false))
             ->add('districtNameDari', TextType::class, array('label'=>'Dari Name', 'required'=>false))
-            ->add('districtLpdStatus', ChoiceType::class, array(
+            ->add('districtRiskStatus', ChoiceType::class, array(
                 'choices' => array(
-                    'Non-LPD' => null,
-                    'LPD-1' => 1,
-                    'LPD-2' => 2,
-                    'LPD-3' => 3
+                    'Non-HR' => null,
+                    'HR' => 'HR',
+                    'VHR' => 'VHR'
                 ),
-                'label' => 'LPD Status'
-            ));
+                'label' => 'VHR Status'
+            ))->add('districtIcnStatus', ChoiceType::class, array(
+                    'choices' => array(
+                        'Non-ICN' => null,
+                        'Full-time' => 'full-time',
+                        'Campaign-based' => 'campaign-based'
+                    ),
+                    'label' => 'ICN Status'
+                )
+            );
 
     }
 

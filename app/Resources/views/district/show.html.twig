@@ -6,31 +6,35 @@
     <table>
         <tbody>
             <tr>
-                <th>Districtname</th>
+                <th>Name</th>
                 <td>{{ district.districtName }}</td>
             </tr>
             <tr>
-                <th>Districtnamealt</th>
+                <th>Alt-name</th>
                 <td>{{ district.districtNameAlt }}</td>
             </tr>
             <tr>
-                <th>Districtnamepashtu</th>
+                <th>Pashto Name</th>
                 <td>{{ district.districtNamePashtu }}</td>
             </tr>
             <tr>
-                <th>Districtnamedari</th>
+                <th>Dari Name</th>
                 <td>{{ district.districtNameDari }}</td>
             </tr>
             <tr>
-                <th>Districtlpdstatus</th>
-                <td>{{ district.districtLpdStatus }}</td>
+                <th>Risk Status</th>
+                <td>{{ district.districtRiskStatus }}</td>
             </tr>
             <tr>
-                <th>Entrydate</th>
+                <th>ICN Status</th>
+                <td>{{ district.districtIcnStatus }}</td>
+            </tr>
+            <tr>
+                <th>Entry date</th>
                 <td>{% if district.entryDate %}{{ district.entryDate|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Districtcode</th>
+                <th>District code</th>
                 <td>{{ district.districtCode }}</td>
             </tr>
         </tbody>
