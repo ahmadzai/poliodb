@@ -391,4 +391,354 @@ class DistrictAgg
 
 
 
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return DistrictAgg
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Set province
+     *
+     * @param string $province
+     *
+     * @return DistrictAgg
+     */
+    public function setProvince($province)
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceCode
+     *
+     * @param integer $provinceCode
+     *
+     * @return DistrictAgg
+     */
+    public function setProvinceCode($provinceCode)
+    {
+        $this->provinceCode = $provinceCode;
+
+        return $this;
+    }
+
+    /**
+     * Set district
+     *
+     * @param string $district
+     *
+     * @return DistrictAgg
+     */
+    public function setDistrict($district)
+    {
+        $this->district = $district;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignDate
+     *
+     * @param string $campaignDate
+     *
+     * @return DistrictAgg
+     */
+    public function setCampaignDate($campaignDate)
+    {
+        $this->campaignDate = $campaignDate;
+
+        return $this;
+    }
+
+    /**
+     * Set lpd
+     *
+     * @param integer $lpd
+     *
+     * @return DistrictAgg
+     */
+    public function setLpd($lpd)
+    {
+        $this->lpd = $lpd;
+
+        return $this;
+    }
+
+    /**
+     * Set dcode
+     *
+     * @param integer $dcode
+     *
+     * @return DistrictAgg
+     */
+    public function setDcode($dcode)
+    {
+        $this->dcode = $dcode;
+
+        return $this;
+    }
+
+    /**
+     * Set cType
+     *
+     * @param string $cType
+     *
+     * @return DistrictAgg
+     */
+    public function setCType($cType)
+    {
+        $this->cType = $cType;
+
+        return $this;
+    }
+
+    /**
+     * Set cYear
+     *
+     * @param integer $cYear
+     *
+     * @return DistrictAgg
+     */
+    public function setCYear($cYear)
+    {
+        $this->cYear = $cYear;
+
+        return $this;
+    }
+
+    /**
+     * Set cMonth
+     *
+     * @param string $cMonth
+     *
+     * @return DistrictAgg
+     */
+    public function setCMonth($cMonth)
+    {
+        $this->cMonth = $cMonth;
+
+        return $this;
+    }
+
+    /**
+     * Set campaignId
+     *
+     * @param integer $campaignId
+     *
+     * @return DistrictAgg
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingAbsent
+     *
+     * @param integer $remainingAbsent
+     *
+     * @return DistrictAgg
+     */
+    public function setRemainingAbsent($remainingAbsent)
+    {
+        $this->remainingAbsent = $remainingAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set receivedVials
+     *
+     * @param integer $receivedVials
+     *
+     * @return DistrictAgg
+     */
+    public function setReceivedVials($receivedVials)
+    {
+        $this->receivedVials = $receivedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set usedVials
+     *
+     * @param integer $usedVials
+     *
+     * @return DistrictAgg
+     */
+    public function setUsedVials($usedVials)
+    {
+        $this->usedVials = $usedVials;
+
+        return $this;
+    }
+
+    /**
+     * Set child0To11
+     *
+     * @param integer $child0To11
+     *
+     * @return DistrictAgg
+     */
+    public function setChild0To11($child0To11)
+    {
+        $this->child0To11 = $child0To11;
+
+        return $this;
+    }
+
+    /**
+     * Set child12To59
+     *
+     * @param integer $child12To59
+     *
+     * @return DistrictAgg
+     */
+    public function setChild12To59($child12To59)
+    {
+        $this->child12To59 = $child12To59;
+
+        return $this;
+    }
+
+    /**
+     * Set regAbsent
+     *
+     * @param integer $regAbsent
+     *
+     * @return DistrictAgg
+     */
+    public function setRegAbsent($regAbsent)
+    {
+        $this->regAbsent = $regAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccAbsent
+     *
+     * @param integer $vaccAbsent
+     *
+     * @return DistrictAgg
+     */
+    public function setVaccAbsent($vaccAbsent)
+    {
+        $this->vaccAbsent = $vaccAbsent;
+
+        return $this;
+    }
+
+    /**
+     * Set regSleep
+     *
+     * @param integer $regSleep
+     *
+     * @return DistrictAgg
+     */
+    public function setRegSleep($regSleep)
+    {
+        $this->regSleep = $regSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccSleep
+     *
+     * @param integer $vaccSleep
+     *
+     * @return DistrictAgg
+     */
+    public function setVaccSleep($vaccSleep)
+    {
+        $this->vaccSleep = $vaccSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingSleep
+     *
+     * @param integer $remainingSleep
+     *
+     * @return DistrictAgg
+     */
+    public function setRemainingSleep($remainingSleep)
+    {
+        $this->remainingSleep = $remainingSleep;
+
+        return $this;
+    }
+
+    /**
+     * Set regRefusal
+     *
+     * @param integer $regRefusal
+     *
+     * @return DistrictAgg
+     */
+    public function setRegRefusal($regRefusal)
+    {
+        $this->regRefusal = $regRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set vaccRefusal
+     *
+     * @param integer $vaccRefusal
+     *
+     * @return DistrictAgg
+     */
+    public function setVaccRefusal($vaccRefusal)
+    {
+        $this->vaccRefusal = $vaccRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set remainingRefusal
+     *
+     * @param integer $remainingRefusal
+     *
+     * @return DistrictAgg
+     */
+    public function setRemainingRefusal($remainingRefusal)
+    {
+        $this->remainingRefusal = $remainingRefusal;
+
+        return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return DistrictAgg
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

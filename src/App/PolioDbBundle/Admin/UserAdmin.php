@@ -8,6 +8,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 
 class UserAdmin extends AbstractAdmin
 {
+
+    protected $baseRoutePattern = 'user';
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('username', 'text')
@@ -17,12 +19,15 @@ class UserAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('username');
+        $datagridMapper->add('username')
+        ->add('email');
+        //->add('firstname');
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
-        $listMapper->addIdentifier('username');
+        $listMapper->addIdentifier('username')
+        ->add('email');
     }
 
     public function preUpdate($user)

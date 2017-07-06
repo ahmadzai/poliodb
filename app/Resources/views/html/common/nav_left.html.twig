@@ -74,7 +74,7 @@
                 </a>
             </li>
             {% for d_menu in menu %}
-                <li>
+                <li {# class="{{ app.request.attributes.get('_route') == 'admin_data_upload' ? 'open' }}" #}>
                     <a href="javascript:void(0);">
                         <i class="icon-plus"></i>
                         {{ d_menu.tableLongName }}
@@ -103,7 +103,17 @@
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
                             <li>
-                                <a href="{{ path('data_upload', {'table':d_menu.tableName}) }}">
+                              {% if d_menu.tableName == "admin_data" %}
+                              <a href="{{ path('admin_data_upload') }}">
+                                {% endif %}
+
+                                {% if d_menu.tableName == "icm_data" %}
+                                <a href="{{ path('icm_data_upload') }}">
+                                  {% endif %}
+
+                                  {% if d_menu.tableName == "catchup_data" %}
+                                  <a href="{{ path('catchup_data_upload') }}">
+                                    {% endif %}
                                     <i class="icon-cloud-upload"></i>
                                     Upload Data
                                 </a>

@@ -1,91 +1,111 @@
 <?php
 
 namespace App\PolioDbBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TempIcmData
+ * @ORM\Entity
+ * @ORM\Table(name="temp_icm_data")
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\TempIcmDataRepository")
  */
 class TempIcmData
 {
-    /**
-     * @var integer
-     */
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   */
     private $districtCode;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noTeamMonitored;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $teamResidentArea;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $vaccinatorTrained;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $vaccStage3;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $teamSupervised;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $teamWithChw;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $teamWithFemale;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $teamAccomSm;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noMissedNoTeamVisit;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noChildSeen;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noChildWithFm;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noMissedChild;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $noMissed10;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $campaignId;
 
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $dataId;
+    private $data_id;
+
+
+    private $file;
+
+    public function getFile()
+    {
+      return $this->file;
+    }
+
+    public function setFile($file)
+    {
+       $this->file = $file;
+
+       return $this;
+     }
 
 
     /**
@@ -455,7 +475,6 @@ class TempIcmData
      */
     public function getDataId()
     {
-        return $this->dataId;
+        return $this->data_id;
     }
 }
-

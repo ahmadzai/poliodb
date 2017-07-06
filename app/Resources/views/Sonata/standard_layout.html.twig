@@ -101,6 +101,9 @@ file that was distributed with this source code.
             <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.move.js')}}"></script>
             <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.swipe.js')}}"></script>
 
+
+            {# Nawid Add JavaScript for filter #}
+            <script type="text/javascript" src="{{ asset('template/assets/js/Admin.js')}}"></script>
             {# General JavaScript #}
             <script type="text/javascript" src="{{ asset('template/assets/js/libs/breakpoints.js')}}"></script>
             <script type="text/javascript" src="{{ asset('template/plugins/respond/respond.min.js')}}"></script>
@@ -208,6 +211,60 @@ file that was distributed with this source code.
 
             <div class="container">
                 {% block sonata_page_content %}
+                <section class="content-header">
+                  <div class="page-header">
+                      <div class="page-title">
+                    {% block sonata_page_content_header %}
+                        {% block sonata_page_content_nav %}
+                            {% if _tab_menu is not empty or _actions is not empty or _list_filters_actions is not empty %}
+                                <nav class="navbar navbar-default" role="navigation">
+                                    <div class="container-fluid">
+                                        {% block tab_menu_navbar_header %}
+                                            {% if _navbar_title is not empty %}
+                                                <div class="navbar-header">
+                                                    <a class="navbar-brand" href="#">{{ _navbar_title|raw }}</a>
+                                                </div>
+                                            {% endif %}
+                                        {% endblock %}
+
+
+
+                                          {#  {% if admin is defined and action is defined and action == 'list' and admin.listModes|length > 1 %}
+                                                <div class="nav navbar-right btn-group">
+                                                    {% for mode, settings in admin.listModes %}
+                                                        <a href="{{ admin.generateUrl('list', app.request.query.all|merge({_list_mode: mode})) }}" class="btn btn-default navbar-btn btn-sm{% if admin.getListMode() == mode %} active{% endif %}"><i class="{{ settings.class }}"></i></a>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}  #}
+
+                                            {% block sonata_admin_content_actions_wrappers %}
+                                                {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
+                                                    <ul class="nav navbar-nav navbar-right">
+                                                    {% if _actions|split('</a>')|length > 2 %}
+                                                        <li class="dropdown sonata-actions">
+                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                {{ _actions|raw }}
+                                                            </ul>
+                                                        </li>
+                                                    {% else %}
+                                                        {{ _actions|raw }}
+                                                    {% endif %}
+                                                    </ul>
+                                                {% endif %}
+                                            {% endblock sonata_admin_content_actions_wrappers %}
+
+                                            {% if _list_filters_actions is not empty %}
+                                                {{ _list_filters_actions|raw }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </nav>
+                            {% endif %}
+                        {% endblock sonata_page_content_nav %}
+                    {% endblock sonata_page_content_header %}
+                </section>
+
 
                     <div class="content">
                         {% block sonata_admin_content %}

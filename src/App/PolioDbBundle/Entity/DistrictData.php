@@ -92,4 +92,74 @@ class DistrictData
     {
         return $this->provinceCode;
     }
+
+    /**
+     * Set districtName
+     *
+     * @param string $districtName
+     *
+     * @return DistrictData
+     */
+    public function setDistrictName($districtName)
+    {
+        $this->districtName = $districtName;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceName
+     *
+     * @param string $provinceName
+     *
+     * @return DistrictData
+     */
+    public function setProvinceName($provinceName)
+    {
+        $this->provinceName = $provinceName;
+
+        return $this;
+    }
+
+    /**
+     * Set districtCode
+     *
+     * @param integer $districtCode
+     *
+     * @return DistrictData
+     */
+    public function setDistrictCode($districtCode)
+    {
+        $this->districtCode = $districtCode;
+
+        return $this;
+    }
+
+    /**
+     * Set provinceCode
+     *
+     * @param string $provinceCode
+     *
+     * @return DistrictData
+     */
+    public function setProvinceCode($provinceCode)
+    {
+        $this->provinceCode = $provinceCode;
+
+        return $this;
+    }
+
+    /**
+     * Set lpdStatus
+     *
+     * @param string $lpdStatus
+     *
+     * @return DistrictData
+     */
+    public function setLpdStatus($lpdStatus)
+    {
+        $this->lpdStatus = $lpdStatus;
+
+        return $this;
+    }
 }
