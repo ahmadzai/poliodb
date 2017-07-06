@@ -1,0 +1,64 @@
+
+            <ul class="page-stats">
+                <li>
+                    <div class="summary">
+                        <span>Vaccinated U5</span>
+                        <h3>{{ lastCampData[0]['VaccChild']|number_format(0, '.', ',') }}</h3>
+                    </div>
+                    <div id="sparkline-pie-vaccinated" class="graph hidden-xs"></div>
+
+                </li>
+                <li>
+                    <div class="summary">
+                        <span>Remaining U5</span>
+                        <h3>{{ lastCampData[0]['TotalRemaining']|number_format(0, '.', ',') }}</h3>
+                    </div>
+                    <div id="sparkline-pie-remaining" class="graph hidden-xs"></div>
+                </li>
+            </ul>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $("#sparkline-pie-vaccinated").sparkline(['{{ lastCampData[0]['Child011'] }}',
+                        '{{ lastCampData[0]['Child1259'] }}',
+                        '{{ lastCampData[0]['MissedVaccinated'] }}'
+                    ], {
+                        type: 'pie',
+                        width: '40px',
+                        height: '40px',
+                        sliceColors: ['#43AB0D', '#048aff', '#B844F0'],
+                        {% verbatim %}
+                        tooltipFormat: '{{offset:offset}} ({{percent.1}}%)',
+                        tooltipValueLookups: {
+                            'offset': {
+                                0: 'Child-011M',
+                                1: 'Child-1259',
+                                2: 'MissedVacc'
+                            }
+                }
+                {% endverbatim %}
+                    });
+                    $("#sparkline-pie-remaining").sparkline(['{{ lastCampData[0]['RemainingAbsent'] }}',
+                            '{{ lastCampData[0]['RemainingRefusal'] }}',
+                            '{{ lastCampData[0]['RemainingNSS'] }}'
+                        ],
+                        {
+                            type: 'pie',
+                            width: '40px',
+                            height: '40px',
+                            sliceColors: ['#FFFF00','#FF0000', '#C99900'],
+                            {% verbatim %}
+                            tooltipFormat: '{{offset:offset}} ({{percent.1}}%)',
+                            tooltipValueLookups: {
+                                'offset': {
+                                    0: 'Absent',
+                                    1: 'Refusal',
+                                    2: 'NSS'
+                                    }
+                }
+                {% endverbatim %}
+                        });
+
+                })
+            </script>

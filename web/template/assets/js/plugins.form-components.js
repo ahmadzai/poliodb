@@ -250,7 +250,7 @@ var FormComponents = function() {
 			initDualListBox(); // Dual Select Boxes
 			initValidation(); // Validation
 			initWysiwyg(); // wysihtml5
-			initMultiselect(); // Multiselect
+			//initMultiselect(); // Multiselect
 		}
 
 	};

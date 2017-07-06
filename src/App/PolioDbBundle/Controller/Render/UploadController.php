@@ -26,6 +26,7 @@ use App\PolioDbBundle\Entity\TempCatchupData;
 class UploadController extends Controller
 {
 
+<<<<<<< HEAD
   /**
   * @Route("/upload/admin_data", name="admin_data_upload")
   */
@@ -952,6 +953,16 @@ class UploadController extends Controller
                 if(is_double($row['J']) || is_null($row['J']))
                 echo "";
                 else {
+=======
+    /**
+     * @Route("/upload/admin_data", name="data_upload")
+     * @param $table
+     * @param $request
+     * @return response
+     */
+     public function uploadAction(Request $request)
+     {
+>>>>>>> charts_filter
 
                   $stmtt = $em->getRepository('AppPolioDbBundle:TempCatchupData')
                   ->truncatTempCatchupData();

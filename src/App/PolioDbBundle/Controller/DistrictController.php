@@ -37,7 +37,7 @@ class DistrictController extends Controller
      *
      * @Route("/new", name="district_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function newAction(Request $request)
     {
@@ -80,7 +80,7 @@ class DistrictController extends Controller
      *
      * @Route("/{id}/edit", name="district_edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function editAction(Request $request, District $district)
     {
@@ -106,7 +106,7 @@ class DistrictController extends Controller
      *
      * @Route("/{id}", name="district_delete")
      * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function deleteAction(Request $request, District $district)
     {
