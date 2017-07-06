@@ -108,10 +108,10 @@
                         {% endif %}
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
-                                <li {% if app.session.get('visited_url') == 'data_upload_'~d_menu.tableName %}
+                                <li {% if app.session.get('visited_url') == d_menu.tableName~'_upload' %}
                                     class="current"
                                         {% endif %}>
-                                    <a href="{{ path('data_upload', {'table':d_menu.tableName}) }}">
+                                    <a href="{{ path(d_menu.tableName~'_upload') }}">
                                         <i class="icon-cloud-upload"></i>
                                         Upload Data
                                     </a>
