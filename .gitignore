@@ -37,6 +37,9 @@ Pol_System
 !bin/console
 !bin/symfony_requirements
 
+# Vendor
+/vendor/
+
 
 # PHPUnit
 /app/phpunit.xml

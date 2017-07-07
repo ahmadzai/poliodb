@@ -3320,3 +3320,9 @@ ul.stats li.light strong {
 .theme-dark #sidebar .notifications li a:hover {
   color: #eaebee;
 }
+
+.multiselect .dropdown-toggle .btn .btn-default {
+    height: 100%;
+    font-family: cursive;
+    top: 10px;
+}

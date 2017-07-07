@@ -8,7 +8,7 @@
                     <i class="icon-search"></i>
                 </button>
                 <span>
-                    <input type="text" placeholder="Search...">
+                    <input type="text" placeholder="Search ...">
                 </span>
             </div>
         </form>
@@ -16,114 +16,114 @@
         {#<!-- Search Results -->#}
         {#<div class="sidebar-search-results">#}
 
-            {#<i class="icon-remove close"></i>#}
-            {#<!-- Documents -->#}
-            {#<div class="title">#}
-                {#Documents#}
-            {#</div>#}
-            {#<ul class="notifications">#}
-                {#<li>#}
-                    {#<a href="javascript:void(0);">#}
-                        {#<div class="col-left">#}
-                            {#<span class="label label-info"><i class="icon-file-text"></i></span>#}
-                        {#</div>#}
-                        {#<div class="col-right with-margin">#}
-                            {#<span class="message"><strong>John Doe</strong> received $1.527,32</span>#}
-                            {#<span class="time">finances.xls</span>#}
-                        {#</div>#}
-                    {#</a>#}
-                {#</li>#}
-                {#<li>#}
-                    {#<a href="javascript:void(0);">#}
-                        {#<div class="col-left">#}
-                            {#<span class="label label-success"><i class="icon-file-text"></i></span>#}
-                        {#</div>#}
-                        {#<div class="col-right with-margin">#}
-                            {#<span class="message">My name is <strong>John Doe</strong> ...</span>#}
-                            {#<span class="time">briefing.docx</span>#}
-                        {#</div>#}
-                    {#</a>#}
-                {#</li>#}
-            {#</ul>#}
-            {#<!-- /Documents -->#}
-            {#<!-- Persons -->#}
-            {#<div class="title">#}
-                {#Persons#}
-            {#</div>#}
-            {#<ul class="notifications">#}
-                {#<li>#}
-                    {#<a href="javascript:void(0);">#}
-                        {#<div class="col-left">#}
-                            {#<span class="label label-danger"><i class="icon-female"></i></span>#}
-                        {#</div>#}
-                        {#<div class="col-right with-margin">#}
-                            {#<span class="message">Jane <strong>Doe</strong></span>#}
-                            {#<span class="time">21 years old</span>#}
-                        {#</div>#}
-                    {#</a>#}
-                {#</li>#}
-            {#</ul>#}
+        {#<i class="icon-remove close"></i>#}
+        {#<!-- Documents -->#}
+        {#<div class="title">#}
+        {#Documents#}
+        {#</div>#}
+        {#<ul class="notifications">#}
+        {#<li>#}
+        {#<a href="javascript:void(0);">#}
+        {#<div class="col-left">#}
+        {#<span class="label label-info"><i class="icon-file-text"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message"><strong>John Doe</strong> received $1.527,32</span>#}
+        {#<span class="time">finances.xls</span>#}
+        {#</div>#}
+        {#</a>#}
+        {#</li>#}
+        {#<li>#}
+        {#<a href="javascript:void(0);">#}
+        {#<div class="col-left">#}
+        {#<span class="label label-success"><i class="icon-file-text"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message">My name is <strong>John Doe</strong> ...</span>#}
+        {#<span class="time">briefing.docx</span>#}
+        {#</div>#}
+        {#</a>#}
+        {#</li>#}
+        {#</ul>#}
+        {#<!-- /Documents -->#}
+        {#<!-- Persons -->#}
+        {#<div class="title">#}
+        {#Persons#}
+        {#</div>#}
+        {#<ul class="notifications">#}
+        {#<li>#}
+        {#<a href="javascript:void(0);">#}
+        {#<div class="col-left">#}
+        {#<span class="label label-danger"><i class="icon-female"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message">Jane <strong>Doe</strong></span>#}
+        {#<span class="time">21 years old</span>#}
+        {#</div>#}
+        {#</a>#}
+        {#</li>#}
+        {#</ul>#}
         {#</div> <!-- /.sidebar-search-results -->#}
 
         <!--=== Navigation ===-->
         <ul id="nav">
-            <li class="current">
-                <a href="{{ path('home_admin_data') }}">
+            <li class="{% if(app.session.get('visited_url') == 'dashboard_main') %}current{% endif %}">
+                <a href="{{ path('dashboard_main') }}">
                     <i class="icon-dashboard"></i>
                     Dashboard
                 </a>
             </li>
             {% for d_menu in menu %}
-                <li {# class="{{ app.request.attributes.get('_route') == 'admin_data_upload' ? 'open' }}" #}>
+                <li {% if app.session.get('visited_url') == 'dashboard_'~d_menu.tableName %}
+                    class="current open"
+                        {% endif %}>
                     <a href="javascript:void(0);">
                         <i class="icon-plus"></i>
                         {{ d_menu.tableLongName }}
                     </a>
                     <ul class="sub-menu">
                         {% if d_menu.dashboard == 1 %}
-                        <li>
+                            <li {% if app.session.get('visited_url') == 'dashboard_'~d_menu.tableName %}
+                                class="current"
+                                    {% endif %}>
 
-                            <a href="{{ path('dashboard_'~d_menu.tableName) }}">
-                                <i class="icon-bar-chart"></i>
-                                Dashboard
-                            </a>
+                                <a href="{{ path('dashboard_'~d_menu.tableName) }}">
+                                    <i class="icon-bar-chart"></i>
+                                    Dashboard
+                                </a>
 
-                        </li>
+                            </li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                {% if d_menu.entryForm == 1 %}
+                                    <li {% if app.session.get('visited_url') == 'entry_'~d_menu.tableName %}
+                                        class="current"
+                                            {% endif %}>
+                                        <a href="{{ path('entry_'~d_menu.tableName) }}">
+                                            <i class="icon-edit"></i>
+                                            Data Entry
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            {% if d_menu.entryForm == 1 %}
-                                <li>
-                                    <a href="{{ path('entry_'~d_menu.tableName) }}">
-                                        <i class="icon-edit"></i>
-                                        Data Entry
+                            {% if d_menu.uploadForm == 1 %}
+                                <li {% if app.session.get('visited_url') == d_menu.tableName~'_upload' %}
+                                    class="current"
+                                        {% endif %}>
+                                    <a href="{{ path(d_menu.tableName~'_upload') }}">
+                                        <i class="icon-cloud-upload"></i>
+                                        Upload Data
                                     </a>
                                 </li>
                             {% endif %}
                         {% endif %}
-                        {% endif %}
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            {% if d_menu.uploadForm == 1 %}
-                            <li>
-                              {% if d_menu.tableName == "admin_data" %}
-                              <a href="{{ path('admin_data_upload') }}">
-                                {% endif %}
-
-                                {% if d_menu.tableName == "icm_data" %}
-                                <a href="{{ path('icm_data_upload') }}">
-                                  {% endif %}
-
-                                  {% if d_menu.tableName == "catchup_data" %}
-                                  <a href="{{ path('catchup_data_upload') }}">
-                                    {% endif %}
-                                    <i class="icon-cloud-upload"></i>
-                                    Upload Data
-                                </a>
-                            </li>
-                            {% endif %}
-                        {% endif %}
 
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if d_menu.uploadForm == 1 %}
-                                <li>
+                                <li {% if app.session.get('visited_url') == d_menu.tableName~'_download' %}
+                                    class="current"
+                                        {% endif %}>
                                     <a href="{{ path('data_download', {'table':d_menu.tableName}) }}">
                                         <i class="icon-cloud-download"></i>
                                         Download Data
@@ -139,36 +139,36 @@
 
         {#<!-- /Navigation -->#}
         {#<div class="sidebar-title">#}
-            {#<span>Notifications</span>#}
+        {#<span>Notifications</span>#}
         {#</div>#}
         {#<ul class="notifications demo-slide-in"> <!-- .demo-slide-in is just for demonstration purposes. You can remove this. -->#}
-            {#<li style="display: none;"> <!-- style-attr is here only for fading in this notification after a specific time. Remove this. -->#}
-                {#<div class="col-left">#}
-                    {#<span class="label label-danger"><i class="icon-warning-sign"></i></span>#}
-                {#</div>#}
-                {#<div class="col-right with-margin">#}
-                    {#<span class="message">Server <strong>#512</strong> crashed.</span>#}
-                    {#<span class="time">few seconds ago</span>#}
-                {#</div>#}
-            {#</li>#}
-            {#<li style="display: none;"> <!-- style-attr is here only for fading in this notification after a specific time. Remove this. -->#}
-                {#<div class="col-left">#}
-                    {#<span class="label label-info"><i class="icon-envelope"></i></span>#}
-                {#</div>#}
-                {#<div class="col-right with-margin">#}
-                    {#<span class="message"><strong>John</strong> sent you a message</span>#}
-                    {#<span class="time">few second ago</span>#}
-                {#</div>#}
-            {#</li>#}
-            {#<li>#}
-                {#<div class="col-left">#}
-                    {#<span class="label label-success"><i class="icon-plus"></i></span>#}
-                {#</div>#}
-                {#<div class="col-right with-margin">#}
-                    {#<span class="message"><strong>Emma</strong>'s account was created</span>#}
-                    {#<span class="time">4 hours ago</span>#}
-                {#</div>#}
-            {#</li>#}
+        {#<li style="display: none;"> <!-- style-attr is here only for fading in this notification after a specific time. Remove this. -->#}
+        {#<div class="col-left">#}
+        {#<span class="label label-danger"><i class="icon-warning-sign"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message">Server <strong>#512</strong> crashed.</span>#}
+        {#<span class="time">few seconds ago</span>#}
+        {#</div>#}
+        {#</li>#}
+        {#<li style="display: none;"> <!-- style-attr is here only for fading in this notification after a specific time. Remove this. -->#}
+        {#<div class="col-left">#}
+        {#<span class="label label-info"><i class="icon-envelope"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message"><strong>John</strong> sent you a message</span>#}
+        {#<span class="time">few second ago</span>#}
+        {#</div>#}
+        {#</li>#}
+        {#<li>#}
+        {#<div class="col-left">#}
+        {#<span class="label label-success"><i class="icon-plus"></i></span>#}
+        {#</div>#}
+        {#<div class="col-right with-margin">#}
+        {#<span class="message"><strong>Emma</strong>'s account was created</span>#}
+        {#<span class="time">4 hours ago</span>#}
+        {#</div>#}
+        {#</li>#}
         {#</ul>#}
 
         <div class="sidebar-widget align-center">

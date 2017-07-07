@@ -1,111 +1,143 @@
 {% extends 'main_filter.html.twig' %}
 {% block content %}
-    <div class="container">
-        <!-- Breadcrumbs line -->
-        <div class="crumbs" role="">
-            <ul id="breadcrumbs" class="breadcrumb">
-                <li>
-                    <i class="icon-home"></i>
-                    <a href="{{ path('dashboard_main') }}">Home</a>
-                </li>
+<div class="container">
+    <!-- Breadcrumbs line -->
+    <div class="crumbs" role="">
+        <ul id="breadcrumbs" class="breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="{{ path('dashboard_main') }}">Home</a>
+            </li>
+            <li class="">
+                <a href="#" title="">Admin Data</a>
+            </li>
+            <li class="current">
+                <a href="{{ path(app.session.get('visited_url')) }}" title="">
+                    {% if('dashboard' in app.session.get('visited_url')) %} Dashboard
+                    {% elseif('entry' in app.session.get('visited_url')) %} Data Entry
+                    {% elseif('upload' in app.session.get('visited_url')) %} Upload
+                    {% elseif('download' in app.session.get('visited_url')) %} Download
+                    {% endif %}
+                </a>
+            </li>
 
-            </ul>
-            <ul class="pull-right breadcrumb">
-                <li>
-                    <span class="loading-top">Updating charts' contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                </li>
-            </ul>
 
-        </div>
-        <!-- /Breadcrumbs line -->
-        <!--=== Page Header ===-->
-        <div class="page-header">
-            <div class="page-title">
-                <h3>Dashboard</h3>
-                <span>Hello, {{app.user.username|capitalize}}!</span>
-            </div>
 
-            <!-- Page Stats -->
+        </ul>
+        <ul class="pull-right breadcrumb">
+            <li>
+                <span class="loading-top">Updating charts' contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+            </li>
+        </ul>
 
-            {% block sparkline %}
-                {{ render(controller(
-                'AppPolioDbBundle:CommonChart:sparklineChart'
-                ))
-                }}
-            {% endblock %}
 
-            <!-- /Page Stats -->
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget box">
-                    <div class="widget-header">
-                        <h4><i class="icon-bar-chart"></i> Remaining Children</h4>
-                        <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                    </div>
-                    <script src="{{ asset('/js/js/highcharts.js') }}"></script>
-                    <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
-                    <script src="{{ asset('/js/js/modules/grouped-categories.js') }}"></script>
-                    <div class="widget-content">
-                        <div id="chart1" style="min-width: 310px; height: 400px; max-width:inherit"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget box">
-                    <div class="widget-header">
-                        <h4><i class="icon-bar-chart"></i> Title</h4>
-                        <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                    </div>
-                    <div class="widget-content">
-                        <div id="chart-absent" style="min-width: 310px; height: 400px; max-width:inherit"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget box">
-                    <div class="widget-header">
-                        <h4><i class="icon-bar-chart"></i> Title </h4>
-                        <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                    </div>
-                    <div class="widget-content">
-                        <div id="chart-nss" style="min-width: 310px; height: 400px; max-width:inherit"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget box">
-                    <div class="widget-header">
-                        <h4><i class="icon-bar-chart"></i> Title </h4>
-                        <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                    </div>
-                    <div class="widget-content">
-                        <div id="chart-refusal" style="min-width: 310px; height: 400px; max-width:inherit"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget box">
-                    <div class="widget-header">
-                        <h4><i class="icon-bar-chart"></i> Vaccine Usage</h4>
-                        <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
-                    </div>
-                    <div class="widget-content">
-                        <div id="vaccine-usage" style="min-width: 310px; height: 400px; max-width:inherit"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {#<ul class="crumb-buttons">#}
+            {#<li><a href="charts.html" title=""><i class="icon-signal"></i><span>Statistics</span></a></li>#}
+            {#<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-tasks"></i><span>Users <strong>(+3)</strong></span><i class="icon-angle-down left-padding"></i></a>#}
+                {#<ul class="dropdown-menu pull-right">#}
+                    {#<li><a href="form_components.html" title=""><i class="icon-plus"></i>Add new User</a></li>#}
+                    {#<li><a href="tables_dynamic.html" title=""><i class="icon-reorder"></i>Overview</a></li>#}
+                {#</ul>#}
+            {#</li>#}
+            {#<li class="range">#}
+                {#<a href="#">#}
+                    {#<i class="icon-calendar"></i>#}
+                    {#<span></span>#}
+                    {#<i class="icon-angle-down"></i>#}
+                {#</a>#}
+            {#</li>#}
+        {#</ul>#}
 
     </div>
+    <!-- /Breadcrumbs line -->
+    <!--=== Page Header ===-->
+    <div class="page-header">
+        <div class="page-title">
+            <h3>Dashboard</h3>
+            <span>Hello, {{app.user.username|capitalize}}!</span>
+        </div>
+
+        <!-- Page Stats -->
+
+        {% block sparkline %}
+            {{ render(controller(
+            'AppPolioDbBundle:CommonChart:sparklineChart'
+            ))
+            }}
+        {% endblock %}
+
+        <!-- /Page Stats -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-bar-chart"></i> Remaining Children</h4>
+                    <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+                </div>
+                <script src="{{ asset('/js/js/highcharts.js') }}"></script>
+                <script src="{{ asset('/js/js/modules/exporting.js') }}"></script>
+                <script src="{{ asset('/js/js/modules/grouped-categories.js') }}"></script>
+                <div class="widget-content">
+                    <div id="chart1" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-bar-chart"></i> Title</h4>
+                    <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+                </div>
+                <div class="widget-content">
+                    <div id="chart-absent" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-bar-chart"></i> Title </h4>
+                    <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+                </div>
+                <div class="widget-content">
+                    <div id="chart-nss" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-bar-chart"></i> Title </h4>
+                    <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+                </div>
+                <div class="widget-content">
+                    <div id="chart-refusal" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget box">
+                <div class="widget-header">
+                    <h4><i class="icon-bar-chart"></i> Vaccine Usage</h4>
+                    <span class="pull-right loading">Loading filtered contents <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+                </div>
+                <div class="widget-content">
+                    <div id="vaccine-usage" style="min-width: 310px; height: 400px; max-width:inherit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
 {% block script_end %}
     {{parent()}}
@@ -151,7 +183,7 @@
 
                 var data = {'campaign':selectedCampaigns, 'region':selectedRegions, 'province': selectedProvinces, 'district': selectedDistricts};
 
-                //console.log(data);
+                console.log(data);
 
                 /**
                  * Todo: to write ajax request

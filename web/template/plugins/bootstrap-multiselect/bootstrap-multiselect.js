@@ -133,7 +133,7 @@
             // possible options: 'text', 'value', 'both'
             filterBehavior: 'text',
             preventInputChangeEvent: false,
-            nonSelectedText: 'None selected',
+            nonSelectedText: 'Default',
             nSelectedText: 'selected'
         },
 

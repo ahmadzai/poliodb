@@ -8,8 +8,11 @@ namespace App\PolioDbBundle\Utils;
  */
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class Settings
 {
+    //const VISITED_URL = 'dashboard_main';
 
     protected $em;
 
@@ -17,6 +20,11 @@ class Settings
     {
         $this->em = $entityManager;
 
+    }
+
+    public function trackUrl($url = 'dashboard_main') {
+        $session = new Session();
+        $session->set('visited_url', $url);
     }
 
     /***
@@ -73,16 +81,18 @@ class Settings
      * @param $campaignId
      * @return single campaign
      */
-    public function campaignLatest($table, $campaignId = 0) {
+    public function latestCampaign($table, $campaignId = 0) {
 
         if($campaignId === 0 || $campaignId == 0) {
             $data = $this->em->createQuery(
-                "SELECT distinct MAX (ca.campaignId) as CampID
-             FROM AppPolioDbBundle:$table a
-             JOIN a.campaign ca GROUP BY ca.campaignId ORDER BY ca.campaignId DESC"
-            )->getResult(Query::HYDRATE_SCALAR);
-            $campaignId = $data[0]['CampID'];
-            return $campaignId;
+                "SELECT ca.campaignId, ca.campaignMonth, ca.campaignType, ca.campaignYear
+               FROM AppPolioDbBundle:$table a
+               JOIN a.campaign ca ORDER BY ca.campaignId DESC"
+              ) ->setFirstResult(1)
+                ->setMaxResults(1)
+                ->getResult(Query::HYDRATE_SCALAR);
+            //$campaignId = $data[0]['CampID'];
+            return $data;
         }
         else {
           $data = $this->em->createQuery(
@@ -92,6 +102,25 @@ class Settings
           )->setParameter('camp', $campaignId)->getResult(Query::HYDRATE_SCALAR);
           return $data;
        }
+    }
+
+    /**
+     * @param $table
+     * @param int $no default 3 campaigns
+     * @return array
+     */
+    public function lastFewCampaigns($table, $no = 3) {
+        $campaigns = $this->campaignMenu($table);
+        $cam = [];
+        $i = 0;
+        foreach ($campaigns as $campaign) {
+            if($i == $no)
+                break;
+            $cam[] = $campaign['campaignId'];
+            $i++;
+        }
+
+        return $cam;
     }
 
 //    public function dashboardMenu() {

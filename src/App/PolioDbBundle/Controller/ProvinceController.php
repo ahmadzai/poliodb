@@ -37,7 +37,7 @@ class ProvinceController extends Controller
      *
      * @Route("/new", name="province_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function newAction(Request $request)
     {
@@ -80,7 +80,7 @@ class ProvinceController extends Controller
      *
      * @Route("/{id}/edit", name="province_edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function editAction(Request $request, Province $province)
     {
@@ -106,7 +106,7 @@ class ProvinceController extends Controller
      *
      * @Route("/{id}", name="province_delete")
      * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN_DATA_ADMIN')")
      */
     public function deleteAction(Request $request, Province $province)
     {
