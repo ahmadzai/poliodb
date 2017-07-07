@@ -16,7 +16,7 @@ index.html
 Pol_System
 
 # vendor ignored
-vendor/
+/vendor/
 
 # Email spool folder
 /app/spool/*
