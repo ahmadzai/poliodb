@@ -167,7 +167,7 @@ class AdminDataRepository extends EntityRepository {
       // createQueryBuilder() automatically selects FROM AppBundle:Product
       // and aliases it to "p"
       $query = $repository->createQueryBuilder('p')
-      ->where('p.campaign = 7')
+      ->where('p.campaign = 14')
       ->andWhere('p.vaccDay = 1 OR p.vaccDay = 2 OR p.vaccDay = 3')
       ->getQuery();
 

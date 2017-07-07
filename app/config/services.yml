@@ -20,11 +20,18 @@ services:
     #arguments: [ setUserManager, ["@fosuser.usermanager"]]
     #tags:
         #- { name: sonata.admin, manager_type: orm, label: User }
+  app.admin.province_list_builder:
+      class: App\PolioDbBundle\Admin\ProvinceListBuilder
+      arguments: [ "@doctrine" ]
+
   admin.admindata:
       class: App\PolioDbBundle\Admin\AdminDataAdmin
       arguments: [~, App\PolioDbBundle\Entity\AdminData, ~]
       tags:
           - { name: sonata.admin, manager_type: orm, label: AdminData }
+      calls:
+            - [ setTemplate, [list, edit.html.twig]]
+      public: true
 
   custom.sonata.security.handler.role:
     class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
