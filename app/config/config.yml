@@ -3,10 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@AppPolioDbBundle/Resources/config/services.yml" }
-<<<<<<< HEAD
-=======
     #- { resource: "@AppPolioDbBundle/Resources/config/admindata.xml" }
->>>>>>> charts_filter
 
 
     # Put parameters here that don't need to change on each machine where the app is deployed
@@ -42,12 +39,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-<<<<<<< HEAD
-=======
     form_themes:
         - bootstrap_3_layout.html.twig
 
->>>>>>> charts_filter
 
 # Doctrine Configuration
 doctrine:
@@ -99,12 +93,9 @@ fos_user:
     registration:
         confirmation:
             enabled: true
-<<<<<<< HEAD
-=======
     profile:
         form:
             type: App\PolioDbBundle\Form\ProfileType
->>>>>>> charts_filter
 
     group:
         group_class:   Application\Sonata\UserBundle\Entity\Group
@@ -134,50 +125,6 @@ sonata_block:
             contexts: [admin]
 
 sonata_admin:
-<<<<<<< HEAD
-    title: PolioDb
-    #title_logo: web\img\logo-big.png
-    security:
-       handler: sonata.admin.security.handler.acl
-       # acl security information
-       information:
-           GUEST:    [VIEW, LIST]
-           STAFF:    [EDIT, LIST, CREATE]
-           EDITOR:   [OPERATOR, EXPORT]
-           ADMIN:    [MASTER]
-
-        # permissions not related to an object instance and also to be available when objects do not exist
-        # the DELETE admin permission means the user is allowed to batch delete objects
-       admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
-
-        # permission related to the objects
-       object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
-    dashboard:
-        blocks:
-            -
-                position: left
-                type: sonata.admin.block.admin_list
-            -
-                position: right
-                type: sonata.block.service.text
-                settings:
-                    content: >
-                        <h2>Welcome to the PolioDb Admin</h2>
-                        <p>This is a <code>sonata.block.service.text</code> from the Block
-                        Bundle, you can create and add new block in these area by configuring
-                        the <code>sonata_admin</code> section.</p> <br /> For instance, here
-                        a RSS feed parser (<code>sonata.block.service.rss</code>):
-            -
-                position: right
-                type: sonata.block.service.rss
-                roles: [POST_READER]
-                settings:
-                    title: Sonata Project's Feeds
-                    url: https://sonata-project.org/blog/archive.rss
-
-sonata_user:
-    security_acl: false
-=======
     templates:
         layout: Sonata\standard_layout.html.twig
         list: Sonata\base_list.html.twig
@@ -201,7 +148,6 @@ sonata_user:
 
 sonata_user:
     security_acl: true
->>>>>>> charts_filter
     manager_type: orm # can be orm or mongodb
 
 
