@@ -22,10 +22,22 @@ class Province
 
 
     /**
-     * @var string
+     * @var \App\PolioDbBundle\Entity\Region
      *
-     * @ORM\Column(name="province_region", type="string", length=10, nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\PolioDbBundle\Entity\Region")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="province_regio", referencedColumnName="region_name")
+     * })
      */
+
+     private $provinceRegio;
+
+
+     /**
+      * @var string
+      *
+      * @ORM\Column(name="province_region", type="string", length=10, nullable=false)
+      */
     private $provinceRegion;
 
 
