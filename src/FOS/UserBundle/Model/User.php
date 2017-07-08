@@ -89,6 +89,4 @@ class User
      */
     private $roles;
 
-
 }
-

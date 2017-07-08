@@ -11,6 +11,8 @@ imports:
 parameters:
     locale: en
 
+    sonata.user.admin.user.class: App\PolioDbBundle\Admin\UserAdminNew
+
 framework:
     #esi:             ~
     translator: { fallbacks: ["%locale%"] }

@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityRepository;
 //use Symfony\Bundle\DoctrineBundle\Registry;
 use App\PolioDbBundle\Admin\ProvinceListBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
 class AdminDataAdmin extends AbstractAdmin
@@ -56,9 +57,9 @@ class AdminDataAdmin extends AbstractAdmin
             'operator_type' => 'hidden',
             'advanced_filter' => false
         ))*/
-            ->add('districtCode', null, array(), 'entity', array(
+           ->add('districtCode', null, array(), 'entity', array(
             'class'       => 'AppPolioDbBundle:District',
-            'choice_label' => 'districtName',
+            'choice_label' => 'districtName', 'multiple' => true,
             'query_builder' => function (EntityRepository $er) {
               return $er->createQueryBuilder('u')
               ->groupBy('u.districtName');
@@ -76,17 +77,17 @@ class AdminDataAdmin extends AbstractAdmin
             )) */
             ->add('province', 'doctrine_orm_callback', array(
             'callback'   => array($this, 'callbackFilterCompany'),
-            'field_type' => 'checkbox'
             ),
             'choice',
-            array('choices' => $this -> getProvinceList()))
+            array('choices' => $this -> getProvinceList(), 'multiple' => true))
+
 
         ->add('region', 'doctrine_orm_callback', array(
           'callback'   => array($this, 'callbackFilterCompanyy'),
           'field_type' => 'checkbox'
         ),
         'choice',
-        array('choices' => $this -> getRegionList()))
+        array('choices' => $this -> getRegionList(), 'multiple' => true))
        ;
     }
 
@@ -136,7 +137,7 @@ class AdminDataAdmin extends AbstractAdmin
     $queryBuilder
     ->leftJoin(sprintf('%s.districtCode', $alias), 'u')
     ->leftJoin('u.provinceCode', 'c')
-    ->andWhere('u.provinceCode = :id')
+    ->andWhere('u.provinceCode IN (:id)')
     ->setParameter('id', $value['value'])
     ;
 
@@ -155,7 +156,7 @@ class AdminDataAdmin extends AbstractAdmin
     $queryBuilder
     ->leftJoin(sprintf('%s.districtCode', $alias), 'uu')
     ->leftJoin('uu.provinceCode', 'cc')
-    ->andWhere('cc.provinceRegion = :id')
+    ->andWhere('cc.provinceRegion IN (:id)')
     ->setParameter('id', $value['value'])
     ;
 
