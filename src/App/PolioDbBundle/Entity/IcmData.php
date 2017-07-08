@@ -2,143 +2,210 @@
 
 namespace App\PolioDbBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * IcmData
+ *
+ * @ORM\Table(name="icm_data", indexes={@ORM\Index(name="fk_dist_icm_idx", columns={"district_code"}), @ORM\Index(name="fk_camp_icm_idx", columns={"campaign_id"})})
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\IcmDataRepository")
  */
 class IcmData
 {
-    /**
-     * @var integer
-     */
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="no_team_monitored", type="integer", nullable=true)
+   */
     private $noTeamMonitored;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="team_resident_area", type="integer", nullable=true)
      */
     private $teamResidentArea;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="vaccinator_trained", type="integer", nullable=true)
      */
     private $vaccinatorTrained;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="vacc_stage_3", type="integer", nullable=true)
      */
     private $vaccStage3;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="team_supervised", type="integer", nullable=true)
      */
     private $teamSupervised;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="team_with_chw", type="integer", nullable=true)
      */
     private $teamWithChw;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="team_with_female", type="integer", nullable=true)
      */
     private $teamWithFemale;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="team_accom_sm", type="integer", nullable=true)
      */
     private $teamAccomSm;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="no_missed_child_novisit", type="integer", nullable=true)
      */
     private $noMissedChildNovisit;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="no_child_seen", type="integer", nullable=true)
      */
     private $noChildSeen;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="no_child_with_fm", type="integer", nullable=true)
      */
     private $noChildWithFm;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="no_missed_child", type="integer", nullable=true)
      */
     private $noMissedChild;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="no_missed_10", type="integer", nullable=true)
      */
     private $noMissed10;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
     private $entryDate = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_resident_area", type="float", nullable=true)
      */
     private $perResidentArea;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_vacc_trained", type="float", nullable=true)
      */
     private $perVaccTrained;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_stage_3", type="float", nullable=true)
      */
     private $perStage3;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_team_supervised", type="float", nullable=true)
      */
     private $perTeamSupervised;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_team_with_chw", type="float", nullable=true)
      */
     private $perTeamWithChw;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_team_with_female", type="float", nullable=true)
      */
     private $perTeamWithFemale;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_team_accom_sm", type="float", nullable=true)
      */
     private $perTeamAccomSm;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_missed_10", type="float", nullable=true)
      */
     private $perMissed10;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_child_vaccinated", type="float", nullable=true)
      */
     private $perChildVaccinated;
 
     /**
-     * @var float
+     * @var \float
+     *
+     * @ORM\Column(name="per_missed_child_fm", type="float", nullable=true)
      */
     private $perMissedChildFm;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="data_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $dataId;
 
     /**
      * @var \App\PolioDbBundle\Entity\District
+     *
+     * @ORM\ManyToOne(targetEntity="App\PolioDbBundle\Entity\District")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="district_code", referencedColumnName="district_code")
+     * })
      */
     private $districtCode;
 
     /**
      * @var \App\PolioDbBundle\Entity\Campaign
+     *
+     * @ORM\ManyToOne(targetEntity="App\PolioDbBundle\Entity\Campaign")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="campaign_id", referencedColumnName="campaign_id")
+     * })
      */
     private $campaign;
 
@@ -777,4 +844,3 @@ class IcmData
         return $this->campaign;
     }
 }
-

@@ -11,6 +11,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 
 class AdminDataAdmin extends AbstractAdmin
 {
+
+    protected $baseRoutePattern = 'adminadata';
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -33,6 +35,7 @@ class AdminDataAdmin extends AbstractAdmin
        $datagridMapper
             ->add('clusterName')
             ->add('targetPopulation')
+             ->add('region')
        ;
     }
 
@@ -51,7 +54,8 @@ class AdminDataAdmin extends AbstractAdmin
     {
         $showMapper
            ->add('clusterName')
-           ->add('targetPopulation  ')
+           ->add('targetPopulation')
+
        ;
     }
 }

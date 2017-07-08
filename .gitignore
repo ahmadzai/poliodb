@@ -1,3 +1,4 @@
+
 # Created by https://www.gitignore.io/api/symfony
 
 ### Symfony ###
@@ -35,7 +36,10 @@ Pol_System
 /bin/*
 !bin/console
 !bin/symfony_requirements
+
+# Vendor
 /vendor/
+
 
 # PHPUnit
 /app/phpunit.xml

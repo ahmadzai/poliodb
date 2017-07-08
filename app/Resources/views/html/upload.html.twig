@@ -14,7 +14,7 @@
         </ul>
         <ul class="crumb-buttons">
 
-            <li><a href="template.xlsx"><i class="icon-download"></i> Download Template</a></li>
+            <li><a href="{{ table ~'_template.xlsx' }}"><i class="icon-download"></i> Download Template</a></li>
 
 
         </ul>
@@ -37,12 +37,79 @@
         </ul>
         -->
     </div>
+  <div class="row">
     <!-- /Breadcrumbs line -->
     <!--=== Page Header ===-->
     <div class="page-header">
         <div class="page-title">
-            <h3>Uploading Data</h3>
-            <span>Good morning, {{app.user.username|capitalize}}!</span>
+                {% if table == "admin_data" %}
+                  {% block admin_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Admin Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to admin data uploading page. please check your file template before uploading. After successful uploading,
+                                 you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  {% endblock %}
+                {% endif %}
+
+                {% if table == "catchup_data" %}
+                    {% block catchup_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Catchup Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to Catchup data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endif %}
+
+                {% if table == "icm_data" %}
+                    {% block icm_desc %}
+                        <div class="widget-content">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title">
+                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    Icm Data Upload </a>
+                                </h3>
+                              </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                 Welcome to Icm data uploading page. please check your file template before uploading. After successful uploading, you will be prompted a success message and after that you sync your data to master repository.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endblock %}
+                {% endif %}
+
+            {# <span>Good morning, {{app.user.username|capitalize}}!</span> #}
         </div>
 
         <!-- Page Stats -->
@@ -70,29 +137,40 @@
         <!-- /Page Stats -->
     </div>
 
-    <div class="row">
+
         {{form_start(form)}}
         <div class="form-group">
             {{ form_row(form.file) }}
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data">
+            <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data" {{uploadbutt}}>
         </div>
 
                 {% for message in app.session.flashBag.get('exception') %}
             <div class="alert alert-danger fade in">
                     <i class="icon-remove close" data-dismiss="alert"></i>
-                    <strong>Info!</strong> {{ message }}
-                {% endfor %}
+                    <strong>Notice!</strong> {{ ' Your file template is not correct. Please make sure that your template is the same as data source
+                    template availabe in the top menu of the page.'}}
             </div>
+                {% endfor %}
+
 
             {% for message in app.session.flashBag.get('notice') %}
         <div class="alert alert-info fade in">
                 <i class="icon-remove close" data-dismiss="alert"></i>
                 <strong>Info!</strong> {{ message }}
-            {% endfor %}
         </div>
+            {% endfor %}
+
+
+       {% for message in app.session.flashBag.get('datatype_exception') %}
+    <div class="alert alert-danger fade in">
+            <i class="icon-remove close" data-dismiss="alert"></i>
+            <strong>Notice!</strong> {{ message }}
+    </div>
+        {% endfor %}
+
         {{ form_end(form) }}
 
 
@@ -100,11 +178,16 @@
         {{form_start(form2)}}
 
         <div class="form-group">
-            <input type="submit" class="btn btn-success" value="Sync to Master" name="sync_data">
+            <input type="submit" class="btn btn-success" value="Sync to Master" name="sync_data" {{syncbutt}}>
         </div>
 
         {% for message in app.session.flashBag.get('noticee') %}
         <div class="alert alert-success fade in">
+            <i class="icon-remove close" data-dismiss="alert"></i>
+            <strong>Info!</strong> {{ message }}
+        {% endfor %}
+        {% for message in app.session.flashBag.get('masterexception') %}
+        <div class="alert alert-danger fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> {{ message }}
         {% endfor %}

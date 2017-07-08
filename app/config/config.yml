@@ -183,7 +183,7 @@ sonata_user:
         list: Sonata\base_list.html.twig
         #ajax:   SonataAdminBundle::ajax_layout.html.twig
     security:
-       handler: sonata.admin.security.handler.role
+       handler: custom.sonata.security.handler.role
        # acl security information
 #       information:
 #          #GUEST:    [VIEW, LIST]
