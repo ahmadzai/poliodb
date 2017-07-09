@@ -57,6 +57,15 @@ class AdminDataAdmin extends AbstractAdmin
             'operator_type' => 'hidden',
             'advanced_filter' => false
         ))*/
+        ->add('campaign', null, array(), 'entity', array(
+         'class'       => 'AppPolioDbBundle:Campaign',
+         'choice_label' => 'campaignName', 'multiple' => true,
+         'query_builder' => function (EntityRepository $er) {
+           return $er->createQueryBuilder('u')
+           ->groupBy('u.campaignName');
+  },
+
+         ))
            ->add('districtCode', null, array(), 'entity', array(
             'class'       => 'AppPolioDbBundle:District',
             'choice_label' => 'districtName', 'multiple' => true,
@@ -156,7 +165,7 @@ class AdminDataAdmin extends AbstractAdmin
     $queryBuilder
     ->leftJoin(sprintf('%s.districtCode', $alias), 'uu')
     ->leftJoin('uu.provinceCode', 'cc')
-    ->andWhere('cc.provinceRegion IN (:id)')
+    ->Where('cc.provinceRegion IN (:id)')
     ->setParameter('id', $value['value'])
     ;
 
