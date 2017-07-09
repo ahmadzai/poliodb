@@ -15,6 +15,9 @@ index.html
 
 Pol_System
 
+# vendor ignored
+/vendor/
+
 # Email spool folder
 /app/spool/*
 
@@ -55,3 +58,4 @@ Pol_System
 
 # End of https://www.gitignore.io/api/symfony
 /ideas.txt
+ideas.txt

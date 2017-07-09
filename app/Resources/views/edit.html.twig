@@ -11,44 +11,10 @@ file that was distributed with this source code.
 
 {% extends base_template %}
 
-{# }{%- block actions -%}
+{#{%- block actions -%}
     {% include 'SonataAdminBundle:CRUD:action_buttons.html.twig' %}
 {%- endblock -%} #}
 
-{% block tab_menu %}{{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active', 'template': sonata_admin.adminPool.getTemplate('tab_menu_template')}, 'twig') }}{% endblock %}
-
-{% block title %}
-    {#
-        The list template can be used in nested mode,
-        so we define the title corresponding to the parent's admin.
-    #}
-
-    {% if admin.isChild and admin.parent.subject %}
-        {{ "title_edit"|trans({'%name%': admin.parent.toString(admin.parent.subject)|truncate(15) }, 'SonataAdminBundle') }}
-    {% endif %}
-{% endblock %}
-
-{% block navbar_title %}
-    {{ block('title') }}
-{% endblock %}
-
-{% block breadcrumbs %}
-<div class="container">
-  <div class="crumbs" role="">
-    <ul id="breadcrumbs" class="breadcrumb">
-        <li>
-            <i class="icon-home"></i>
-            <a href="{{ path('home_admin_data') }}">Dashboard</a>
-        </li>
-    </ul>
-    <ul class="crumb-buttons">
-
-        <li><a href="{{ path('fos_user_change_password')}}"><i class=" icon-cog"></i> Change Password</a></li>
-        <li><a href="{{ path('fos_user_profile_edit')}}"><i class="icon-user"></i> Edit Profile </a></li>
-    </ul>
-  </div><br><br>
-
-{% endblock %}
 
 {% block list_table %}
     <div class="col-xs-12 col-md-12">
@@ -243,7 +209,7 @@ file that was distributed with this source code.
     </div>
 {% endblock %}
 
-{# {% block list_filters_actions %}
+{% block list_filters_actions %}
     {%- if admin.datagrid.filters|length %}
         <ul class="nav navbar-nav navbar-right">
 
@@ -266,7 +232,7 @@ file that was distributed with this source code.
             </li>
         </ul>
     {% endif -%}
-{% endblock %} #}
+{% endblock %}
 
 {% block list_filters %}
     {% if admin.datagrid.filters %}
