@@ -66,7 +66,27 @@ class AdminDataAdmin extends AbstractAdmin
   },
 
          ))
-           ->add('districtCode', null, array(), 'entity', array(
+
+         ->add('region', 'doctrine_orm_callback', array(
+           'callback'   => array($this, 'callbackFilterCompanyy'),
+           'field_type' => 'checkbox'
+         ),
+         'choice',
+         array('choices' => $this -> getRegionList(), 'multiple' => true))
+
+         ->add('province', 'doctrine_orm_callback', array(
+         'callback'   => array($this, 'callbackFilterCompany'),
+         ),
+         'entity', array(
+          'class'       => 'AppPolioDbBundle:Province',
+          'choice_label' => 'provinceName', 'multiple' => true,
+          'query_builder' => function (EntityRepository $er) {
+            return $er->createQueryBuilder('u')
+            ->groupBy('u.provinceName');
+          },
+         ))
+
+           ->add('district.districtCode', null, array(), 'entity', array(
             'class'       => 'AppPolioDbBundle:District',
             'choice_label' => 'districtName', 'multiple' => true,
             'query_builder' => function (EntityRepository $er) {
@@ -84,19 +104,8 @@ class AdminDataAdmin extends AbstractAdmin
      },
 
             )) */
-            ->add('province', 'doctrine_orm_callback', array(
-            'callback'   => array($this, 'callbackFilterCompany'),
-            ),
-            'choice',
-            array('choices' => $this -> getProvinceList(), 'multiple' => true))
 
 
-        ->add('region', 'doctrine_orm_callback', array(
-          'callback'   => array($this, 'callbackFilterCompanyy'),
-          'field_type' => 'checkbox'
-        ),
-        'choice',
-        array('choices' => $this -> getRegionList(), 'multiple' => true))
        ;
     }
 
