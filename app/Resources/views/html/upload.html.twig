@@ -147,7 +147,7 @@
             <input type="submit" class="btn btn-info" value="Upload Data" name="upload_data" {{uploadbutt}}>
         </div>
 
-                {% for message in app.session.flashBag.get('exception') %}
+            {% for message in app.session.flashBag.get('exception') %}
             <div class="alert alert-danger fade in">
                     <i class="icon-remove close" data-dismiss="alert"></i>
                     <strong>Notice!</strong> {{ ' Your file template is not correct. Please make sure that your template is the same as data source

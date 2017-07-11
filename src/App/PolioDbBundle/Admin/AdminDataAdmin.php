@@ -57,7 +57,9 @@ class AdminDataAdmin extends AbstractAdmin
             'operator_type' => 'hidden',
             'advanced_filter' => false
         ))*/
-        ->add('campaign', null, array(), 'entity', array(
+       ->add('campaign', 'doctrine_orm_callback', array(
+        'callback'   => array($this, 'callbackFilterCampaign'),
+        ), 'entity', array(
          'class'       => 'AppPolioDbBundle:Campaign',
          'choice_label' => 'campaignName', 'multiple' => true,
          'query_builder' => function (EntityRepository $er) {
@@ -74,7 +76,7 @@ class AdminDataAdmin extends AbstractAdmin
          'choice',
          array('choices' => $this -> getRegionList(), 'multiple' => true))
 
-         ->add('province', 'doctrine_orm_callback', array(
+    /**    ->add('province', 'doctrine_orm_callback', array(
          'callback'   => array($this, 'callbackFilterCompany'),
          ),
          'entity', array(
@@ -181,4 +183,21 @@ class AdminDataAdmin extends AbstractAdmin
     return true;
   }
 
+  public function callbackFilterCampaign ($queryBuilder, $alias, $field, $value)
+  {
+   if(!is_array($value) or !array_key_exists('value', $value)
+   or empty($value['value'])){
+
+     return;
+
+   }
+
+   $queryBuilder
+   ->leftJoin(sprintf('%s.campaign', $alias), 'ss')
+   ->Where('ss.campaignId IN (:id)')
+   ->setParameter('id', $value['value'])
+   ;
+
+   return true;
+  }
 }

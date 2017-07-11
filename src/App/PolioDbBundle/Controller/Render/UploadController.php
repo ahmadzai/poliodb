@@ -63,7 +63,7 @@ class UploadController extends Controller
                             if($i !== 1) {
                                 $user = new TempAdminData();
                                 $campaignrecord = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
-                                    ->checkThreeDayCampaign();
+                                    ->checkThreeDayCampaign($row['S']);
                                 if ($campaignrecord == NULL) {
                                     $request->getSession()->getFlashBag()->add('datatype_exception', "Please insert data from day 1,2,3 of the current campaign.");
                                     throw new \Doctrine\DBAL\DBALException;

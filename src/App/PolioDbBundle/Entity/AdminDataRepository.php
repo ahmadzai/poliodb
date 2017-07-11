@@ -525,7 +525,7 @@ class AdminDataRepository extends EntityRepository {
     }
 
 
-    public function checkThreeDayCampaign()
+    public function checkThreeDayCampaign($campaignday)
     {
       $em = $this->getEntityManager();
       $repository = $em->getRepository('AppPolioDbBundle:AdminData');
@@ -533,8 +533,9 @@ class AdminDataRepository extends EntityRepository {
       // createQueryBuilder() automatically selects FROM AppBundle:Product
       // and aliases it to "p"
       $query = $repository->createQueryBuilder('p')
-      ->where('p.campaign = 14')
+      ->where('p.campaign= :campid')
       ->andWhere('p.vaccDay = 1 OR p.vaccDay = 2 OR p.vaccDay = 3')
+      ->setParameter('campid', $campaignday)
       ->getQuery();
 
 
