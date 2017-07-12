@@ -24,10 +24,40 @@ class DownloadController extends Controller
     /**
      * @Route("/download/{table}", name="data_download")
      */
-    public function DashboardAdminDataAction($table)
+    public function DashboardAdminDataAction(Request $request)
     {
-        return $this->render("pages/home.html.twig");
+      $isAjax = $request->isXmlHttpRequest();
+
+      // Get your Datatable ...
+      //$datatable = $this->get('app.datatable.post');
+      //$datatable->buildDatatable();
+
+      // or use the DatatableFactory
+      /** @var DatatableInterface $datatable */
+      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
+      $datatable->buildDatatable();
+
+      if ($isAjax) {
+        $responseService = $this->get('sg_datatables.response');
+        $responseService->setDatatable($datatable);
+
+        $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
+        $datatableQueryBuilder->buildQuery();
+
+        //dump($datatableQueryBuilder->getQb()->getDQL()); die();
+
+        return $responseService->getResponse();
+      }
+
+      return $this->render('html/download.html.twig', array(
+        'datatable' => $datatable,
+      ));
     }
 
-
+    public function showAction(Post $post)
+    {
+        return $this->render('post/show.html.twig', array(
+            'post' => $post
+        ));
+    }
 }

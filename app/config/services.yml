@@ -56,5 +56,9 @@ services:
   app.my_factory:
     class: App\PolioDbBundle\Utils\MyFactory
 
+  app.datatable.post:
+    class: App\PolioDbBundle\Controller\Render\AdminDataDatatable
+    parent: sg_datatables.datatable.abstract
+
   #security.acl.permission.map:
   #  class: Sonata\AdminBundle\Security\Acl\Permission\AdminPermissionMap

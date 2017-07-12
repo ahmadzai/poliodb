@@ -1,0 +1,30 @@
+{% extends 'main.html.twig' %}
+{% block content %}
+<div class="container">
+    <!-- Breadcrumbs line -->
+    <div class="crumbs" role="">
+        <ul id="breadcrumbs" class="breadcrumb">
+            <li>
+                <i class="icon-home"></i>
+                <a href="{{ path('home_admin_data') }}">Dashboard</a>
+            </li>
+            {#<li class="current">#}
+                {#<a href="pages_calendar.html" title="">Calendar</a>#}
+            {#</li>#}
+        </ul>
+        </div>
+
+        <div class="page-header">
+            <div class="page-title">
+                <span>Hello, {{app.user.username|capitalize}}!</span>
+            </div>
+        </div>
+
+
+    <div>
+        <h2>Posts</h2>
+          {{ sg_datatables_render(datatable) }}
+
+    </div>
+</div>
+{% endblock %}

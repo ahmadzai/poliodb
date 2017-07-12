@@ -77,4 +77,4 @@ security:
         # Change these rules to adapt them to your needs
         - { path: ^/admin/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/.*, roles: [ROLE_USER]}
+        

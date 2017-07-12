@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5304ea48fb4455ca173659f67cd2427",
+    "content-hash": "1a283287a4443d7fc2eb5444f6254e29",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1243,7 +1243,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -1978,6 +1978,62 @@
             ],
             "description": "A security checker for your composer.lock",
             "time": "2017-03-31T14:50:32+00:00"
+        },
+        {
+            "name": "sg/datatablesbundle",
+            "version": "v1.0",
+            "target-dir": "Sg/DatatablesBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stwe/DatatablesBundle.git",
+                "reference": "24b6cde67fe43aed7f47e5d2349053bf9bcd9b4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/24b6cde67fe43aed7f47e5d2349053bf9bcd9b4f",
+                "reference": "24b6cde67fe43aed7f47e5d2349053bf9bcd9b4f",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2.5",
+                "friendsofsymfony/jsrouting-bundle": "1.6.0",
+                "php": ">=5.5.9",
+                "symfony/framework-bundle": "~3.0",
+                "symfony/options-resolver": "~3.0",
+                "symfony/property-access": "~3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Sg\\DatatablesBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "stwe"
+                },
+                {
+                    "name": "SgDatatablesBundle contributors",
+                    "homepage": "https://github.com/stwe/DatatablesBundle/graphs/contributors"
+                }
+            ],
+            "description": "Symfony Datatable Bundle For Doctrine2 Entities",
+            "homepage": "https://github.com/stwe/DatatablesBundle",
+            "keywords": [
+                "data-table",
+                "datagrid",
+                "datatable",
+                "datatables",
+                "grid",
+                "pagination",
+                "symfony3",
+                "table"
+            ],
+            "time": "2017-05-26T13:41:12+00:00"
         },
         {
             "name": "sonata-project/admin-bundle",

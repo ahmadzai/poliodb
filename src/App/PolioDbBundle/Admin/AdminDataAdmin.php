@@ -57,7 +57,7 @@ class AdminDataAdmin extends AbstractAdmin
             'operator_type' => 'hidden',
             'advanced_filter' => false
         ))*/
-       ->add('campaign', 'doctrine_orm_callback', array(
+    /**   ->add('campaign', 'doctrine_orm_callback', array(
         'callback'   => array($this, 'callbackFilterCampaign'),
         ), 'entity', array(
          'class'       => 'AppPolioDbBundle:Campaign',
@@ -67,17 +67,17 @@ class AdminDataAdmin extends AbstractAdmin
            ->groupBy('u.campaignName');
   },
 
-         ))
+         )) */
 
          ->add('region', 'doctrine_orm_callback', array(
-           'callback'   => array($this, 'callbackFilterCompanyy'),
+           'callback'   => array($this, 'callbackFilterRegion'),
            'field_type' => 'checkbox'
          ),
          'choice',
-         array('choices' => $this -> getRegionList(), 'multiple' => true))
+         array('choices' => $this -> getRegionList(), 'multiple' => true)) 
 
-    /**    ->add('province', 'doctrine_orm_callback', array(
-         'callback'   => array($this, 'callbackFilterCompany'),
+       ->add('province', 'doctrine_orm_callback', array(
+         'callback'   => array($this, 'callbackFilterProvince'),
          ),
          'entity', array(
           'class'       => 'AppPolioDbBundle:Province',
@@ -145,7 +145,7 @@ class AdminDataAdmin extends AbstractAdmin
        ;
     }
 
-    public function callbackFilterCompany ($queryBuilder, $alias, $field, $value)
+    public function callbackFilterProvince ($queryBuilder, $alias, $field, $value)
 {
     if(!is_array($value) or !array_key_exists('value', $value)
         or empty($value['value'])){
@@ -164,7 +164,7 @@ class AdminDataAdmin extends AbstractAdmin
     return true;
 }
 
-   public function callbackFilterCompanyy ($queryBuilder, $alias, $field, $value)
+   public function callbackFilterRegion ($queryBuilder, $alias, $field, $value)
   {
     if(!is_array($value) or !array_key_exists('value', $value)
     or empty($value['value'])){

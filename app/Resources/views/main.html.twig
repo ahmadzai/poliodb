@@ -7,11 +7,14 @@
 
     {% block stylesheets %}
 
+
 	    <link href="{{ asset('template/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 
         <!--[if lt IE 9]>
         <link rel="stylesheet" type="text/css" href="{{ asset('template/plugins/jquery-ui/jquery.ui.1.10.2.ie.css')}}" />
         <![endif]-->
+
+				<link href="{{ asset('template/assets/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 
         <link href="{{ asset('template/assets/css/main.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template/assets/css/plugins.css')}}" rel="stylesheet" type="text/css" />
@@ -29,11 +32,24 @@
         <![endif]-->
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
+
+			{# added for datatables bundle #}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css">
+			<link rel="stylesheet" href="https://cdn.rawgit.com/noelboss/featherlight/1.7.1/release/featherlight.min.css">
+
+
     {% endblock %}
 
     {% block javascripts %}
 
-        <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+
+				<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+
+
+				<script type="text/javascript" src="{{ asset('template/assets/js/jquery.dataTables.min.js')}}"></script>
+				<script src="{{ asset('bundles/sgdatatables/js/pipeline.js') }}"></script>
+
+
         {#<script type="text/javascript" src="{{ asset('template/assets/js/libs/jquery-1.10.2.min.js') }}"></script>#}
         <script type="text/javascript" src="{{ asset('template/plugins/jquery-ui/jquery.ui.core.min.js')}}"></script>
 
@@ -44,7 +60,7 @@
         <script src="{{ asset('template/assets/js/libs/html5shiv.js')}}"></script>
         <![endif]-->
         {# Smartphone touch events #}
-        <script type="text/javascript" src="{{ asset('template/plugins/touchpunch/jquery.ui.touch-punch.min.js')}}"></script>
+        {#<script type="text/javascript" src="{{ asset('template/plugins/touchpunch/jquery.ui.touch-punch.min.js')}}"></script> #}
         <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.move.js')}}"></script>
         <script type="text/javascript" src="{{ asset('template/plugins/event.swipe/jquery.event.swipe.js')}}"></script>
 
@@ -88,8 +104,12 @@
         <script type="text/javascript" src="{{ asset('template/assets/js/plugins.js')}}"></script>
         <script type="text/javascript" src="{{ asset('template/assets/js/plugins.form-components.js')}}"></script>
 
+				{# added for datatables bundle #}
+				{# <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment-with-locales.min.js"></script> #}
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
         <script>
-            $(document).ready(function(){
+      $(document).ready(function(){
                 "use strict";
 
                 App.init(); // Init layout and core plugins
