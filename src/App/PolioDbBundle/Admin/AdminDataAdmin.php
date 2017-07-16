@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityRepository;
 //use Symfony\Bundle\DoctrineBundle\Registry;
 use App\PolioDbBundle\Admin\ProvinceListBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 
 
 class AdminDataAdmin extends AbstractAdmin
@@ -29,9 +31,31 @@ class AdminDataAdmin extends AbstractAdmin
    }
 
 
+  //  public function createQuery($context = 'list')
+  //  {
+   //
+  //      $qb = parent::createQuery($context);
+  //     //  $qb = $this->getModelManager()
+  //     //       ->getEntityManager('AppPolioDbBundle:AdminData');
+  //     //       ->createQueryBuilder('a');
+  //      // you can do anything with this that you can do with the doctrine
+  //      // QueryBuilder
+   //
+  //     // $queryBuilder
+  //      $qb->select(array('u'))
+  //      ->from('AdminData', 'u')
+  //     //  ->where('districtCode = :price')
+  //     //  ->setParameter('price', '101');
+  //      ->where($qb->expr()->eq('a.districtCode', '?101'));
+  //      //$qb->setParameter('that', '101');
+  //      return $qb;
+  //  }
+
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+
+
         $formMapper
             ->add('clusterName', 'text', array(
                 'label' => 'Cluster Name'
@@ -57,46 +81,45 @@ class AdminDataAdmin extends AbstractAdmin
             'operator_type' => 'hidden',
             'advanced_filter' => false
         ))*/
-    /**   ->add('campaign', 'doctrine_orm_callback', array(
-        'callback'   => array($this, 'callbackFilterCampaign'),
-        ), 'entity', array(
-         'class'       => 'AppPolioDbBundle:Campaign',
-         'choice_label' => 'campaignName', 'multiple' => true,
-         'query_builder' => function (EntityRepository $er) {
-           return $er->createQueryBuilder('u')
-           ->groupBy('u.campaignName');
-  },
-
-         )) */
-
-         ->add('region', 'doctrine_orm_callback', array(
-           'callback'   => array($this, 'callbackFilterRegion'),
-           'field_type' => 'checkbox'
-         ),
-         'choice',
-         array('choices' => $this -> getRegionList(), 'multiple' => true)) 
-
-       ->add('province', 'doctrine_orm_callback', array(
-         'callback'   => array($this, 'callbackFilterProvince'),
-         ),
-         'entity', array(
-          'class'       => 'AppPolioDbBundle:Province',
-          'choice_label' => 'provinceName', 'multiple' => true,
+        ->add('campaign', null, array(), 'entity', array(
+          'class'       => 'AppPolioDbBundle:Campaign',
+          'choice_label' => 'campaignName', 'multiple' => true,
           'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
-            ->groupBy('u.provinceName');
-          },
-         ))
+            ->groupBy('u.campaignName');
+   },
 
-           ->add('district.districtCode', null, array(), 'entity', array(
-            'class'       => 'AppPolioDbBundle:District',
-            'choice_label' => 'districtName', 'multiple' => true,
-            'query_builder' => function (EntityRepository $er) {
-              return $er->createQueryBuilder('u')
-              ->groupBy('u.districtName');
-     },
+          ))
 
-            ))
+        ->add('region', 'doctrine_orm_callback', array(
+            'callback'   => array($this, 'callbackFilterRegion'),
+            'field_type' => 'checkbox'
+          ),
+          'choice',
+          array('choices' => $this -> getRegionList(), 'multiple' => true))
+
+        // ->add('province', 'doctrine_orm_callback', array(
+        //   'callback'   => array($this, 'callbackFilterProvince'),
+        //   ),
+        //   'entity', array(
+        //    'class'       => 'AppPolioDbBundle:Province',
+        //    'choice_label' => 'provinceName', 'multiple' => true,
+        //    'query_builder' => function (EntityRepository $er) {
+        //      return $er->createQueryBuilder('u')
+        //      ->groupBy('u.provinceName');
+        //    },
+        //   ))
+
+            ->add('district.districtCode', null, array(), 'entity', array(
+             'class'       => 'AppPolioDbBundle:District',
+             'choice_label' => 'districtName', 'multiple' => true,
+             'query_builder' => function (EntityRepository $er) {
+               return $er->createQueryBuilder('u')
+               ->groupBy('u.districtName');
+      },
+
+             ))
+
           /**  ->add('cluster', null, array(), 'entity', array(
             'class'       => 'AppPolioDbBundle:Province',
             'choice_label' => 'provinceRegion',
@@ -114,6 +137,13 @@ class AdminDataAdmin extends AbstractAdmin
     // Fields to be shown on lists
     protected function configureListFields(ListMapper $listMapper)
     {
+
+    //   $parameters = parent::getFilterParameters();
+    //
+    // $request = $this->getRequest();
+    // //dump($request);
+    // $dateParameter = $request->query->get('filter')['region'];
+    // dump($dateParameter);
         $listMapper
             ->addIdentifier('clusterName')
             ->add('targetPopulation')
@@ -157,7 +187,7 @@ class AdminDataAdmin extends AbstractAdmin
     $queryBuilder
     ->leftJoin(sprintf('%s.districtCode', $alias), 'u')
     ->leftJoin('u.provinceCode', 'c')
-    ->andWhere('u.provinceCode IN (:id)')
+    ->andWhere('c.provinceCode IN (:id)')
     ->setParameter('id', $value['value'])
     ;
 
@@ -174,9 +204,9 @@ class AdminDataAdmin extends AbstractAdmin
     }
 
     $queryBuilder
-    ->leftJoin(sprintf('%s.districtCode', $alias), 'uu')
-    ->leftJoin('uu.provinceCode', 'cc')
-    ->Where('cc.provinceRegion IN (:id)')
+    ->leftJoin(sprintf('%s.districtCode', $alias), 'hh')
+    ->leftJoin('hh.provinceCode', 'kk')
+    ->Where('kk.provinceRegion IN (:id)')
     ->setParameter('id', $value['value'])
     ;
 
@@ -185,19 +215,18 @@ class AdminDataAdmin extends AbstractAdmin
 
   public function callbackFilterCampaign ($queryBuilder, $alias, $field, $value)
   {
-   if(!is_array($value) or !array_key_exists('value', $value)
-   or empty($value['value'])){
+    if(!is_array($value) or !array_key_exists('value', $value)
+    or empty($value['value'])){
 
-     return;
+      return;
 
-   }
+    }
 
-   $queryBuilder
-   ->leftJoin(sprintf('%s.campaign', $alias), 'ss')
-   ->Where('ss.campaignId IN (:id)')
-   ->setParameter('id', $value['value'])
-   ;
-
+     $queryBuilder
+     ->leftJoin(sprintf('%s.campaign', $alias), 'zz')
+     ->Where('zz.campaignId IN (:id)')
+     ->setParameter('id', $value['value'])
+     ;
    return true;
   }
 }

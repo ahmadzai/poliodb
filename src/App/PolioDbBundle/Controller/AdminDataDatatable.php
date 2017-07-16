@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PolioDbBundle\Controller\Render;
+namespace App\PolioDbBundle\Controller;
 
 use Sg\DatatablesBundle\Datatable\AbstractDatatable;
 use Sg\DatatablesBundle\Datatable\Style;
@@ -41,7 +41,7 @@ class AdminDataDatatable extends AbstractDatatable
         ));
 
         $this->options->set(array(
-            'individual_filtering' => true,
+            'individual_filtering' => false,
             'individual_filtering_position' => 'head',
             'order_cells_top' => true,
         ));
@@ -62,6 +62,8 @@ class AdminDataDatatable extends AbstractDatatable
             ->add('subDistrictName', Column::class, array(
                 'title' => 'SubDistrictName',
                 ))
+
+
       /**      ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(

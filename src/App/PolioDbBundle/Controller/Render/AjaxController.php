@@ -157,6 +157,13 @@ class AjaxController extends Controller
 
     }
 
-
+    /**
+     * @Route("/ajax/admin_data_download", name="ajax_download_data")
+     * @param $request
+     * @return response
+     */
+    public function AjaxDownloadDataAction(Request $request) {
+      
+    }
 
 }
