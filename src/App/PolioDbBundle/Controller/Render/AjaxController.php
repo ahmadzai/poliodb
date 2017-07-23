@@ -162,8 +162,128 @@ class AjaxController extends Controller
      * @param $request
      * @return response
      */
-    public function AjaxDownloadDataAction(Request $request) {
+     public function AjaxDownloadDataAction(Request $request) {
+
+       $campaignIds = $request->get('campaign');
+       $regions = $request->get('region');
+       $provinces = $request->get('province');
+       $districts = $request->get('district');
+
+
+
+       if($campaignIds != null){
+            $temp = [];
+            $camp = [];
+            foreach($campaignIds as $campaignId) {
+                foreach ($campaignId as $r)
+                $camp[] = $r;
+            }
+
+                if($regions != null){
+
+                            if($provinces != null){
+
+                                          if($districts != null){
+                                              foreach($districts as $district) {
+                                                foreach ($district as $r)
+                                                $temp[] = $r;
+                                                $function = 'districtAggByCampaigns';
+                                              }
+                                            }
+                                          else{
+                                                  foreach($provinces as $province) {
+                                                      foreach ($province as $r)
+                                                      $temp[] = $r;
+                                                      $function = 'provinceAggByCampaigns';
+                                                  }
+                                          }
+                                }
+                            else{
+                                  foreach($regions as $region) {
+                                      foreach ($region as $r)
+                                      $temp[] = $r;
+                                      $function = 'regionAggByCampaigns';
+                                  }
+                            }
+                }
+                else{
+                      foreach($campaignIds as $campaignId) {
+                          foreach ($campaignId as $r)
+                          $temp[] = $r;
+                          $function = 'selectCampaign';
+                      }
+
+                      $em = $this->getDoctrine()->getManager();
+                      $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+                      ->$function($temp);
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+                ->$function($temp, $camp);
+          }
+          else{
+            $temp = [];
+            if($regions != null){
+
+                        if($provinces != null){
+
+                                      if($districts != null){
+                                          foreach($districts as $district) {
+                                            foreach ($district as $r)
+                                            $temp[] = $r;
+                                            $function = 'selectDistrict';
+                                          }
+                                        }
+                                      else{
+                                              foreach($provinces as $province) {
+                                                  foreach ($province as $r)
+                                                  $temp[] = $r;
+                                                  $function = 'selectProvince';
+                                              }
+                                      }
+                            }
+                        else{
+                              foreach($regions as $region) {
+                                  foreach ($region as $r)
+                                  $temp[] = $r;
+                                  $function = 'selectRegion';
+                              }
+                        }
+              }
+              $em = $this->getDoctrine()->getManager();
+              $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+              ->$function($temp);
+            }
+
+      //  if($regions !== null) {
+      //    $temp = [];
+      //    foreach($regions as $region) {
+      //      foreach ($region as $r)
+      //      $temp[] = $r;
+      //    }
+      //  }
+
+      //  $em = $this->getDoctrine()->getManager();
+      //  $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+      //  ->$function($temp);
+       return new Response(json_encode($objs));
+
+     }
+
+     /**
+      * @Route("/ajax/admin_data_all", name="ajax_download_data_all")
+      * @param $request
+      * @return response
+      */
+      public function AjaxDownloadDataAllAction(Request $request) {
+
       
-    }
+        $em = $this->getDoctrine()->getManager();
+        $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+        ->selectAllAdminData();
+
+          return new Response(json_encode($objs));
+      }
 
 }

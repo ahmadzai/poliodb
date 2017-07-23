@@ -1,4 +1,4 @@
-{% extends 'main.html.twig' %}
+{% extends 'main_filter.html.twig' %}
 {% block content %}
 <div class="container">
     <!-- Breadcrumbs line -->
@@ -20,30 +20,94 @@
             </div>
         </div>
 
-        {% block fliter %}
-            {{ render(controller(
-            'AppPolioDbBundle:Download:downloadFilter'
-            ))
-            }}
-        {% endblock %}
-
-        <div>
+        <!-- <div>
             <h2>Posts</h2>
-              {{ sg_datatables_render(datatable) }}
+            {#  {{ sg_datatables_render(datatable) }} #}
 
-        </div>
+        </div> -->
 
-        <!-- <script type="text/javascript">
-      $(document).ready(function(){
-                $("#sg-datatables-admindata_datatable_filter").css("display","none");
-            });
-        </script> -->
+        <table id="example" class="table table-striped table-bordered table-hover table-checkable datatable" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Cluster</th>
+                <th>ClusterName</th>
+                <th>ClusterNumber</th>
+                <th>SubDistrictName</th>
+                <th>TargetPopulation</th>
+                <th>ReceivedVials</th>
+                <th>UsedVials</th>
+                <th>Child011</th>
+                <th>Child1259</th>
+                <th>RegAbsent</th>
+                <th>VaccAbsent</th>
+                <th>RegSleep</th>
+                <th>VaccSleep</th>
+                <th>RegRefusal</th>
+                <th>VaccRefusal</th>
+                <th>NewPolioCase</th>
+                <th>VaccDay</th>
+                <th>EntryDate</th>
+                <th>Missed</th>
+                <th>Sleep</th>
+                <th>Refusal</th>
+                <th>DistrictCode</th>
+                <th>Campaign</th>
+
+
+            </tr>
+        </thead>
+    </table>
 
         {% block script_end %}
 
             <script>
                 $(document).ready(function () {
                     // $('.loading, .loading-top').hide();
+                    testdata = [{"ClusterName":"1A","Cluster":"1A","ClusterNumber":"1A","SubDistrictName":"1B","TargetPopulation":"16200","ReceivedVials":"329","UsedVials":"307",
+                    "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
+                    "NewPolioCase":"65","VaccDay":"1","EntryDate":"32","Missed":"449","Sleep":"76","Refusal":"32","Id":"86486","DistrictCode":"101","Campaign":"13"},{"ClusterName":"1A","Cluster":"1A","ClusterNumber":"1A","SubDistrictName":"1B","TargetPopulation":"16200","ReceivedVials":"329","UsedVials":"307",
+                    "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
+                    "NewPolioCase":"65","VaccDay":"1","EntryDate":"32","Missed":"449","Sleep":"76","Refusal":"32","Id":"86486","DistrictCode":"101","Campaign":"13"}];
+                    var table = $('#example').DataTable( {
+                        //  "processing": true,
+                        dom: 'Blfrtip',
+                        "searching": false,
+                        buttons: [
+                            'csv', 'excel', 'pdf'
+                        ],
+                        destroy: true,
+                        "type"   : "POST",
+                        //  "serverSide": true,
+                         "aaData": testdata,
+                        "columns": [
+                            { "data": "Cluster", "visible": false},
+                            { "data": "ClusterName" },
+                            { "data": "ClusterNumber"},
+                            { "data": "SubDistrictName", "visible": false},
+                            { "data": "TargetPopulation"},
+                            { "data": "ReceivedVials"},
+                            { "data": "UsedVials"},
+                            { "data": "Child011", "visible": false},
+                            { "data": "Child1259", "visible": false},
+                            { "data": "RegAbsent", "visible": false},
+                            { "data": "VaccAbsent", "visible": false},
+                            { "data": "RegSleep", "visible": false},
+                            { "data": "VaccSleep", "visible": false},
+                            { "data": "RegRefusal", "visible": false},
+                            { "data": "VaccRefusal", "visible": false},
+                            { "data": "NewPolioCase", "visible": false},
+                            { "data": "VaccDay", "visible": false},
+                            { "data": "EntryDate", "visible": false},
+                            { "data": "Missed", "visible": false},
+                            { "data": "Sleep", "visible": false},
+                            { "data": "Refusal", "visible": false},
+                            { "data": "DistrictCode"},
+                            { "data": "Campaign"}
+                        ]
+                        } );
+
+                    //ajaxRequest();
+
 
                     $('#filterButton').click(function () {
                         var campaigns = $('#filterCampaign option:selected');
@@ -81,7 +145,15 @@
                             type: 'POST',
                             success: function (data) {
                                 //console.log(data);
-                                var jsonData = JSON.parse(data);
+                                 var jsonData = JSON.parse(data);
+                                // table.ajax.reload( function ( data ) {
+                                // table.val( data.lastInput );
+                                // } );
+                                // if(table != null){
+                                //   console.log("not if");
+                              table.clear();
+                              table.rows.add( jsonData ).draw();
+
 
                             },
                             cache: false
@@ -90,7 +162,22 @@
                     })
                 });
 
-            
+                // function ajaxRequest() {
+                //     //var test = "test";
+                //     //var data = {'data': test};
+                //     $.ajax({
+                //         url: Routing.generate('ajax_download_data_all'),
+                //         //data: data,
+                //         type: 'POST',
+                //         success: function (data) {
+                //           //console.log(data);
+                //         //    var jsonData = JSON.parse(data);
+                //         //
+                //         // table.clear();
+                //         // table.rows.add( jsonData ).draw();
+                //         }
+                //     });
+                // }
 
             </script>
 

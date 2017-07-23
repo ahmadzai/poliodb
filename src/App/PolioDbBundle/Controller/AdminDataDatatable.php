@@ -59,9 +59,7 @@ class AdminDataDatatable extends AbstractDatatable
             ->add('clusterNo', Column::class, array(
                 'title' => 'ClusterNo',
                 ))
-            ->add('subDistrictName', Column::class, array(
-                'title' => 'SubDistrictName',
-                ))
+
 
 
       /**      ->add(null, ActionColumn::class, array(

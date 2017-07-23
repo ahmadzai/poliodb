@@ -64,21 +64,4 @@ class DownloadController extends Controller
             'post' => $post
         ));
     }
-
-    /**
-     * @Route("/downloadFilter", name="download_filter")
-     */
-
-    public function downloadFilterAction()
-    {
-
-
-        $em = $this->getDoctrine()->getManager();
-
-        $campaigns = $em->getRepository('AppPolioDbBundle:Campaign')->findBy([], ['campaignId' => 'DESC']);
-
-        $regions = $em->getRepository('AppPolioDbBundle:Province')->selectAllRegions();
-
-        return $this->render("html/downloadFilter.html.twig", ['campaigns' => $campaigns, 'regions' => $regions]);
-    }
 }
