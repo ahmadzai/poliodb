@@ -604,7 +604,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-              "SELECT adm.clusterName as ClusterName, adm.cluster as Cluster, adm.clusterNo as ClusterNumber, adm.subDistrictName as SubDistrictName, adm.targetPopulation as TargetPopulation,
+              "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.clusterName as ClusterName, adm.cluster as Cluster, adm.clusterNo as ClusterNumber, adm.subDistrictName as SubDistrictName, adm.targetPopulation as TargetPopulation,
               adm.receivedVials as ReceivedVials
               , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
               , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.newPolioCase as NewPolioCase, adm.vaccDay as VaccDay, adm.entryDate as EntryDate
@@ -735,7 +735,7 @@ class AdminDataRepository extends EntityRepository {
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
             , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.newPolioCase as NewPolioCase, adm.vaccDay as VaccDay, adm.entryDate as EntryDate
             , adm.missed as Missed, adm.sleep as Sleep, adm.refusal as Refusal, adm.id as Id, (adm.districtCode) as DistrictCode, (adm.campaign) as Campaign
-                FROM AppPolioDbBundle:AdminData adm") 
+                FROM AppPolioDbBundle:AdminData adm")
           ->getResult(Query::HYDRATE_SCALAR);
     }
 }
