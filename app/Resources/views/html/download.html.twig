@@ -32,11 +32,11 @@
                 <th>Region</th>
                 <th>Province</th>
                 <th>District</th>
+                <th>S-District</th>
                 <th>Cluster</th>
-                <th>ClusterName</th>
-                <th>ClusterNumber</th>
-                <th>SubDistrictName</th>
-                <th>TargetPopulation</th>
+                <th>C-Type</th>
+                <th>C-Month</th>
+                <th>C-Year</th>
                 <th>ReceivedVials</th>
                 <th>UsedVials</th>
                 <th>Child011</th>
@@ -47,15 +47,8 @@
                 <th>VaccSleep</th>
                 <th>RegRefusal</th>
                 <th>VaccRefusal</th>
-                <th>NewPolioCase</th>
                 <th>VaccDay</th>
-                <th>EntryDate</th>
                 <th>Missed</th>
-                <th>Sleep</th>
-                <th>Refusal</th>
-                <th>DistrictCode</th>
-                <th>Campaign</th>
-
 
             </tr>
         </thead>
@@ -86,9 +79,9 @@
 
                 $(document).ready(function () {
                     // $('.loading, .loading-top').hide();
-                    testdata = [{"Region":"CR","Province":"Kabul","District":"Kabul","ClusterName":"1A","Cluster":"1A","ClusterNumber":"1A","SubDistrictName":"1B","TargetPopulation":"16200","ReceivedVials":"329","UsedVials":"307",
+                    testdata = [{"Region":"CR","Province":"Kabul","District":"Kabul","SDistrict":"1A","Cluster":"1A","CType":"1A","CMonth":"1A","CYear":"1A","SubDistrictName":"1B","ReceivedVials":"329","UsedVials":"307",
                     "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
-                    "NewPolioCase":"65","VaccDay":"1","EntryDate":"32","Missed":"449","Sleep":"76","Refusal":"32","Id":"86486","DistrictCode":"101","Campaign":"13"}];
+                    "VaccDay":"1","Missed":"449"}];
                     var table = $('#example').DataTable( {
                         //  "processing": true,
                         dom: 'Blfrtip',
@@ -98,20 +91,62 @@
                                       columns: ':not(.noVis)'
                                   },
                                   {
-                   extend: 'collection',
-                   text: 'Export',
-                   buttons: [ 'pdfHtml5', 'csvHtml5', 'excelHtml5' ]
-                }
+                                     extend: 'collection',
+                                     text: 'Raw Data',
+                                     buttons: [ {
+                                              extend: 'excelHtml5',
+                                              exportOptions: {
+                                                  columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
+                                              }
+                                                },
+                                                {
+                                                   extend: 'csvHtml5',
+                                                   exportOptions: {
+                                                       columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
+                                                   }
+                                                 },
+                                                 {
+                                                        extend: 'pdfHtml5',
+                                                        exportOptions: {
+                                                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
+                                                        }
+                                                  } ]
+
+                                  },
+                                  {
+                                     extend: 'collection',
+                                     text: 'Aggregate Data',
+                                     buttons: [ {
+                                              extend: 'excelHtml5',
+                                              exportOptions: {
+                                                  columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19 ]
+                                              }
+                                                },
+                                                {
+                                                   extend: 'csvHtml5',
+                                                   exportOptions: {
+                                                       columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19 ]
+                                                   }
+                                                 },
+                                                 {
+                                                        extend: 'pdfHtml5',
+                                                        exportOptions: {
+                                                            columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19 ]
+                                                        }
+                                                } ]
+
+                                  }
+
                         ],
                         destroy: true,
                         "type"   : "POST",
                         //  "serverSide": true,
                          "aaData": testdata,
-                         columnDefs: [
-                          {
-                              targets: 1,
-                              className: 'noVis'
-                          }],
+                        //  columnDefs: [
+                        //   {
+                        //       targets: 1,
+                        //       className: 'noVis'
+                        //   }],
                         "columns": [
                           // {
                           //       targets: 1,
@@ -122,15 +157,15 @@
                           //     "orderable":      false,
                           //     "data":           null,
                           //     "defaultContent": ""
-                          // },
+                          // },<th>Cluster</th>
                             { "data": "Region"},
                             { "data": "Province" },
                             { "data": "District"},
-                            { "data": "Cluster", "visible": false},
-                            { "data": "ClusterName" },
-                            { "data": "ClusterNumber", "visible": false},
-                            { "data": "SubDistrictName", "visible": false},
-                            { "data": "TargetPopulation"},
+                            { "data": "SDistrict", "visible": false},
+                            { "data": "Cluster"},
+                            { "data": "CType"},
+                            { "data": "CMonth", "visible": false},
+                            { "data": "CYear"},
                             { "data": "ReceivedVials", "visible": false},
                             { "data": "UsedVials", "visible": false},
                             { "data": "Child011", "visible": false},
@@ -141,14 +176,9 @@
                             { "data": "VaccSleep", "visible": false},
                             { "data": "RegRefusal", "visible": false},
                             { "data": "VaccRefusal", "visible": false},
-                            { "data": "NewPolioCase", "visible": false},
                             { "data": "VaccDay", "visible": false},
-                            { "data": "EntryDate", "visible": false},
                             { "data": "Missed", "visible": false},
-                            { "data": "Sleep", "visible": false},
-                            { "data": "Refusal", "visible": false},
-                            { "data": "DistrictCode"},
-                            { "data": "Campaign"}
+
                         ], "order": [[1, 'asc']]
                         } );
 
