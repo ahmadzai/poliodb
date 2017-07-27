@@ -718,16 +718,4 @@ class AdminDataRepository extends EntityRepository {
           )-> setParameters(['camp'=>$campaign, 'dist' => $district])
           ->getResult(Query::HYDRATE_SCALAR);
     }
-
-    public function selectAllAdminData() {
-
-      return $this->getEntityManager()
-          ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
-            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p")
-          ->getResult(Query::HYDRATE_SCALAR);
-    }
 }

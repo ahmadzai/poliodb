@@ -36,6 +36,10 @@ services:
   custom.sonata.security.handler.role:
     class: App\PolioDbBundle\Security\Handler\MyRoleSecurityHandler
 
+  app.download:
+    class: App\PolioDbBundle\Utils\Download
+    arguments: [ "@doctrine.orm.entity_manager" ]
+
   app.chart_manager:
     class: App\PolioDbBundle\Utils\Charts
     # call a method on the specified service

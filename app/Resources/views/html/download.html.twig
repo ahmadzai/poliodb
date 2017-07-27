@@ -22,7 +22,7 @@
 
         <!-- <div>
             <h2>Posts</h2>
-            {#  {{ sg_datatables_render(datatable) }} #}
+            {#  {{ sg_datatables_render(datatable) }}  #}
 
         </div> -->
 
@@ -80,8 +80,10 @@
                 $(document).ready(function () {
                     // $('.loading, .loading-top').hide();
                     testdata = [{"Region":"CR","Province":"Kabul","District":"Kabul","SDistrict":"1A","Cluster":"1A","CType":"1A","CMonth":"1A","CYear":"1A","SubDistrictName":"1B","ReceivedVials":"329","UsedVials":"307",
-                    "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
-                    "VaccDay":"1","Missed":"449"}];
+                    "VaccineWastage":"43", "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
+                    "VaccDay":"1","Missed":"449", "TotalChildrenVaccinated":"1000"}];
+                    //testdata = JSON.parse('{{lastcamp|raw}}');
+                    //console.log(testdata);
                     var table = $('#example').DataTable( {
                         //  "processing": true,
                         dom: 'Blfrtip',
@@ -139,6 +141,7 @@
 
                         ],
                         destroy: true,
+                        "pageLength": 20,
                         "type"   : "POST",
                         //  "serverSide": true,
                          "aaData": testdata,

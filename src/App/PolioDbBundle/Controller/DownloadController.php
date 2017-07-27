@@ -38,6 +38,11 @@ class DownloadController extends Controller
 
       // or use the DatatableFactory
       /** @var DatatableInterface $datatable */
+
+      $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
+      $lastCampData = $this->get('app.download')->latestCampaignForAdmin($lastCamp[0]['campaignId']);
+
+
       $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
       $datatable->buildDatatable();
 
@@ -54,7 +59,7 @@ class DownloadController extends Controller
       }
 
       return $this->render('html/download.html.twig', array(
-        'datatable' => $datatable,
+        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData)
       ));
     }
 

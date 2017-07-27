@@ -278,7 +278,7 @@ class AjaxController extends Controller
       */
       public function AjaxDownloadDataAllAction(Request $request) {
 
-      
+
         $em = $this->getDoctrine()->getManager();
         $objs = $em->getRepository('AppPolioDbBundle:AdminData')
         ->selectAllAdminData();
