@@ -94,7 +94,7 @@ class MainController extends Controller
     {
 
         // $this->get('app.chart')->chartData('entityName', 'functionName', 'parametersArray');
-        $data = $this->get('app.chart')->chartData('AdminData', 'clusterAgg', [14, 15], [3301,3302]);
+        $data = $this->get('app.chart')->chartData('AdminData', 'regionAgg', [14, 15]);
         // Category 1 (name must be in the result set)
         // Category 2 (name must be in the result set)
         // Array of columns to show on chart (the index is the label and the value is the column name in the result set
