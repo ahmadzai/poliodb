@@ -30,33 +30,25 @@ class DownloadController extends Controller
      */
     public function DashboardAdminDataAction(Request $request)
     {
-      $isAjax = $request->isXmlHttpRequest();
-
-      // Get your Datatable ...
-      //$datatable = $this->get('app.datatable.post');
-      //$datatable->buildDatatable();
-
-      // or use the DatatableFactory
-      /** @var DatatableInterface $datatable */
+      // $isAjax = $request->isXmlHttpRequest();
 
       $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
       $lastCampData = $this->get('app.download')->latestCampaignForAdmin($lastCamp[0]['campaignId']);
 
-
       $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
       $datatable->buildDatatable();
-
-      if ($isAjax) {
-        $responseService = $this->get('sg_datatables.response');
-        $responseService->setDatatable($datatable);
-
-        $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
-        $datatableQueryBuilder->buildQuery();
-
-        //dump($datatableQueryBuilder->getQb()->getDQL()); die();
-
-        return $responseService->getResponse();
-      }
+      //
+      // if ($isAjax) {
+      //   $responseService = $this->get('sg_datatables.response');
+      //   $responseService->setDatatable($datatable);
+      //
+      //   $datatableQueryBuilder = $responseService->getDatatableQueryBuilder();
+      //   $datatableQueryBuilder->buildQuery();
+      //
+      //   //dump($datatableQueryBuilder->getQb()->getDQL()); die();
+      //
+      //   return $responseService->getResponse();
+      // }
 
       return $this->render('html/download.html.twig', array(
         'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData)

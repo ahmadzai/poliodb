@@ -271,19 +271,4 @@ class AjaxController extends Controller
 
      }
 
-     /**
-      * @Route("/ajax/admin_data_all", name="ajax_download_data_all")
-      * @param $request
-      * @return response
-      */
-      public function AjaxDownloadDataAllAction(Request $request) {
-
-
-        $em = $this->getDoctrine()->getManager();
-        $objs = $em->getRepository('AppPolioDbBundle:AdminData')
-        ->selectAllAdminData();
-
-          return new Response(json_encode($objs));
-      }
-
 }

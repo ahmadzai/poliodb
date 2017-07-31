@@ -604,10 +604,11 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-              "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
-              c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-              , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-              , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['regio'=>$region])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -623,8 +624,9 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['prov'=>$province])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -640,8 +642,9 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['dist'=>$district])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -657,8 +660,9 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['camp'=>$campaign])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -676,8 +680,9 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceRegion in (:regio) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['camp'=>$campaign, 'regio'=>$region])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -694,8 +699,9 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
                 FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceCode in (:prov) ORDER BY adm.cluster, adm.vaccDay"
           )-> setParameters(['camp'=>$campaign, 'prov'=>$province])
           ->getResult(Query::HYDRATE_SCALAR);
@@ -712,9 +718,10 @@ class AdminDataRepository extends EntityRepository {
           ->createQuery(
             "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.vaccDay as VaccDay, adm.missed as Missed
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY adm.cluster, adm.vaccDay"
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY adm.cluster, adm.vaccDay "
           )-> setParameters(['camp'=>$campaign, 'dist' => $district])
           ->getResult(Query::HYDRATE_SCALAR);
     }
