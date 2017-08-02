@@ -31,6 +31,12 @@
             {#  {{ sg_datatables_render(datatable) }}  #}
 
         </div> -->
+        <label> Select data format: </label><br>
+        <select id="data-format">
+            <option value="raw">Raw Data</option>
+            <option value="agg">Aggregate Data</option>
+        </select>
+        <!-- <button type="button" id="loadButton">Load</button> -->
 
         <table id="example" cellspacing="0" width="100%">
 
@@ -40,34 +46,18 @@
         {% block script_endd %}
 
             <script>
-            function format ( d ) {
-                    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                        '<tr>'+
-                            '<td>C-Month:</td>'+
-                            '<td>'+d.CMonth+'</td>'+
-                        '</tr>'+
-                        '<tr>'+
-                            '<td>ReceivedVials:</td>'+
-                            '<td>'+d.ReceivedVials+'</td>'+
-                        '</tr>'+
-                        '<tr>'+
-                            '<td>UsedVials:</td>'+
-                            '<td>'+d.UsedVials+'</td>'+
-                        '</tr>'+
-                    '</table>';
-            }
+
 
                 $(document).ready(function () {
-                    // $('.loading, .loading-top').hide();
-                    // testdata1 = [{"Region":"CR","Province":"Kabul","District":"Kabul","SDistrict":"1A","Cluster":"1A","CType":"1A","CMonth":"1A","CYear":"1A","SubDistrictName":"1B","ReceivedVials":"329","UsedVials":"307",
-                    // "Child011":"919","Child1259":"4433","RegAbsent":"519","VaccAbsent":"70","RegSleep":"3","VaccSleep":"33","RegRefusal":"65","VaccRefusal":"43",
-                    // "VaccDay":"1","Missed":"449"}];
-                     //Hide the table
 
-                    lastcampdata = JSON.parse('{{lastcamp|raw}}');
+                    //local variables
+                    var dataType = 'raw';
+                    var table;
+                    var source, sourceCols;
 
-
-                    var cols = [
+                    //Initialize datatable with last campaign raw data
+                    source = JSON.parse('{{lastcamp|raw}}');
+                    sourceCols = [
                       {
                           "class":          "details-control",
                           "orderable":      false,
@@ -75,155 +65,286 @@
                           "defaultContent": "",
                           "width": "4%"
                       },
-                        { "data": "Region"},
-                        { "data": "Province" },
-                        { "data": "District"},
-                        { "data": "SDistrict", "visible": false},
-                        { "data": "Cluster"},
-                        { "data": "CType"},
-                        { "data": "CMonth", "visible": false},
-                        { "data": "CYear"},
-                        { "data": "ReceivedVials", "visible": false},
-                        { "data": "UsedVials", "visible": false},
-                        // { "data": "VaccineWastage", "visible": false},
-                        { "data": "Child011", "visible": false},
-                        { "data": "Child1259", "visible": false},
-                        { "data": "RegAbsent", "visible": false},
-                        { "data": "VaccAbsent", "visible": false},
-                        { "data": "RemainingAbsent", "visible": false},
-                        { "data": "RegSleep", "visible": false},
-                        { "data": "VaccSleep", "visible": false},
-                        { "data": "RemainingSleep", "visible": false},
-                        { "data": "RegRefusal", "visible": false},
-                        { "data": "VaccRefusal", "visible": false},
-                        { "data": "RemainingRefusal", "visible": false},
-                        { "data": "VaccDay", "visible": false},
-                        // { "data": "TotalChildrenVaccinated", "visible": false}
+                        { "data": "Region", title : 'Region'},
+                        { "data": "Province", title : 'Province' },
+                        { "data": "District", title : 'District'},
+                        { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+                        { "data": "Cluster", title : 'Cluster'},
+                        { "data": "CType", title : 'CType'},
+                        { "data": "CMonth", "visible": false, title : 'CMonth'},
+                        { "data": "CYear", title : 'CYear'},
+                        { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+                        { "data": "UsedVials", "visible": false, title : 'UsedVials'},
+                        { "data": "Child011", "visible": false, title : 'Child011'},
+                        { "data": "Child1259", "visible": false, title : 'Child1259'},
+                        { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                        { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                        { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                        { "data": "RegSleep", "visible": false, title : 'RegSleep'},
+                        { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
+                        { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+                        { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                        { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                        { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                        { "data": "VaccDay", "visible": false, title : 'VaccDay'},
                     ];
+                    createDatatable(source, sourceCols);
 
-                    //console.log(testdata);
-                    var table = $('#example').DataTable( {
-                        //  "processing": true,
-                        dom: 'Blfrtip',
-                        "searching": false,
-                        buttons: [{
-                                      extend: 'colvis',
-                                      columns: ':not(.noVis)'
-                                  },
-                                  {
-                                     extend: 'collection',
-                                     text: 'Raw Data',
-                                     buttons: [ {
-                                              extend: 'excelHtml5',
-                                              exportOptions: {
-                                                  columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
-                                              }
-                                                },
-                                                {
-                                                   extend: 'csvHtml5',
-                                                   exportOptions: {
-                                                       columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
-                                                   }
-                                                 } ]
+                    //change datatable based on the data type user selected.
+                    $('#data-format').change(function () {
+                        switch($("#data-format").val()) {
 
-                                  },
-                                  {
-                                     extend: 'collection',
-                                     text: 'Aggregate Data',
-                                     buttons: [ {
-                                              extend: 'excelHtml5',
-                                              exportOptions: {
-                                                  columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19 ]
-                                              }
-                                                },
-                                                {
-                                                   extend: 'csvHtml5',
-                                                   exportOptions: {
-                                                       columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19 ]
-                                                   }
-                                                 }]
+                          case 'raw':
+                          var filterData = getData();
+                          $.ajax({
+                              url: Routing.generate('ajax_download_data'),
+                              data: filterData,
+                              type: 'POST',
+                              success: function (data) {
+                                  //console.log(data);
+                                   source = JSON.parse(data);
+                                   sourceCols = [
+                                     {
+                                          "class":          "details-control",
+                                          "orderable":      false,
+                                          "data":           null,
+                                          "defaultContent": "",
+                                          "width": "4%"
+                                      },
+                                      { "data": "Region", title : 'Region'},
+                                      { "data": "Province", title : 'Province' },
+                                      { "data": "District", title : 'District'},
+                                      { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+                                      { "data": "Cluster", title : 'Cluster'},
+                                      { "data": "CType", title : 'CType'},
+                                      { "data": "CMonth", "visible": false, title : 'CMonth'},
+                                      { "data": "CYear", title : 'CYear'},
+                                      { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+                                      { "data": "UsedVials", "visible": false, title : 'UsedVials'},
+                                      { "data": "Child011", "visible": false, title : 'Child011'},
+                                      { "data": "Child1259", "visible": false, title : 'Child1259'},
+                                      { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                                      { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                                      { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                                      { "data": "RegSleep", "visible": false, title : 'RegSleep'},
+                                      { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
+                                      { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+                                      { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                                      { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                                      { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                                      { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                                                  ];
+                                                  createDatatable(source, sourceCols);
+                                                  dataType = 'raw';
+                                },
+                                cache: false
+                              });
+                                  break;
 
+                          case 'agg':
+                          var filterData = getData();
+                          $.ajax({
+                              url: Routing.generate('ajax_download_agg_data'),
+                              data: filterData,
+                              type: 'POST',
+                              success: function (data) {
+                                  //console.log(data);
+                                   source = JSON.parse(data);
+
+                                   sourceCols = [
+                                     {
+                                          "class":          "details-control",
+                                          "orderable":      false,
+                                          "data":           null,
+                                          "defaultContent": "",
+                                          "width": "4%"
+                                      },
+                                      { "data": "Region", title : 'Region'},
+                                      { "data": "Province", title : 'Province' },
+                                      { "data": "District", title : 'District'},
+                                      { "data": "DCODE", "visible": false, title : 'DCODE'},
+                                      { "data": "CDate", title : 'CDate'},
+                                      { "data": "CID", title : 'CID'},
+                                      { "data": "CType", "visible": false, title : 'CType'},
+                                      { "data": "CYear", title : 'CYear'},
+                                      { "data": "CMonth", "visible": false, title : 'CMonth'},
+                                      { "data": "ClusterName", "visible": false, title : 'ClusterName'},
+                                      { "data": "ClusterNo", "visible": false, title : 'ClusterNo'},
+                                      { "data": "RVials", "visible": false, title : 'RVials'},
+                                      { "data": "UVials", "visible": false, title : 'UVials'},
+                                      { "data": "VaccWastage", "visible": false, title : 'VaccWastage'},
+                                      { "data": "VaccChild", "visible": false, title : 'VaccChild'},
+                                      { "data": "Child011", "visible": false, title : 'Child011'},
+                                      { "data": "Child1259", "visible": false, title : 'Child1259'},
+                                      { "data": "MissedVaccinated", "visible": false, title : 'MissedVaccinated'},
+                                      { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                                      { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                                      { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                                      { "data": "RegNSS", "visible": false, title : 'RegNSS'},
+                                      { "data": "VaccNSS", "visible": false, title : 'VaccNSS'},
+                                      { "data": "RemainingNSS", "visible": false, title : 'RemainingNSS'},
+                                      { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                                      { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                                      { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                                      { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'}
+                                                ];
+                                                createDatatable(source, sourceCols);
+                                                dataType = 'agg';
+                                              },
+                                                    cache: false
+                                });
+                                  break;
+                          };
+                        });
+
+
+                        //create datatable with the source and provided columns
+                        function createDatatable(data, cols) {
+                            if ( $.fn.DataTable.isDataTable( '#example' ) ) {
+                                    $('#example').DataTable().destroy();
+                                    $('#example').empty();
+                                 };
+
+                            table = $('#example').DataTable( {
+                            //  "processing": true,
+                            dom: 'Blfrtip',
+                            "searching": false,
+                            buttons: [{
+                                          extend: 'colvis',
+                                          columns: ':not(.noVis)'
+                                      },
+                                      {
+                                         extend: 'collection',
+                                         text: 'Download',
+                                         buttons: [ {
+                                                  extend: 'excelHtml5',
+                                                    },
+                                                    {
+                                                       extend: 'csvHtml5',
+                                                     }]
+                                      }
+                                      ],
+                                      destroy: true,
+                                      "pageLength": 25,
+                                      "type"   : "POST",
+                                       "aaData": data,
+
+                                      "columns": cols,
+                                      "order": [[1, 'asc']]
+                                      } );
+                                }
+
+
+                            document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
+                            var detailRows = [];
+
+                            $('#example tbody').on('click', 'td.details-control', function () {
+                                  var tr = $(this).closest('tr');
+                                  var row = table.row( tr );
+
+                                  if ( row.child.isShown() ) {
+                                      // This row is already open - close it
+                                      row.child.hide();
+                                      tr.removeClass('shown');
+                                  }
+                                  else {
+                                      // Open this row
+                                      row.child( format(row.data()) ).show();
+                                      tr.addClass('shown');
+                                  }
+                              } );
+
+
+                              //get filter selected data
+                              function getData(){
+                                var campaigns = $('#filterCampaign option:selected');
+                                var selectedCampaigns = [];
+                                $(campaigns).each(function (index, campaigns) {
+                                    selectedCampaigns.push([$(this).val()]);
+                                });
+
+                                var region = $('#filterRegion option:selected');
+                                var selectedRegions = [];
+                                $(region).each(function (index, region) {
+                                    selectedRegions.push([$(this).val()]);
+                                });
+
+                                var provinces = $('#filterProvince option:selected');
+                                var selectedProvinces = [];
+                                $(provinces).each(function (index, provinces) {
+                                    selectedProvinces.push([$(this).val()]);
+                                });
+
+                                var districts = $('#filterDistrict option:selected');
+                                var selectedDistricts = [];
+                                $(districts).each(function (index, districts) {
+                                    selectedDistricts.push([$(this).val()]);
+                                });
+
+                                var data = {'campaign':selectedCampaigns, 'region':selectedRegions, 'province': selectedProvinces, 'district': selectedDistricts};
+
+                                  return data;
+                              }
+
+
+
+                              function reloadDatatable(data){
+                                if (dataType == 'raw'){
+                                      $.ajax({
+                                          url: Routing.generate('ajax_download_data'),
+                                          data: data,
+                                          type: 'POST',
+                                          success: function (data) {
+                                              //console.log(data);
+                                               var jsonData = JSON.parse(data);
+                                               //$('td:nth-child(2),th:nth-child(2)').hide();
+                                               table.clear();
+                                               table.rows.add( jsonData ).draw();
+                                          },
+                                          cache: false
+                                      });
+                                }
+                                else{
+                                      $.ajax({
+                                          url: Routing.generate('ajax_download_agg_data'),
+                                          data: data,
+                                          type: 'POST',
+                                          success: function (data) {
+                                              //console.log(data);
+                                               var jsonData = JSON.parse(data);
+                                               //$('td:nth-child(2),th:nth-child(2)').hide();
+                                               table.clear();
+                                               table.rows.add( jsonData ).draw();
+                                          },
+                                          cache: false
+                                      });
+
+                                    }
                                   }
 
-                        ],
-                        destroy: true,
-                        "pageLength": 10,
-                        "type"   : "POST",
-                        //  "serverSide": true,
-                         "aaData": lastcampdata,
-                        //  columnDefs: [
-                        //   {
-                        //       targets: 1,
-                        //       className: 'noVis'
-                        //   }],
-                        "columns": cols,
-                        "order": [[1, 'asc']]
-                        } );
 
+                              $('#filterButton').click(function () {
+                                  var filterData = getData();
+                                  reloadDatatable(filterData);
+                              })
+                          });
 
-                        document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
-                    var detailRows = [];
-
-                    $('#example tbody').on('click', 'td.details-control', function () {
-                          var tr = $(this).closest('tr');
-                          var row = table.row( tr );
-
-                          if ( row.child.isShown() ) {
-                              // This row is already open - close it
-                              row.child.hide();
-                              tr.removeClass('shown');
+                          function format ( d ) {
+                                  return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                                      '<tr>'+
+                                          '<td>C-Month:</td>'+
+                                          '<td>'+d.CMonth+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td>ReceivedVials:</td>'+
+                                          '<td>'+d.ReceivedVials+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td>UsedVials:</td>'+
+                                          '<td>'+d.UsedVials+'</td>'+
+                                      '</tr>'+
+                                  '</table>';
                           }
-                          else {
-                              // Open this row
-                              row.child( format(row.data()) ).show();
-                              tr.addClass('shown');
-                          }
-                      } );
-
-
-                    $('#filterButton').click(function () {
-                        var campaigns = $('#filterCampaign option:selected');
-                        var selectedCampaigns = [];
-                        $(campaigns).each(function (index, campaigns) {
-                            selectedCampaigns.push([$(this).val()]);
-                        });
-
-                        var region = $('#filterRegion option:selected');
-                        var selectedRegions = [];
-                        $(region).each(function (index, region) {
-                            selectedRegions.push([$(this).val()]);
-                        });
-
-                        var provinces = $('#filterProvince option:selected');
-                        var selectedProvinces = [];
-                        $(provinces).each(function (index, provinces) {
-                            selectedProvinces.push([$(this).val()]);
-                        });
-
-                        var districts = $('#filterDistrict option:selected');
-                        var selectedDistricts = [];
-                        $(districts).each(function (index, districts) {
-                            selectedDistricts.push([$(this).val()]);
-                        });
-
-                        var data = {'campaign':selectedCampaigns, 'region':selectedRegions, 'province': selectedProvinces, 'district': selectedDistricts};
-
-                        $.ajax({
-                            url: Routing.generate('ajax_download_data'),
-                            data: data,
-                            type: 'POST',
-                            success: function (data) {
-                                //console.log(data);
-                                 var jsonData = JSON.parse(data);
-                                 //$('td:nth-child(2),th:nth-child(2)').hide();
-                                 table.clear();
-                                 table.rows.add( jsonData ).draw();
-                            },
-                            cache: false
-                        });
-
-                    })
-                });
 
             </script>
 

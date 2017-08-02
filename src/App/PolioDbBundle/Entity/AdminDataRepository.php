@@ -609,7 +609,7 @@ class AdminDataRepository extends EntityRepository {
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
             , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio) ORDER BY adm.cluster, adm.vaccDay"
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
           )-> setParameters(['regio'=>$region])
           ->getResult(Query::HYDRATE_SCALAR);
     }
@@ -627,7 +627,7 @@ class AdminDataRepository extends EntityRepository {
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
             , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov) ORDER BY adm.cluster, adm.vaccDay"
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
           )-> setParameters(['prov'=>$province])
           ->getResult(Query::HYDRATE_SCALAR);
     }
@@ -645,7 +645,7 @@ class AdminDataRepository extends EntityRepository {
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
             , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist) ORDER BY adm.cluster, adm.vaccDay"
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
           )-> setParameters(['dist'=>$district])
           ->getResult(Query::HYDRATE_SCALAR);
     }
@@ -663,9 +663,267 @@ class AdminDataRepository extends EntityRepository {
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
             , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) ORDER BY adm.cluster, adm.vaccDay"
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
           )-> setParameters(['camp'=>$campaign])
           ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $region
+     * @param $campaign
+     * @return array
+     */
+
+    public function regionByCampaigns($region, $campaign) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
+          )-> setParameters(['camp'=>$campaign, 'regio'=>$region])
+          ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $province
+     * @param $campaign
+     * @return array
+     */
+    public function provinceByCampaigns($province, $campaign) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay"
+          )-> setParameters(['camp'=>$campaign, 'prov'=>$province])
+          ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $district
+     * @param $campaign
+     * @return array
+     */
+    public function districtByCampaigns($district, $campaign) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
+            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
+            adm.regSleep as RegSleep
+            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
+                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName, adm.cluster, adm.vaccDay "
+          )-> setParameters(['camp'=>$campaign, 'dist' => $district])
+          ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $region
+     * @return array
+     */
+    public function selectAggRegion($region) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio)
+              GROUP BY adm.cluster, p.provinceRegion"
+        )-> setParameters(['regio'=>$region])
+        ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $province
+     * @return array
+     */
+    public function selectAggProvince($province) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov)
+              GROUP BY adm.cluster, p.provinceCode"
+        )-> setParameters(['prov'=>$province])
+        ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $district
+     * @return array
+     */
+    public function selectAggDistrict($district) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist)
+              GROUP BY adm.cluster, d.districtCode"
+        )-> setParameters(['dist'=>$district])
+        ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $campaign
+     * @return array
+     */
+    public function selectAggCampaign($campaign) {
+
+      return $this->getEntityManager()
+          ->createQuery(
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE cmp.campaignId in (:camp)
+              GROUP BY adm.cluster, cmp.campaignId"
+        )-> setParameters(['camp'=>$campaign])
+        ->getResult(Query::HYDRATE_SCALAR);
     }
 
     /**
@@ -678,14 +936,46 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
-            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
-            adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceRegion in (:regio) ORDER BY adm.cluster, adm.vaccDay"
-          )-> setParameters(['camp'=>$campaign, 'regio'=>$region])
-          ->getResult(Query::HYDRATE_SCALAR);
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE(adm.campaign in (:camp) AND p.provinceRegion in (:region))
+              GROUP BY adm.cluster, p.provinceRegion, cmp.campaignId"
+        )-> setParameters(['camp'=>$campaign, 'region' => $region])
+        ->getResult(Query::HYDRATE_SCALAR);
     }
 
     /**
@@ -697,14 +987,46 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
-            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
-            adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.districtCode d JOIN d.provinceCode p JOIN adm.campaign c WHERE c.campaignId in (:camp) AND p.provinceCode in (:prov) ORDER BY adm.cluster, adm.vaccDay"
-          )-> setParameters(['camp'=>$campaign, 'prov'=>$province])
-          ->getResult(Query::HYDRATE_SCALAR);
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE(adm.campaign in (:camp) AND p.provinceCode in (:prov))
+              GROUP BY adm.cluster, p.provinceCode, cmp.campaignId"
+        )-> setParameters(['camp'=>$campaign, 'prov' => $province])
+        ->getResult(Query::HYDRATE_SCALAR);
     }
 
     /**
@@ -716,13 +1038,45 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
-            c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
-            , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
-            adm.regSleep as RegSleep
-            , adm.vaccSleep as VaccSleep, adm.sleep as RemainingSleep, adm.regRefusal as RegRefusal, adm.vaccRefusal as VaccRefusal, adm.refusal as RemainingRefusal, adm.vaccDay as VaccDay
-                FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign c JOIN adm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY adm.cluster, adm.vaccDay "
-          )-> setParameters(['camp'=>$campaign, 'dist' => $district])
-          ->getResult(Query::HYDRATE_SCALAR);
+            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+              cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
+              sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
+              ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
+              sum(adm.child011)+SUM(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as VaccChild,
+              sum(adm.child011) as Child011, sum(adm.child1259) as Child1259,
+              sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal) as MissedVaccinated,
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regAbsent ELSE 0
+                END
+              ) as RegAbsent,
+              sum(adm.vaccAbsent) as VaccAbsent,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.missed ELSE 0 END ) as RemainingAbsent,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regSleep ELSE 0
+                END
+              ) as RegNSS,
+              sum(adm.vaccSleep) as VaccNSS,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.sleep ELSE 0 END ) as RemainingNSS,
+
+              sum(
+                CASE
+                  WHEN (adm.vaccDay = 1 OR adm.vaccDay = 2 OR adm.vaccDay = 3)
+                  THEN adm.regRefusal ELSE 0
+                END
+              ) as RegRefusal,
+              sum(adm.vaccRefusal) as VaccRefusal,
+              sum(CASE WHEN adm.vaccDay = 4 THEN adm.refusal ELSE 0 END ) as RemainingRefusal,
+
+              sum(adm.missed + adm.sleep + adm.refusal) as TotalRemaining
+              FROM AppPolioDbBundle:AdminData adm JOIN adm.campaign cmp
+              JOIN adm.districtCode d JOIN d.provinceCode p WHERE(adm.campaign in (:camp) AND d.districtCode in (:dist))
+              GROUP BY adm.cluster, d.districtCode, cmp.campaignId"
+        )-> setParameters(['camp'=>$campaign, 'dist' => $district])
+        ->getResult(Query::HYDRATE_SCALAR);
     }
 }

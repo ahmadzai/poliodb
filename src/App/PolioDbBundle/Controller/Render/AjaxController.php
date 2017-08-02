@@ -187,14 +187,14 @@ class AjaxController extends Controller
                                               foreach($districts as $district) {
                                                 foreach ($district as $r)
                                                 $temp[] = $r;
-                                                $function = 'districtAggByCampaigns';
+                                                $function = 'districtByCampaigns';
                                               }
                                             }
                                           else{
                                                   foreach($provinces as $province) {
                                                       foreach ($province as $r)
                                                       $temp[] = $r;
-                                                      $function = 'provinceAggByCampaigns';
+                                                      $function = 'provinceByCampaigns';
                                                   }
                                           }
                                 }
@@ -202,7 +202,7 @@ class AjaxController extends Controller
                                   foreach($regions as $region) {
                                       foreach ($region as $r)
                                       $temp[] = $r;
-                                      $function = 'regionAggByCampaigns';
+                                      $function = 'regionByCampaigns';
                                   }
                             }
                 }
@@ -270,5 +270,119 @@ class AjaxController extends Controller
        return new Response(json_encode($objs));
 
      }
+
+     /**
+      * @Route("/ajax/admin_agg_data_download", name="ajax_download_agg_data")
+      * @param $request
+      * @return response
+      */
+      public function AjaxDownloadAggDataAction(Request $request) {
+
+        $campaignIds = $request->get('campaign');
+        $regions = $request->get('region');
+        $provinces = $request->get('province');
+        $districts = $request->get('district');
+
+
+
+        if($campaignIds != null){
+             $temp = [];
+             $camp = [];
+             foreach($campaignIds as $campaignId) {
+                 foreach ($campaignId as $r)
+                 $camp[] = $r;
+             }
+
+                 if($regions != null){
+
+                             if($provinces != null){
+
+                                           if($districts != null){
+                                               foreach($districts as $district) {
+                                                 foreach ($district as $r)
+                                                 $temp[] = $r;
+                                                 $function = 'districtAggByCampaigns';
+                                               }
+                                             }
+                                           else{
+                                                   foreach($provinces as $province) {
+                                                       foreach ($province as $r)
+                                                       $temp[] = $r;
+                                                       $function = 'provinceAggByCampaigns';
+                                                   }
+                                           }
+                                 }
+                             else{
+                                   foreach($regions as $region) {
+                                       foreach ($region as $r)
+                                       $temp[] = $r;
+                                       $function = 'regionAggByCampaigns';
+                                   }
+                             }
+                 }
+                 else{
+                       foreach($campaignIds as $campaignId) {
+                           foreach ($campaignId as $r)
+                           $temp[] = $r;
+                           $function = 'selectAggCampaign';
+                       }
+
+                       $em = $this->getDoctrine()->getManager();
+                       $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+                       ->$function($temp);
+                 }
+
+                 $em = $this->getDoctrine()->getManager();
+                 $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+                 ->$function($temp, $camp);
+           }
+           else{
+             $temp = [];
+             if($regions != null){
+
+                         if($provinces != null){
+
+                                       if($districts != null){
+                                           foreach($districts as $district) {
+                                             foreach ($district as $r)
+                                             $temp[] = $r;
+                                             $function = 'selectAggDistrict';
+                                           }
+                                         }
+                                       else{
+                                               foreach($provinces as $province) {
+                                                   foreach ($province as $r)
+                                                   $temp[] = $r;
+                                                   $function = 'selectAggProvince';
+                                               }
+                                       }
+                             }
+                         else{
+                               foreach($regions as $region) {
+                                   foreach ($region as $r)
+                                   $temp[] = $r;
+                                   $function = 'selectAggRegion';
+                               }
+                         }
+               }
+               $em = $this->getDoctrine()->getManager();
+               $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+               ->$function($temp);
+             }
+
+       //  if($regions !== null) {
+       //    $temp = [];
+       //    foreach($regions as $region) {
+       //      foreach ($region as $r)
+       //      $temp[] = $r;
+       //    }
+       //  }
+
+       //  $em = $this->getDoctrine()->getManager();
+       //  $objs = $em->getRepository('AppPolioDbBundle:AdminData')
+       //  ->$function($temp);
+        return new Response(json_encode($objs));
+
+      }
 
 }
