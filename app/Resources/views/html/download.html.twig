@@ -18,6 +18,11 @@
                 <a href="{{ path('home_admin_data') }}">Dashboard</a>
             </li>
         </ul>
+        <ul class="pull-right breadcrumb">
+            <li>
+                <span class="loading-top">Updating Datatable Content  <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+            </li>
+        </ul>
         </div>
 
         <div class="page-header">
@@ -49,6 +54,8 @@
 
 
                 $(document).ready(function () {
+
+                   $('.loading, .loading-top').hide();
 
                     //local variables
                     var dataType = 'raw';
@@ -90,12 +97,15 @@
                     ];
                     createDatatable(source, sourceCols);
 
+
+
                     //change datatable based on the data type user selected.
                     $('#data-format').change(function () {
                         switch($("#data-format").val()) {
 
                           case 'raw':
                           var filterData = getData();
+                          $('.loading, .loading-top').show();
                           $.ajax({
                               url: Routing.generate('ajax_download_data'),
                               data: filterData,
@@ -136,6 +146,7 @@
                                                   ];
                                                   createDatatable(source, sourceCols);
                                                   dataType = 'raw';
+                                                  $('.loading, .loading-top').hide();
                                 },
                                 cache: false
                               });
@@ -143,6 +154,7 @@
 
                           case 'agg':
                           var filterData = getData();
+                          $('.loading, .loading-top').show();
                           $.ajax({
                               url: Routing.generate('ajax_download_agg_data'),
                               data: filterData,
@@ -190,6 +202,7 @@
                                                 ];
                                                 createDatatable(source, sourceCols);
                                                 dataType = 'agg';
+                                                $('.loading, .loading-top').hide();
                                               },
                                                     cache: false
                                 });
@@ -289,6 +302,7 @@
 
 
                               function reloadDatatable(data){
+                                $('.loading, .loading-top').show();
                                 if (dataType == 'raw'){
                                       $.ajax({
                                           url: Routing.generate('ajax_download_data'),
@@ -300,6 +314,8 @@
                                                //$('td:nth-child(2),th:nth-child(2)').hide();
                                                table.clear();
                                                table.rows.add( jsonData ).draw();
+
+                                               $('.loading, .loading-top').hide();
                                           },
                                           cache: false
                                       });
@@ -315,6 +331,8 @@
                                                //$('td:nth-child(2),th:nth-child(2)').hide();
                                                table.clear();
                                                table.rows.add( jsonData ).draw();
+
+                                               $('.loading, .loading-top').hide();
                                           },
                                           cache: false
                                       });
