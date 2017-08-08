@@ -37,6 +37,8 @@ class DownloadController extends Controller
 
       $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
       $datatable->buildDatatable();
+
+      $datasource = "admin_data";
       //
       // if ($isAjax) {
       //   $responseService = $this->get('sg_datatables.response');
@@ -51,7 +53,7 @@ class DownloadController extends Controller
       // }
 
       return $this->render('html/download.html.twig', array(
-        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData)
+        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
       ));
     }
 

@@ -26,6 +26,9 @@ class UploadController extends Controller
      */
     public function adminUploadAction(Request $request)
     {
+
+        //track url
+        $this->get('app.settings')->trackUrl('admin_data_upload');
         //mapping Db table TempAdminData
         $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempAdminData');
         $fieldNames = $mappings->getFieldNames();
@@ -304,13 +307,15 @@ class UploadController extends Controller
             }//end of second form.
         }
         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
-            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool));
+            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'admin_data_upload'));
     }
     /**
      * @Route("/upload/icm_data", name="icm_data_upload")
      */
     public function icmUploadAction(Request $request)
     {
+        //track url
+        $this->get('app.settings')->trackUrl('icm_data_upload');
         //mapping Db table TempAdminData
         $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempIcmData');
         $fieldNames = $mappings->getFieldNames();
@@ -578,13 +583,16 @@ class UploadController extends Controller
             }//end of second form.
         }
         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
-            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool));
+            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'icm_data_upload'));
     }
     /**
      * @Route("/upload/catchup_data", name="catchup_data_upload")
      */
     public function catchupUploadAction(Request $request)
     {
+
+        //track url
+        $this->get('app.settings')->trackUrl('catchup_data_upload');
         //mapping Db table TempAdminData
         $mappings = $this->getDoctrine()->getManager()->getClassMetadata('AppPolioDbBundle:TempCatchupData');
         $fieldNames = $mappings->getFieldNames();
@@ -799,6 +807,6 @@ class UploadController extends Controller
             }//end of second form.
         }
         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
-            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool));
+            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url' => 'catchup_data_upload'));
     }
 }

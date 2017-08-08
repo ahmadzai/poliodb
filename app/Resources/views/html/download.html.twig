@@ -13,11 +13,42 @@
     </style>
     <div class="crumbs" role="">
         <ul id="breadcrumbs" class="breadcrumb">
-            <li>
-                <i class="icon-home"></i>
-                <a href="{{ path('home_admin_data') }}">Dashboard</a>
-            </li>
+          <li>
+              <i class="icon-home"></i>
+              <a href="{{ path('dashboard_main') }}">Home</a>
+          </li>
+          <li class="">
+              <a href="#" title="">
+              {% if table == "admin_data" %}
+                Admin Data
+              {% endif %}
+              {% if table == "catchup_data" %}
+                Catchup Data
+              {% endif %}
+              {% if table == "icm_data" %}
+                Icm Data
+              {% endif %}
+              </a>
+          </li>
+          <li class="current">
+              <a href="{{ path(app.session.get('visited_url')) }}" title="">
+                  {% if('admin' in app.session.get('visited_url')) %} Download
+                  {% elseif('icm' in app.session.get('visited_url')) %} Download
+                  {% elseif('catchup' in app.session.get('visited_url')) %} Download
+                  {% endif %}
+              </a>
+          </li>
         </ul>
+
+        <ul class="crumb-buttons">
+						<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-tasks"></i><span>Select Data Format</span><i class="icon-angle-down left-padding"></i></a>
+							<ul class="dropdown-menu pull-right">
+							<li><a id="rawLink" href="#" title="">Raw Data</a></li>
+							<li><a id="aggLink" href="#" title="">Aggregate Data</a></li>
+							</ul>
+						</li>
+				</ul>
+
         <ul class="pull-right breadcrumb">
             <li>
                 <span class="loading-top">Updating Datatable Content  <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
@@ -36,11 +67,11 @@
             {#  {{ sg_datatables_render(datatable) }}  #}
 
         </div> -->
-        <label> Select data format: </label><br>
+        <!-- <label> Select data format: </label><br>
         <select id="data-format">
             <option value="raw">Raw Data</option>
             <option value="agg">Aggregate Data</option>
-        </select>
+        </select> -->
         <!-- <button type="button" id="loadButton">Load</button> -->
 
         <table id="example" cellspacing="0" width="100%">
@@ -65,13 +96,13 @@
                     //Initialize datatable with last campaign raw data
                     source = JSON.parse('{{lastcamp|raw}}');
                     sourceCols = [
-                      {
-                          "class":          "details-control",
-                          "orderable":      false,
-                          "data":           null,
-                          "defaultContent": "",
-                          "width": "4%"
-                      },
+                      // {
+                      //     "class":          "details-control",
+                      //     "orderable":      false,
+                      //     "data":           null,
+                      //     "defaultContent": "",
+                      //     "width": "4%"
+                      // },
                         { "data": "Region", title : 'Region'},
                         { "data": "Province", title : 'Province' },
                         { "data": "District", title : 'District'},
@@ -98,12 +129,8 @@
                     createDatatable(source, sourceCols);
 
 
+                    $("#rawLink").click(function() {
 
-                    //change datatable based on the data type user selected.
-                    $('#data-format').change(function () {
-                        switch($("#data-format").val()) {
-
-                          case 'raw':
                           var filterData = getData();
                           $('.loading, .loading-top').show();
                           $.ajax({
@@ -114,13 +141,13 @@
                                   //console.log(data);
                                    source = JSON.parse(data);
                                    sourceCols = [
-                                     {
-                                          "class":          "details-control",
-                                          "orderable":      false,
-                                          "data":           null,
-                                          "defaultContent": "",
-                                          "width": "4%"
-                                      },
+                                    //  {
+                                    //       "class":          "details-control",
+                                    //       "orderable":      false,
+                                    //       "data":           null,
+                                    //       "defaultContent": "",
+                                    //       "width": "4%"
+                                    //   },
                                       { "data": "Region", title : 'Region'},
                                       { "data": "Province", title : 'Province' },
                                       { "data": "District", title : 'District'},
@@ -150,66 +177,66 @@
                                 },
                                 cache: false
                               });
-                                  break;
 
-                          case 'agg':
-                          var filterData = getData();
-                          $('.loading, .loading-top').show();
-                          $.ajax({
-                              url: Routing.generate('ajax_download_agg_data'),
-                              data: filterData,
-                              type: 'POST',
-                              success: function (data) {
-                                  //console.log(data);
-                                   source = JSON.parse(data);
+                     });
 
-                                   sourceCols = [
-                                     {
-                                          "class":          "details-control",
-                                          "orderable":      false,
-                                          "data":           null,
-                                          "defaultContent": "",
-                                          "width": "4%"
-                                      },
-                                      { "data": "Region", title : 'Region'},
-                                      { "data": "Province", title : 'Province' },
-                                      { "data": "District", title : 'District'},
-                                      { "data": "DCODE", "visible": false, title : 'DCODE'},
-                                      { "data": "CDate", title : 'CDate'},
-                                      { "data": "CID", title : 'CID'},
-                                      { "data": "CType", "visible": false, title : 'CType'},
-                                      { "data": "CYear", title : 'CYear'},
-                                      { "data": "CMonth", "visible": false, title : 'CMonth'},
-                                      { "data": "ClusterName", "visible": false, title : 'ClusterName'},
-                                      { "data": "ClusterNo", "visible": false, title : 'ClusterNo'},
-                                      { "data": "RVials", "visible": false, title : 'RVials'},
-                                      { "data": "UVials", "visible": false, title : 'UVials'},
-                                      { "data": "VaccWastage", "visible": false, title : 'VaccWastage'},
-                                      { "data": "VaccChild", "visible": false, title : 'VaccChild'},
-                                      { "data": "Child011", "visible": false, title : 'Child011'},
-                                      { "data": "Child1259", "visible": false, title : 'Child1259'},
-                                      { "data": "MissedVaccinated", "visible": false, title : 'MissedVaccinated'},
-                                      { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
-                                      { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
-                                      { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
-                                      { "data": "RegNSS", "visible": false, title : 'RegNSS'},
-                                      { "data": "VaccNSS", "visible": false, title : 'VaccNSS'},
-                                      { "data": "RemainingNSS", "visible": false, title : 'RemainingNSS'},
-                                      { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
-                                      { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
-                                      { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
-                                      { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'}
-                                                ];
-                                                createDatatable(source, sourceCols);
-                                                dataType = 'agg';
-                                                $('.loading, .loading-top').hide();
-                                              },
-                                                    cache: false
-                                });
-                                  break;
-                          };
-                        });
+                     $("#aggLink").click(function() {
 
+                           var filterData = getData();
+                           $('.loading, .loading-top').show();
+                           $.ajax({
+                               url: Routing.generate('ajax_download_agg_data'),
+                               data: filterData,
+                               type: 'POST',
+                               success: function (data) {
+                                   //console.log(data);
+                                    source = JSON.parse(data);
+
+                                    sourceCols = [
+                                      // {
+                                      //      "class":          "details-control",
+                                      //      "orderable":      false,
+                                      //      "data":           null,
+                                      //      "defaultContent": "",
+                                      //      "width": "4%"
+                                      //  },
+                                       { "data": "Region", title : 'Region'},
+                                       { "data": "Province", title : 'Province' },
+                                       { "data": "District", title : 'District'},
+                                       { "data": "DCODE", "visible": false, title : 'DCODE'},
+                                       { "data": "CDate", title : 'CDate'},
+                                       { "data": "CID", title : 'CID'},
+                                       { "data": "CType", "visible": false, title : 'CType'},
+                                       { "data": "CYear", title : 'CYear'},
+                                       { "data": "CMonth", "visible": false, title : 'CMonth'},
+                                       { "data": "ClusterName", "visible": false, title : 'ClusterName'},
+                                       { "data": "ClusterNo", "visible": false, title : 'ClusterNo'},
+                                       { "data": "RVials", "visible": false, title : 'RVials'},
+                                       { "data": "UVials", "visible": false, title : 'UVials'},
+                                       { "data": "VaccWastage", "visible": false, title : 'VaccWastage'},
+                                       { "data": "VaccChild", "visible": false, title : 'VaccChild'},
+                                       { "data": "Child011", "visible": false, title : 'Child011'},
+                                       { "data": "Child1259", "visible": false, title : 'Child1259'},
+                                       { "data": "MissedVaccinated", "visible": false, title : 'MissedVaccinated'},
+                                       { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                                       { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                                       { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                                       { "data": "RegNSS", "visible": false, title : 'RegNSS'},
+                                       { "data": "VaccNSS", "visible": false, title : 'VaccNSS'},
+                                       { "data": "RemainingNSS", "visible": false, title : 'RemainingNSS'},
+                                       { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                                       { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                                       { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                                       { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'}
+                                                 ];
+                                                 createDatatable(source, sourceCols);
+                                                 dataType = 'agg';
+                                                 $('.loading, .loading-top').hide();
+                                               },
+                                                     cache: false
+                                 });
+
+                     });
 
                         //create datatable with the source and provided columns
                         function createDatatable(data, cols) {
@@ -224,7 +251,8 @@
                             "searching": false,
                             buttons: [{
                                           extend: 'colvis',
-                                          columns: ':not(.noVis)'
+                                          columns: ':not(.noVis)',
+                                          collectionLayout: 'fixed two-column'
                                       },
                                       {
                                          extend: 'collection',
@@ -243,10 +271,21 @@
                                        "aaData": data,
 
                                       "columns": cols,
-                                      "order": [[1, 'asc']]
+                                      "order": [[1, 'asc']],
+                                      "columnDefs": [ {
+                                                        "targets": -1,
+                                                        "data": null,
+                                                        "defaultContent": "<button>Click!</button>"
+                                                    } ]
+                                      // "defaultContent": "<button>click</button>"
+                                                      //  + '<button class="btn-show"  type="button">Delete</button>'
                                       } );
                                 }
 
+                                $('#example tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        alert( data[0] +"'s salary is: "+ data[ 5 ] );
+    } );
 
                             document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
                             var detailRows = [];

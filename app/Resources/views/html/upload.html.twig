@@ -4,13 +4,31 @@
     <!-- Breadcrumbs line -->
     <div class="crumbs" role="">
         <ul id="breadcrumbs" class="breadcrumb">
-            <li>
-                <i class="icon-home"></i>
-                <a href="{{ path('home_admin_data') }}">Dashboard</a>
-            </li>
-            {#<li class="current">#}
-                {#<a href="pages_calendar.html" title="">Calendar</a>#}
-            {#</li>#}
+          <li>
+              <i class="icon-home"></i>
+              <a href="{{ path('dashboard_main') }}">Home</a>
+          </li>
+          <li class="">
+              <a href="#" title="">
+              {% if table == "admin_data" %}
+                Admin Data
+              {% endif %}
+              {% if table == "catchup_data" %}
+                Catchup Data
+              {% endif %}
+              {% if table == "icm_data" %}
+                Icm Data
+              {% endif %}
+              </a>
+          </li>
+          <li class="current">
+              <a href="{{ path(app.session.get('visited_url')) }}" title="">
+                  {% if('admin' in app.session.get('visited_url')) %} Upload
+                  {% elseif('icm' in app.session.get('visited_url')) %} Upload
+                  {% elseif('catchup' in app.session.get('visited_url')) %} Upload
+                  {% endif %}
+              </a>
+          </li>
         </ul>
         <ul class="crumb-buttons">
 
@@ -37,7 +55,7 @@
         </ul>
         -->
     </div>
-  <div class="row">
+  <!-- <div class="row"> -->
     <!-- /Breadcrumbs line -->
     <!--=== Page Header ===-->
     <div class="page-header">
@@ -189,15 +207,15 @@
         <div class="alert alert-success fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> {{ message }}
+        </div>
         {% endfor %}
         {% for message in app.session.flashBag.get('masterexception') %}
         <div class="alert alert-danger fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
             <strong>Info!</strong> {{ message }}
-        {% endfor %}
         </div>
+        {% endfor %}
 
         {{ form_end(form2) }}
-    </div>
 </div>
 {% endblock %}
