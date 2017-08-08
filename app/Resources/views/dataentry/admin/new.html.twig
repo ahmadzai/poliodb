@@ -1,0 +1,153 @@
+{% extends 'main.html.twig' %}
+
+{% block content %}
+
+
+                {{ form_start(form) }}
+
+                  <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="col-md-4">
+                              <label class="control-label">Cluster Name:</label>
+                                  {{ form_widget(form.clusterName, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.clusterName) }}
+                            </div>
+                            <div class="col-md-4">
+        										  <label class="control-label">Cluster:</label>
+                                  {{ form_widget(form.cluster, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.cluster) }}
+                            </div>
+                            <div class="col-md-4">
+                              <label class="control-label">Cluster Number:</label>
+                                  {{ form_widget(form.clusterNo, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.clusterNo) }}
+                            </div>
+                            <div class="col-md-4">
+            										<label class="control-label">SubDistrictName:</label>
+                                {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                {{ form_errors(form.subDistrictName) }}
+            								</div>
+                            <div class="col-md-4">
+            										<label class="control-label">Target Population:</label>
+                                {{ form_widget(form.targetPopulation, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                {{ form_errors(form.targetPopulation) }}
+        							      </div>
+                            <div class="col-md-4">
+                                <label class="control-label">Received Vials:</label>
+                                {{ form_widget(form.receivedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                {{ form_errors(form.receivedVials) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group">
+                      <div class="row">
+                          <div class="col-md-10">
+                              <div class="col-md-4">
+              										<label class="control-label">Used Vials:</label>
+                                  {{ form_widget(form.usedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.usedVials) }}
+              								</div>
+                              <div class="col-md-4">
+              										<label class="control-label">Child001:</label>
+                                  {{ form_widget(form.child011, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.child011) }}
+              							  </div>
+                              <div class="col-md-4">
+                                  <label class="control-label">Child1259:</label>
+                                  {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.child1259) }}
+                              </div>
+                              <div class="col-md-4">
+              										<label class="control-label">Reg Absent:</label>
+                                  {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.regAbsent) }}
+              								</div>
+                              <div class="col-md-4">
+              										<label class="control-label">Vacc Absent:</label>
+                                  {{ form_widget(form.vaccAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.vaccAbsent) }}
+              							  </div>
+                              <div class="col-md-4">
+                                  <label class="control-label">Missed:</label>
+                                  {{ form_widget(form.missed, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                                  {{ form_errors(form.missed) }}
+                              </div>
+                      </div>
+                   </div>
+                </div>
+                  <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-10">
+                          <div class="col-md-4">
+          										<label class="control-label">Reg Sleep:</label>
+                              {{ form_widget(form.regSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.regSleep) }}
+          								</div>
+                          <div class="col-md-4">
+          										<label class="control-label">Vacc Sleep:</label>
+                              {{ form_widget(form.vaccSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.vaccSleep) }}
+          							  </div>
+                          <div class="col-md-4">
+                              <label class="control-label">Sleep:</label>
+                              {{ form_widget(form.sleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.sleep) }}
+                          </div>
+                          <div class="col-md-4">
+          										<label class="control-label">Reg Regusal:</label>
+                              {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.regRefusal) }}
+          								</div>
+                          <div class="col-md-4">
+          										<label class="control-label">Vacc Refusal:</label>
+                              {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.vaccRefusal) }}
+          							  </div>
+                          <div class="col-md-4">
+                              <label class="control-label">Refusal:</label>
+                              {{ form_widget(form.refusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                              {{ form_errors(form.refusal) }}
+                          </div>
+                      </div>
+                   </div>
+                </div>
+                  <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-10">
+                          <div class="col-md-4">
+        										<label class="control-label">NewPolioCase:</label>
+                            {{ form_widget(form.newPolioCase, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                            {{ form_errors(form.newPolioCase) }}
+        								</div>
+                        <div class="col-md-4">
+        										<label class="control-label">Vacc Day:</label>
+                            {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                            {{ form_errors(form.vaccDay) }}
+        							  </div>
+                        <div class="col-md-4">
+                            <label class="control-label">District Code:</label>
+                            {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                            {{ form_errors(form.districtCode) }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Campaign ID:</label>
+                            {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                            {{ form_errors(form.campaign) }}
+                        </div>
+                      </div>
+                  </div>
+
+
+
+
+        <input type="submit" value="Create" />
+              {{ form_end(form) }}
+
+    <!-- <ul>
+        <li>
+            <a href="">Back to the list</a>
+        </li>
+    </ul> -->
+{% endblock %}

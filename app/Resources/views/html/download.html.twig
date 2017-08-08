@@ -125,6 +125,7 @@
                         { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
                         { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
                         { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                        { "data": null}
                     ];
                     createDatatable(source, sourceCols);
 
@@ -170,6 +171,7 @@
                                       { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
                                       { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
                                       { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                                      { "data": null}
                                                   ];
                                                   createDatatable(source, sourceCols);
                                                   dataType = 'raw';
@@ -227,7 +229,8 @@
                                        { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
                                        { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
                                        { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
-                                       { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'}
+                                       { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'},
+                                       { "data": null}
                                                  ];
                                                  createDatatable(source, sourceCols);
                                                  dataType = 'agg';
@@ -274,18 +277,15 @@
                                       "order": [[1, 'asc']],
                                       "columnDefs": [ {
                                                         "targets": -1,
+                                                        "width": "8%",
                                                         "data": null,
-                                                        "defaultContent": "<button>Click!</button>"
+                                                        "defaultContent": '<button class="btn btn-xs" type="button"><i class="icon-edit"></i></button>'
+                                                                          + '<button class="btn btn-xs"  type="button"><i class="icon-bar-chart"></i></button>'
                                                     } ]
-                                      // "defaultContent": "<button>click</button>"
-                                                      //  + '<button class="btn-show"  type="button">Delete</button>'
                                       } );
                                 }
 
-                                $('#example tbody').on( 'click', 'button', function () {
-        var data = table.row( $(this).parents('tr') ).data();
-        alert( data[0] +"'s salary is: "+ data[ 5 ] );
-    } );
+
 
                             document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
                             var detailRows = [];

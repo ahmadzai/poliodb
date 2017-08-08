@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\PolioDbBundle\Entity\AdminData;
 
 
 class DataEntryController extends Controller
@@ -24,9 +25,24 @@ class DataEntryController extends Controller
     /**
      * @Route("/data_entry/admin_data", name="entry_admin_data")
      */
-    public function DashboardAdminDataAction()
+    public function DashboardAdminDataAction(Request $request)
     {
-        return $this->render("pages/home.html.twig");
+      $adminData = new AdminData();
+      $form = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $adminData);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($adminData);
+          $em->flush($adminData);
+
+          // return $this->redirectToRoute('district_show', array('id' => $district->getDistrictCode()));
+      }
+
+      return $this->render('dataentry/admin/new.html.twig', array(
+          'admindata' => $adminData,
+          'form' => $form->createView(),
+      ));
     }
 
     /**
