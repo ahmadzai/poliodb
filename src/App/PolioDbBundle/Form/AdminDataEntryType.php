@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class AdminDataEntryType extends AbstractType
 {
@@ -38,11 +39,12 @@ class AdminDataEntryType extends AbstractType
                 ->add('refusal')
                 ->add('newPolioCase')
                 ->add('vaccDay')
-                // ->add('entryDate', DateType::class, array(
-                //     'label'=>'Entry Date',
-                //     'widget' => 'single_text',
-                //     'format' => 'yyyy-MM-dd',
-                //     ))
+                ->add('entryDate', DateTimeType::class, array(
+                    'label'=>'Entry Date',
+                    'widget' => 'single_text',
+                    'data' => new \DateTime(),
+                    'format' => 'yyyy-MM-dd',
+                    ))
                 ->add('districtCode', 'entity', array(
                     'class' => 'AppPolioDbBundle:District',
                     'choice_label' => 'districtName',
@@ -68,9 +70,7 @@ class AdminDataEntryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'App\PolioDbBundle\Entity\AdminData', 'attr' => array(
-            'class' => 'form-horizontal row-border'
-        )
+            'data_class' => 'App\PolioDbBundle\Entity\AdminData'
         ));
     }
 

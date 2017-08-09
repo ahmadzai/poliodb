@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\PolioDbBundle\Entity\AdminData;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataEntryController extends Controller
 {
@@ -31,17 +31,33 @@ class DataEntryController extends Controller
       $form = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $adminData);
       $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid()) {
+      if ($form->isSubmitted()) {
           $em = $this->getDoctrine()->getManager();
           $em->persist($adminData);
           $em->flush($adminData);
 
+
+          return new JsonResponse(array('message' => 'Success!'), 200);
           // return $this->redirectToRoute('district_show', array('id' => $district->getDistrictCode()));
       }
+
+    //   $response = new JsonResponse(
+    //         array(
+    //     'message' => 'Error',
+    //     'form' => $this->renderView('dataentry/admin/new.html.twig',
+    //             array(
+    //               'admindata' => $adminData,
+    //               'form' => $form->createView(),
+    //     ))), 400);
+    //
+    // return $response;
+
+    $lastThreeRows = $this->get('app.download')->lastThreeAdminRows();
 
       return $this->render('dataentry/admin/new.html.twig', array(
           'admindata' => $adminData,
           'form' => $form->createView(),
+          'lastthreerows' => json_encode($lastThreeRows)
       ));
     }
 

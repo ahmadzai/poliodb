@@ -1,9 +1,13 @@
 {% extends 'main.html.twig' %}
 
 {% block content %}
-
-
-                {{ form_start(form) }}
+          <div class="col-md-12">
+						<div class="widget box">
+							<div class="widget-header">
+								<h4><i class="icon-reorder"></i> Data Entry </h4>
+							</div>
+							<div class="widget-content">
+                {{ form_start(form, { 'action': path('entry_admin_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
 
                   <div class="form-group">
                     <div class="row">
@@ -127,6 +131,11 @@
                             {{ form_errors(form.vaccDay) }}
         							  </div>
                         <div class="col-md-4">
+                            <label class="control-label">Entry Date:</label>
+                            {{ form_widget(form.entryDate , { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                            {{ form_errors(form.entryDate) }}
+                        </div>
+                        <div class="col-md-4">
                             <label class="control-label">District Code:</label>
                             {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
                             {{ form_errors(form.districtCode) }}
@@ -138,16 +147,106 @@
                         </div>
                       </div>
                   </div>
+                </div>
+              </div>
+            </div>
 
 
 
+        <input type="submit" class="btn btn-info" value="Submit" />
 
-        <input type="submit" value="Create" />
-              {{ form_end(form) }}
+        <table id="example" cellspacing="0" width="100%">
+
+    </table>
+
 
     <!-- <ul>
         <li>
             <a href="">Back to the list</a>
         </li>
     </ul> -->
+{% endblock %}
+
+{% block script_end %}
+<script>
+
+
+          var table;
+          var source, sourceCols;
+
+          //Initialize datatable with last campaign raw data
+          source = JSON.parse('{{lastthreerows|raw}}');
+          sourceCols = [
+              { "data": "Region", title : 'Region'},
+              { "data": "Province", title : 'Province' },
+              { "data": "District", title : 'District'},
+              { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+              { "data": "Cluster", title : 'Cluster'},
+              { "data": "CType", title : 'CType'},
+              { "data": "CMonth", "visible": false, title : 'CMonth'},
+              { "data": "CYear", title : 'CYear'},
+              { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+              { "data": "UsedVials", "visible": false, title : 'UsedVials'},
+              { "data": "Child011", "visible": false, title : 'Child011'},
+              { "data": "Child1259", "visible": false, title : 'Child1259'},
+              { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+              { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+              { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+              { "data": "RegSleep", "visible": false, title : 'RegSleep'},
+              { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
+              { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+              { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+              { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+              { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+              { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+          ];
+          createDatatable(source, sourceCols);
+
+
+                function createDatatable(data, cols) {
+                  if ( $.fn.DataTable.isDataTable( '#example' ) ) {
+                          $('#example').DataTable().destroy();
+                          $('#example').empty();
+                       };
+
+                        table = $('#example').DataTable( {
+                        //  "processing": true,
+                        dom: 'frtip',
+                        "searching": false,
+                        destroy: true,
+                        "pageLength": 25,
+                        "type"   : "POST",
+                         "aaData": data,
+                         "columns": cols,
+                        } );
+                  }
+
+
+
+      $('form.ajaxForm').on('submit', function () {
+        var that = $(this),
+        url= that.attr('action'),
+        type= that.attr('method'),
+        data = {};
+
+        that.find('[name]').each(function(index, value) {
+          var that = $(this),
+          name = that.attr('name'),
+          value = that.val();
+
+          data[name] = value;
+        });
+
+        $.ajax({
+              type: type,
+              url: url,
+              data: data,
+              success: function(response){
+                console.log(response);
+              }
+          });
+
+    return false;
+});
+</script>
 {% endblock %}
