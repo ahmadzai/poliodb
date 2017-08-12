@@ -56,11 +56,11 @@
         </ul>
         </div>
 
-        <div class="page-header">
+        <!-- <div class="page-header">
             <div class="page-title">
                 <span>Hello, {{app.user.username|capitalize}}!</span>
             </div>
-        </div>
+        </div> -->
 
         <!-- <div>
             <h2>Posts</h2>
@@ -73,7 +73,7 @@
             <option value="agg">Aggregate Data</option>
         </select> -->
         <!-- <button type="button" id="loadButton">Load</button> -->
-
+        <br>
         <table id="example" cellspacing="0" width="100%">
 
     </table>
@@ -251,7 +251,12 @@
                             table = $('#example').DataTable( {
                             //  "processing": true,
                             dom: 'Blfrtip',
-                            "searching": false,
+                            scrollY: 600,
+                            deferRender: true,
+                            scroller: {
+                                loadingIndicator: true
+                            },
+                            //"searching": false,
                             buttons: [{
                                           extend: 'colvis',
                                           columns: ':not(.noVis)',
@@ -285,7 +290,7 @@
                                       } );
                                 }
 
-
+                            $('.dataTables_filter input').attr('type', 'text');
 
                             document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
                             var detailRows = [];

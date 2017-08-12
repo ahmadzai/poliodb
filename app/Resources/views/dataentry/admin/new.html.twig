@@ -1,165 +1,122 @@
 {% extends 'main.html.twig' %}
 
 {% block content %}
-          <div class="col-md-12">
-						<div class="widget box">
-							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Data Entry </h4>
-							</div>
-							<div class="widget-content">
-                {{ form_start(form, { 'action': path('entry_admin_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
-
-                  <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="col-md-4">
-                              <label class="control-label">Cluster Name:</label>
-                                  {{ form_widget(form.clusterName, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.clusterName) }}
-                            </div>
-                            <div class="col-md-4">
-        										  <label class="control-label">Cluster:</label>
-                                  {{ form_widget(form.cluster, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.cluster) }}
-                            </div>
-                            <div class="col-md-4">
-                              <label class="control-label">Cluster Number:</label>
-                                  {{ form_widget(form.clusterNo, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.clusterNo) }}
-                            </div>
-                            <div class="col-md-4">
-            										<label class="control-label">SubDistrictName:</label>
-                                {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                {{ form_errors(form.subDistrictName) }}
-            								</div>
-                            <div class="col-md-4">
-            										<label class="control-label">Target Population:</label>
-                                {{ form_widget(form.targetPopulation, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                {{ form_errors(form.targetPopulation) }}
-        							      </div>
-                            <div class="col-md-4">
-                                <label class="control-label">Received Vials:</label>
-                                {{ form_widget(form.receivedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                {{ form_errors(form.receivedVials) }}
-                            </div>
-                        </div>
-                    </div>
+    <div class="col-md-12">
+      <div class="widget box">
+        <div class="widget-header">
+          <h4><i class="icon-reorder"></i> Data Entry </h4>
+        </div>
+        <div class="widget-content">
+        {{ form_start(form, { 'action': path('entry_admin_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="col-md-2">
+                  <label class="control-label">Cluster:</label>
+                      {{ form_widget(form.cluster, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                      {{ form_errors(form.cluster) }}
                 </div>
-                  <div class="form-group">
-                      <div class="row">
-                          <div class="col-md-10">
-                              <div class="col-md-4">
-              										<label class="control-label">Used Vials:</label>
-                                  {{ form_widget(form.usedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.usedVials) }}
-              								</div>
-                              <div class="col-md-4">
-              										<label class="control-label">Child001:</label>
-                                  {{ form_widget(form.child011, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.child011) }}
-              							  </div>
-                              <div class="col-md-4">
-                                  <label class="control-label">Child1259:</label>
-                                  {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.child1259) }}
-                              </div>
-                              <div class="col-md-4">
-              										<label class="control-label">Reg Absent:</label>
-                                  {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.regAbsent) }}
-              								</div>
-                              <div class="col-md-4">
-              										<label class="control-label">Vacc Absent:</label>
-                                  {{ form_widget(form.vaccAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.vaccAbsent) }}
-              							  </div>
-                              <div class="col-md-4">
-                                  <label class="control-label">Missed:</label>
-                                  {{ form_widget(form.missed, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                                  {{ form_errors(form.missed) }}
-                              </div>
-                      </div>
-                   </div>
+                <div class="col-md-2">
+                    <label class="control-label">SubDistrictName:</label>
+                    {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                    {{ form_errors(form.subDistrictName) }}
                 </div>
-                  <div class="form-group">
-                      <div class="row">
-                        <div class="col-md-10">
-                          <div class="col-md-4">
-          										<label class="control-label">Reg Sleep:</label>
-                              {{ form_widget(form.regSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.regSleep) }}
-          								</div>
-                          <div class="col-md-4">
-          										<label class="control-label">Vacc Sleep:</label>
-                              {{ form_widget(form.vaccSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.vaccSleep) }}
-          							  </div>
-                          <div class="col-md-4">
-                              <label class="control-label">Sleep:</label>
-                              {{ form_widget(form.sleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.sleep) }}
-                          </div>
-                          <div class="col-md-4">
-          										<label class="control-label">Reg Regusal:</label>
-                              {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.regRefusal) }}
-          								</div>
-                          <div class="col-md-4">
-          										<label class="control-label">Vacc Refusal:</label>
-                              {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.vaccRefusal) }}
-          							  </div>
-                          <div class="col-md-4">
-                              <label class="control-label">Refusal:</label>
-                              {{ form_widget(form.refusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                              {{ form_errors(form.refusal) }}
-                          </div>
-                      </div>
-                   </div>
+                <div class="col-md-2">
+                    <label class="control-label">Target Population:</label>
+                    {{ form_widget(form.targetPopulation, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                    {{ form_errors(form.targetPopulation) }}
                 </div>
-                  <div class="form-group">
-                      <div class="row">
-                        <div class="col-md-10">
-                          <div class="col-md-4">
-        										<label class="control-label">NewPolioCase:</label>
-                            {{ form_widget(form.newPolioCase, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                            {{ form_errors(form.newPolioCase) }}
-        								</div>
-                        <div class="col-md-4">
-        										<label class="control-label">Vacc Day:</label>
-                            {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                            {{ form_errors(form.vaccDay) }}
-        							  </div>
-                        <div class="col-md-4">
-                            <label class="control-label">Entry Date:</label>
-                            {{ form_widget(form.entryDate , { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                            {{ form_errors(form.entryDate) }}
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">District Code:</label>
-                            {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                            {{ form_errors(form.districtCode) }}
-                        </div>
-                        <div class="col-md-4">
-                            <label class="control-label">Campaign ID:</label>
-                            {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
-                            {{ form_errors(form.campaign) }}
-                        </div>
-                      </div>
-                  </div>
+                <div class="col-md-2">
+                    <label class="control-label">Received Vials:</label>
+                    {{ form_widget(form.receivedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                    {{ form_errors(form.receivedVials) }}
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Used Vials:</label>
+                    {{ form_widget(form.usedVials, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                    {{ form_errors(form.usedVials) }}
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label">Child001:</label>
+                    {{ form_widget(form.child011, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                    {{ form_errors(form.child011) }}
                 </div>
               </div>
             </div>
+          </div>
+          <div class="form-group">
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-2">
+                        <label class="control-label">Child1259:</label>
+                        {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.child1259) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Reg Absent:</label>
+                        {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.regAbsent) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Vacc Absent:</label>
+                        {{ form_widget(form.vaccAbsent, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.vaccAbsent) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Reg Sleep:</label>
+                        {{ form_widget(form.regSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.regSleep) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Vacc Sleep:</label>
+                        {{ form_widget(form.vaccSleep, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.vaccSleep) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Reg Regusal:</label>
+                        {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.regRefusal) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-2">
+                        <label class="control-label">Vacc Refusal:</label>
+                        {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.vaccRefusal) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">NewPolioCase:</label>
+                        {{ form_widget(form.newPolioCase, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.newPolioCase) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Vacc Day:</label>
+                        {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.vaccDay) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">District Code:</label>
+                        {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.districtCode) }}
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label">Campaign ID:</label>
+                        {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_errors(form.campaign) }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <input type="submit" class="btn btn-info pull-right" value="Submit" />
 
-
-
-        <input type="submit" class="btn btn-info" value="Submit" />
-
+        <br><br><br>
         <table id="example" cellspacing="0" width="100%">
 
-    </table>
-
-
+        </table>
     <!-- <ul>
         <li>
             <a href="">Back to the list</a>
@@ -169,59 +126,55 @@
 
 {% block script_end %}
 <script>
-
-
           var table;
           var source, sourceCols;
+          var cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
+          regabsent, vaccabsent, regsleep, vaccsleep, regrefusal, vaccrefusal, newpcase, vaccday, district, compaignid;
 
           //Initialize datatable with last campaign raw data
-          source = JSON.parse('{{lastthreerows|raw}}');
+          source = {{lastthreerows|raw}};
           sourceCols = [
-              { "data": "Region", title : 'Region'},
-              { "data": "Province", title : 'Province' },
-              { "data": "District", title : 'District'},
-              { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+              // { "data": "Region", title : 'Region'},
+              // { "data": "Province", title : 'Province' },
+              // { "data": "District", title : 'District'},
+
               { "data": "Cluster", title : 'Cluster'},
-              { "data": "CType", title : 'CType'},
-              { "data": "CMonth", "visible": false, title : 'CMonth'},
-              { "data": "CYear", title : 'CYear'},
+              { "data": "SDistrict",  title : 'SDistrict'},
+              { "data": "TargetPopulation", "visible": false, title : 'TargetPopulation'},
               { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
               { "data": "UsedVials", "visible": false, title : 'UsedVials'},
               { "data": "Child011", "visible": false, title : 'Child011'},
               { "data": "Child1259", "visible": false, title : 'Child1259'},
               { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
               { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
-              { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
               { "data": "RegSleep", "visible": false, title : 'RegSleep'},
               { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
-              { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
               { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
               { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
-              { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
-              { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+              { "data": "NPolioCase", "visible": false, title : 'NPolioCase'},
+              { "data": "VaccDay",  title : 'VaccDay'},
+              { "data": "District", title : 'District'},
+              { "data": "CampaignID", title : 'CampaignID'},
           ];
           createDatatable(source, sourceCols);
 
+          function createDatatable(data, cols) {
+            if ( $.fn.DataTable.isDataTable( '#example' ) ) {
+                    $('#example').DataTable().destroy();
+                    $('#example').empty();
+                 };
 
-                function createDatatable(data, cols) {
-                  if ( $.fn.DataTable.isDataTable( '#example' ) ) {
-                          $('#example').DataTable().destroy();
-                          $('#example').empty();
-                       };
-
-                        table = $('#example').DataTable( {
-                        //  "processing": true,
-                        dom: 'frtip',
-                        "searching": false,
-                        destroy: true,
-                        "pageLength": 25,
-                        "type"   : "POST",
-                         "aaData": data,
-                         "columns": cols,
-                        } );
-                  }
-
-
+                  table = $('#example').DataTable( {
+                  //  "processing": true,
+                  dom: 'frtip',
+                  "searching": false,
+                  //destroy: true,
+                  "pageLength": 25,
+                  "type"   : "POST",
+                   "aaData": data,
+                   "columns": cols,
+                  } );
+            }
 
       $('form.ajaxForm').on('submit', function () {
         var that = $(this),
@@ -234,7 +187,25 @@
           name = that.attr('name'),
           value = that.val();
 
+
           data[name] = value;
+          cluster = $("#app_poliodbbundle_admindata_cluster").val();
+          sdistrict = $("#app_poliodbbundle_admindata_subDistrictName").val();
+          targetpopulation = $("#app_poliodbbundle_admindata_targetPopulation").val();
+          receivedvials = $("#app_poliodbbundle_admindata_receivedVials").val();
+          usedvials = $("#app_poliodbbundle_admindata_usedVials").val();
+          child011 = $("#app_poliodbbundle_admindata_child011").val();
+          child1259 = $("#app_poliodbbundle_admindata_child1259").val();
+          regabsent = $("#app_poliodbbundle_admindata_regAbsent").val();
+          vaccabsent = $("#app_poliodbbundle_admindata_vaccAbsent").val();
+          regsleep = $("#app_poliodbbundle_admindata_regSleep").val();
+          vaccsleep = $("#app_poliodbbundle_admindata_vaccSleep").val();
+          regrefusal = $("#app_poliodbbundle_admindata_regRefusal").val();
+          vaccrefusal = $("#app_poliodbbundle_admindata_vaccRefusal").val();
+          newpcase = $("#app_poliodbbundle_admindata_newPolioCase").val();
+          vaccday = $("#app_poliodbbundle_admindata_vaccDay").val();
+          district = $("#app_poliodbbundle_admindata_districtCode").val();
+          compaignid = $("#app_poliodbbundle_admindata_campaign").val();
         });
 
         $.ajax({
@@ -242,7 +213,11 @@
               url: url,
               data: data,
               success: function(response){
-                console.log(response);
+                 table.row.add([cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
+                 regabsent, vaccabsent, regsleep, vaccsleep, regrefusal, vaccrefusal, newpcase, vaccday, district,
+                 compaignid]).draw(false);
+                // console.log(cluster);
+
               }
           });
 

@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AdminData
 {
+
+    public function __construct()
+    {
+        $this->entryDate = new \DateTime();
+    }
     /**
      * @var string
      *
@@ -152,7 +157,7 @@ class AdminData
      *
      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
-    private $entryDate = 'CURRENT_TIMESTAMP';
+    private $entryDate;
 
     /**
      * @var integer

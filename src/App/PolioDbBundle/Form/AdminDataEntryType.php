@@ -19,10 +19,11 @@ class AdminDataEntryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder->add('clusterName')
-                ->add('cluster')
-                ->add('clusterNo')
-                ->add('subDistrictName')
+        $builder
+                // ->add('clusterName', TextType::class)
+                ->add('cluster', TextType::class)
+                // ->add('clusterNo', TextType::class)
+                ->add('subDistrictName', TextType::class)
                 ->add('targetPopulation')
                 ->add('receivedVials')
                 ->add('usedVials')
@@ -30,21 +31,20 @@ class AdminDataEntryType extends AbstractType
                 ->add('child1259')
                 ->add('regAbsent')
                 ->add('vaccAbsent')
-                ->add('missed')
+                // ->add('missed')
                 ->add('regSleep')
                 ->add('vaccSleep')
-                ->add('sleep')
+                // ->add('sleep')
                 ->add('regRefusal')
                 ->add('vaccRefusal')
-                ->add('refusal')
+                // ->add('refusal')
                 ->add('newPolioCase')
                 ->add('vaccDay')
-                ->add('entryDate', DateTimeType::class, array(
-                    'label'=>'Entry Date',
-                    'widget' => 'single_text',
-                    'data' => new \DateTime(),
-                    'format' => 'yyyy-MM-dd',
-                    ))
+                // ->add('entryDate', DateTimeType::class, array(
+                //     'label'=>'Entry Date',
+                //     'widget' => 'single_text',
+                //     'format' => 'yyyy-MM-dd',
+                //     ))
                 ->add('districtCode', 'entity', array(
                     'class' => 'AppPolioDbBundle:District',
                     'choice_label' => 'districtName',

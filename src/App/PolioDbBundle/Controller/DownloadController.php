@@ -32,6 +32,7 @@ class DownloadController extends Controller
     {
       // $isAjax = $request->isXmlHttpRequest();
 
+
       $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
       $lastCampData = $this->get('app.download')->latestCampaignForAdmin($lastCamp[0]['campaignId']);
 
