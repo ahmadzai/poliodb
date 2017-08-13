@@ -124,7 +124,15 @@
                                 <li {% if app.session.get('visited_url') == d_menu.tableName~'_download' %}
                                     class="current"
                                         {% endif %}>
-                                    <a href="{{ path('data_download', {'table':d_menu.tableName}) }}">
+                                      {% if d_menu.tableName == 'admin_data' %}
+                                      <a href="{{ path('admin_data_download') }}">
+                                      {% endif %}
+                                      {% if d_menu.tableName == 'icm_data' %}
+                                        <a href="{{ path('icm_data_download') }}">
+                                      {% endif %}
+                                      {% if d_menu.tableName == 'catchup_data' %}
+                                        <a href="{{ path('catchup_data_download') }}">
+                                      {% endif %}
                                         <i class="icon-cloud-download"></i>
                                         Download Data
                                     </a>

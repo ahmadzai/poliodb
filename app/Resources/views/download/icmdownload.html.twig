@@ -74,9 +74,10 @@
         </select> -->
         <!-- <button type="button" id="loadButton">Load</button> -->
         <br>
-        <table id="example" cellspacing="0" width="100%">
 
-    </table>
+        <table id="example" cellspacing="0" width="100%">
+        </table>
+
 
 
         {% block script_endd %}
@@ -94,7 +95,7 @@
                     var source, sourceCols;
 
                     //Initialize datatable with last campaign raw data
-                    source = JSON.parse('{{lastcamp|raw}}');
+                    source = {{lastcamp|raw}};
                     sourceCols = [
                       // {
                       //     "class":          "details-control",
@@ -106,25 +107,21 @@
                         { "data": "Region", title : 'Region'},
                         { "data": "Province", title : 'Province' },
                         { "data": "District", title : 'District'},
-                        { "data": "SDistrict", "visible": false, title : 'SDistrict'},
-                        { "data": "Cluster", title : 'Cluster'},
+                        { "data": "NoTeamMonitored", "visible": false, title : 'NoTeamMonitored'},
+                        { "data": "VaccinatorTrained", title : 'VaccinatorTrained'},
                         { "data": "CType", title : 'CType'},
                         { "data": "CMonth", "visible": false, title : 'CMonth'},
                         { "data": "CYear", title : 'CYear'},
-                        { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
-                        { "data": "UsedVials", "visible": false, title : 'UsedVials'},
-                        { "data": "Child011", "visible": false, title : 'Child011'},
-                        { "data": "Child1259", "visible": false, title : 'Child1259'},
-                        { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
-                        { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
-                        { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
-                        { "data": "RegSleep", "visible": false, title : 'RegSleep'},
-                        { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
-                        { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
-                        { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
-                        { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
-                        { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
-                        { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                        { "data": "VaccStage3", "visible": false, title : 'VaccStage3'},
+                        { "data": "TeamSupervised", "visible": false, title : 'TeamSupervised'},
+                        { "data": "TeamWithChw", "visible": false, title : 'TeamWithChw'},
+                        { "data": "TeamWithFemale", "visible": false, title : 'TeamWithFemale'},
+                        { "data": "TeamAccomSm", "visible": false, title : 'TeamAccomSm'},
+                        { "data": "NoMissedChildNovisit", "visible": false, title : 'NoMissedChildNovisit'},
+                        { "data": "NoChildSeen", "visible": false, title : 'NoChildSeen'},
+                        { "data": "NoChildWithFm", "visible": false, title : 'NoChildWithFm'},
+                        { "data": "NoMissedChild", "visible": false, title : 'NoMissedChild'},
+                        { "data": "NoMissed10", "visible": false, title : 'NoMissed10'},
                         { "data": null}
                     ];
                     createDatatable(source, sourceCols);
@@ -251,6 +248,11 @@
                             table = $('#example').DataTable( {
                             //  "processing": true,
                             dom: 'Blfrtip',
+                            responsive: true,
+                            language: {
+                                search: "",
+                                searchPlaceholder: "Search..."
+                            },
                             scrollY: 600,
                             deferRender: true,
                             scroller: {
@@ -290,7 +292,7 @@
                                       } );
                                 }
 
-                            $('.dataTables_filter input').attr('type', 'text');
+
 
                             document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
                             var detailRows = [];

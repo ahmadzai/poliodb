@@ -26,7 +26,7 @@ class DownloadController extends Controller
 {
 
     /**
-     * @Route("/download/{table}", name="data_download")
+     * @Route("/download/admin_data", name="admin_data_download")
      */
     public function DashboardAdminDataAction(Request $request)
     {
@@ -53,7 +53,7 @@ class DownloadController extends Controller
       //   return $responseService->getResponse();
       // }
 
-      return $this->render('html/download.html.twig', array(
+      return $this->render('download/admindownload.html.twig', array(
         'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
       ));
     }
@@ -63,5 +63,48 @@ class DownloadController extends Controller
         return $this->render('post/show.html.twig', array(
             'post' => $post
         ));
+    }
+    /**
+     * @Route("/download/catchup_data", name="catchup_data_download")
+     */
+    public function DashboardCatchupDataAction(Request $request)
+    {
+      // $isAjax = $request->isXmlHttpRequest();
+
+
+      $lastCamp = $this->get('app.settings')->latestCampaign('CatchupData');
+      $lastCampData = $this->get('app.download')->latestCampaignForCatchup($lastCamp[0]['campaignId']);
+
+      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
+      $datatable->buildDatatable();
+
+      $datasource = "catchup_data";
+
+
+      return $this->render('download/catchupdownload.html.twig', array(
+        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
+      ));
+    }
+
+    /**
+      * @Route("/download/icm_data", name="icm_data_download")
+      */
+    public function DashboardIcmDataAction(Request $request)
+    {
+      // $isAjax = $request->isXmlHttpRequest();
+
+
+      $lastCamp = $this->get('app.settings')->latestCampaign('IcmData');
+      $lastCampData = $this->get('app.download')->latestCampaignForIcm($lastCamp[0]['campaignId']);
+
+      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
+      $datatable->buildDatatable();
+
+      $datasource = "icm_data";
+
+
+      return $this->render('download/icmdownload.html.twig', array(
+        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
+      ));
     }
 }

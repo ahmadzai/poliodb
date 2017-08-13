@@ -1,0 +1,423 @@
+{% extends 'main_filter.html.twig' %}
+{% block content %}
+<div class="container">
+    <!-- Breadcrumbs line -->
+      <style type="text/css" class="init">
+              td.details-control {
+                            background: url('{{ asset('template/assets/img/details_open.png')}}') no-repeat center center;
+                            cursor: pointer;
+              }
+              tr.shown td.details-control {
+                            background: url('{{ asset('template/assets/img/details_close.png')}}') no-repeat center center;
+              }
+    </style>
+    <div class="crumbs" role="">
+        <ul id="breadcrumbs" class="breadcrumb">
+          <li>
+              <i class="icon-home"></i>
+              <a href="{{ path('dashboard_main') }}">Home</a>
+          </li>
+          <li class="">
+              <a href="#" title="">
+              {% if table == "admin_data" %}
+                Admin Data
+              {% endif %}
+              {% if table == "catchup_data" %}
+                Catchup Data
+              {% endif %}
+              {% if table == "icm_data" %}
+                Icm Data
+              {% endif %}
+              </a>
+          </li>
+          <li class="current">
+              <a href="{{ path(app.session.get('visited_url')) }}" title="">
+                  {% if('admin' in app.session.get('visited_url')) %} Download
+                  {% elseif('icm' in app.session.get('visited_url')) %} Download
+                  {% elseif('catchup' in app.session.get('visited_url')) %} Download
+                  {% endif %}
+              </a>
+          </li>
+        </ul>
+
+        <ul class="crumb-buttons">
+						<li class="dropdown"><a href="#" title="" data-toggle="dropdown"><i class="icon-tasks"></i><span>Select Data Format</span><i class="icon-angle-down left-padding"></i></a>
+							<ul class="dropdown-menu pull-right">
+							<li><a id="rawLink" href="#" title="">Raw Data</a></li>
+							<li><a id="aggLink" href="#" title="">Aggregate Data</a></li>
+							</ul>
+						</li>
+				</ul>
+
+        <ul class="pull-right breadcrumb">
+            <li>
+                <span class="loading-top">Updating Datatable Content  <img src='{{ asset('ajax-loader-arrow.gif')}}' /></span>
+            </li>
+        </ul>
+        </div>
+
+        <!-- <div class="page-header">
+            <div class="page-title">
+                <span>Hello, {{app.user.username|capitalize}}!</span>
+            </div>
+        </div> -->
+
+        <!-- <div>
+            <h2>Posts</h2>
+            {#  {{ sg_datatables_render(datatable) }}  #}
+
+        </div> -->
+        <!-- <label> Select data format: </label><br>
+        <select id="data-format">
+            <option value="raw">Raw Data</option>
+            <option value="agg">Aggregate Data</option>
+        </select> -->
+        <!-- <button type="button" id="loadButton">Load</button> -->
+        <br>
+
+        <table id="example" cellspacing="0" width="100%">
+        </table>
+
+
+
+        {% block script_endd %}
+
+            <script>
+
+
+                $(document).ready(function () {
+
+                   $('.loading, .loading-top').hide();
+
+                    //local variables
+                    var dataType = 'raw';
+                    var table;
+                    var source, sourceCols;
+
+                    //Initialize datatable with last campaign raw data
+                    source = JSON.parse('{{lastcamp|raw}}');
+                    sourceCols = [
+                      // {
+                      //     "class":          "details-control",
+                      //     "orderable":      false,
+                      //     "data":           null,
+                      //     "defaultContent": "",
+                      //     "width": "4%"
+                      // },
+                        { "data": "Region", title : 'Region'},
+                        { "data": "Province", title : 'Province' },
+                        { "data": "District", title : 'District'},
+                        { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+                        { "data": "Cluster", title : 'Cluster'},
+                        { "data": "CType", title : 'CType'},
+                        { "data": "CMonth", "visible": false, title : 'CMonth'},
+                        { "data": "CYear", title : 'CYear'},
+                        { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+                        { "data": "UsedVials", "visible": false, title : 'UsedVials'},
+                        { "data": "Child011", "visible": false, title : 'Child011'},
+                        { "data": "Child1259", "visible": false, title : 'Child1259'},
+                        { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                        { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                        { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                        { "data": "RegSleep", "visible": false, title : 'RegSleep'},
+                        { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
+                        { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+                        { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                        { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                        { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                        { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                        { "data": null}
+                    ];
+                    createDatatable(source, sourceCols);
+
+
+                    $("#rawLink").click(function() {
+
+                          var filterData = getData();
+                          $('.loading, .loading-top').show();
+                          $.ajax({
+                              url: Routing.generate('ajax_download_data'),
+                              data: filterData,
+                              type: 'POST',
+                              success: function (data) {
+                                  //console.log(data);
+                                   source = JSON.parse(data);
+                                   sourceCols = [
+                                    //  {
+                                    //       "class":          "details-control",
+                                    //       "orderable":      false,
+                                    //       "data":           null,
+                                    //       "defaultContent": "",
+                                    //       "width": "4%"
+                                    //   },
+                                      { "data": "Region", title : 'Region'},
+                                      { "data": "Province", title : 'Province' },
+                                      { "data": "District", title : 'District'},
+                                      { "data": "SDistrict", "visible": false, title : 'SDistrict'},
+                                      { "data": "Cluster", title : 'Cluster'},
+                                      { "data": "CType", title : 'CType'},
+                                      { "data": "CMonth", "visible": false, title : 'CMonth'},
+                                      { "data": "CYear", title : 'CYear'},
+                                      { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+                                      { "data": "UsedVials", "visible": false, title : 'UsedVials'},
+                                      { "data": "Child011", "visible": false, title : 'Child011'},
+                                      { "data": "Child1259", "visible": false, title : 'Child1259'},
+                                      { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                                      { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                                      { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                                      { "data": "RegSleep", "visible": false, title : 'RegSleep'},
+                                      { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
+                                      { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+                                      { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                                      { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                                      { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                                      { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+                                      { "data": null}
+                                                  ];
+                                                  createDatatable(source, sourceCols);
+                                                  dataType = 'raw';
+                                                  $('.loading, .loading-top').hide();
+                                },
+                                cache: false
+                              });
+
+                     });
+
+                     $("#aggLink").click(function() {
+
+                           var filterData = getData();
+                           $('.loading, .loading-top').show();
+                           $.ajax({
+                               url: Routing.generate('ajax_download_agg_data'),
+                               data: filterData,
+                               type: 'POST',
+                               success: function (data) {
+                                   //console.log(data);
+                                    source = JSON.parse(data);
+
+                                    sourceCols = [
+                                      // {
+                                      //      "class":          "details-control",
+                                      //      "orderable":      false,
+                                      //      "data":           null,
+                                      //      "defaultContent": "",
+                                      //      "width": "4%"
+                                      //  },
+                                       { "data": "Region", title : 'Region'},
+                                       { "data": "Province", title : 'Province' },
+                                       { "data": "District", title : 'District'},
+                                       { "data": "DCODE", "visible": false, title : 'DCODE'},
+                                       { "data": "CDate", title : 'CDate'},
+                                       { "data": "CID", title : 'CID'},
+                                       { "data": "CType", "visible": false, title : 'CType'},
+                                       { "data": "CYear", title : 'CYear'},
+                                       { "data": "CMonth", "visible": false, title : 'CMonth'},
+                                       { "data": "ClusterName", "visible": false, title : 'ClusterName'},
+                                       { "data": "ClusterNo", "visible": false, title : 'ClusterNo'},
+                                       { "data": "RVials", "visible": false, title : 'RVials'},
+                                       { "data": "UVials", "visible": false, title : 'UVials'},
+                                       { "data": "VaccWastage", "visible": false, title : 'VaccWastage'},
+                                       { "data": "VaccChild", "visible": false, title : 'VaccChild'},
+                                       { "data": "Child011", "visible": false, title : 'Child011'},
+                                       { "data": "Child1259", "visible": false, title : 'Child1259'},
+                                       { "data": "MissedVaccinated", "visible": false, title : 'MissedVaccinated'},
+                                       { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
+                                       { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
+                                       { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+                                       { "data": "RegNSS", "visible": false, title : 'RegNSS'},
+                                       { "data": "VaccNSS", "visible": false, title : 'VaccNSS'},
+                                       { "data": "RemainingNSS", "visible": false, title : 'RemainingNSS'},
+                                       { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
+                                       { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
+                                       { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+                                       { "data": "TotalRemaining", "visible": false, title : 'TotalRemaining'},
+                                       { "data": null}
+                                                 ];
+                                                 createDatatable(source, sourceCols);
+                                                 dataType = 'agg';
+                                                 $('.loading, .loading-top').hide();
+                                               },
+                                                     cache: false
+                                 });
+
+                     });
+
+                        //create datatable with the source and provided columns
+                        function createDatatable(data, cols) {
+                            if ( $.fn.DataTable.isDataTable( '#example' ) ) {
+                                    $('#example').DataTable().destroy();
+                                    $('#example').empty();
+                                 };
+
+                            table = $('#example').DataTable( {
+                            //  "processing": true,
+                            dom: 'Blfrtip',
+                            responsive: true,
+                            language: {
+                                search: "",
+                                searchPlaceholder: "Search..."
+                            },
+                            scrollY: 600,
+                            deferRender: true,
+                            scroller: {
+                                loadingIndicator: true
+                            },
+                            //"searching": false,
+                            buttons: [{
+                                          extend: 'colvis',
+                                          columns: ':not(.noVis)',
+                                          collectionLayout: 'fixed two-column'
+                                      },
+                                      {
+                                         extend: 'collection',
+                                         text: 'Download',
+                                         buttons: [ {
+                                                  extend: 'excelHtml5',
+                                                    },
+                                                    {
+                                                       extend: 'csvHtml5',
+                                                     }]
+                                      }
+                                      ],
+                                      destroy: true,
+                                      "pageLength": 25,
+                                      "type"   : "POST",
+                                       "aaData": data,
+
+                                      "columns": cols,
+                                      "order": [[1, 'asc']],
+                                      "columnDefs": [ {
+                                                        "targets": -1,
+                                                        "width": "8%",
+                                                        "data": null,
+                                                        "defaultContent": '<button class="btn btn-xs" type="button"><i class="icon-edit"></i></button>'
+                                                                          + '<button class="btn btn-xs"  type="button"><i class="icon-bar-chart"></i></button>'
+                                                    } ]
+                                      } );
+                                }
+
+
+
+                            document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
+                            var detailRows = [];
+
+                            $('#example tbody').on('click', 'td.details-control', function () {
+                                  var tr = $(this).closest('tr');
+                                  var row = table.row( tr );
+
+                                  if ( row.child.isShown() ) {
+                                      // This row is already open - close it
+                                      row.child.hide();
+                                      tr.removeClass('shown');
+                                  }
+                                  else {
+                                      // Open this row
+                                      row.child( format(row.data()) ).show();
+                                      tr.addClass('shown');
+                                  }
+                              } );
+
+
+                              //get filter selected data
+                              function getData(){
+                                var campaigns = $('#filterCampaign option:selected');
+                                var selectedCampaigns = [];
+                                $(campaigns).each(function (index, campaigns) {
+                                    selectedCampaigns.push([$(this).val()]);
+                                });
+
+                                var region = $('#filterRegion option:selected');
+                                var selectedRegions = [];
+                                $(region).each(function (index, region) {
+                                    selectedRegions.push([$(this).val()]);
+                                });
+
+                                var provinces = $('#filterProvince option:selected');
+                                var selectedProvinces = [];
+                                $(provinces).each(function (index, provinces) {
+                                    selectedProvinces.push([$(this).val()]);
+                                });
+
+                                var districts = $('#filterDistrict option:selected');
+                                var selectedDistricts = [];
+                                $(districts).each(function (index, districts) {
+                                    selectedDistricts.push([$(this).val()]);
+                                });
+
+                                var data = {'campaign':selectedCampaigns, 'region':selectedRegions, 'province': selectedProvinces, 'district': selectedDistricts};
+
+                                  return data;
+                              }
+
+
+
+                              function reloadDatatable(data){
+                                $('.loading, .loading-top').show();
+                                if (dataType == 'raw'){
+                                      $.ajax({
+                                          url: Routing.generate('ajax_download_data'),
+                                          data: data,
+                                          type: 'POST',
+                                          success: function (data) {
+                                              //console.log(data);
+                                               var jsonData = JSON.parse(data);
+                                               //$('td:nth-child(2),th:nth-child(2)').hide();
+                                               table.clear();
+                                               table.rows.add( jsonData ).draw();
+
+                                               $('.loading, .loading-top').hide();
+                                          },
+                                          cache: false
+                                      });
+                                }
+                                else{
+                                      $.ajax({
+                                          url: Routing.generate('ajax_download_agg_data'),
+                                          data: data,
+                                          type: 'POST',
+                                          success: function (data) {
+                                              //console.log(data);
+                                               var jsonData = JSON.parse(data);
+                                               //$('td:nth-child(2),th:nth-child(2)').hide();
+                                               table.clear();
+                                               table.rows.add( jsonData ).draw();
+
+                                               $('.loading, .loading-top').hide();
+                                          },
+                                          cache: false
+                                      });
+
+                                    }
+                                  }
+
+
+                              $('#filterButton').click(function () {
+                                  var filterData = getData();
+                                  reloadDatatable(filterData);
+                              })
+                          });
+
+                          function format ( d ) {
+                                  return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                                      '<tr>'+
+                                          '<td>C-Month:</td>'+
+                                          '<td>'+d.CMonth+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td>ReceivedVials:</td>'+
+                                          '<td>'+d.ReceivedVials+'</td>'+
+                                      '</tr>'+
+                                      '<tr>'+
+                                          '<td>UsedVials:</td>'+
+                                          '<td>'+d.UsedVials+'</td>'+
+                                      '</tr>'+
+                                  '</table>';
+                          }
+
+            </script>
+
+        {% endblock %}
+
+
+</div>
+{% endblock %}

@@ -44,4 +44,30 @@ class Download
                   ->getResult(Query::HYDRATE_SCALAR);
               return $data;
       }
+
+      public function latestCampaignForCatchup($camp) {
+
+              $data = $this->em->createQuery(
+                "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+                c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+                cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+                cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+                    FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp)"
+                ) -> setParameters(['camp'=>$camp])
+                  ->getResult(Query::HYDRATE_SCALAR);
+              return $data;
+      }
+
+      public function latestCampaignForIcm($camp) {
+
+              $data = $this->em->createQuery(
+                "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+                c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+                icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+                icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+                    FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp)"
+                ) -> setParameters(['camp'=>$camp])
+                  ->getResult(Query::HYDRATE_SCALAR);
+              return $data;
+      }
 }

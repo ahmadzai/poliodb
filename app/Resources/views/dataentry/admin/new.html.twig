@@ -100,7 +100,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="control-label">District Code:</label>
-                        {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini', 'style': 'display: block'} }) }}
+                        {{ form_widget(form.districtCode, { 'attr': {'class': 'form-control input-width-mini','style': 'display: block'} }) }}
                         {{ form_errors(form.districtCode) }}
                     </div>
                     <div class="col-md-2">
@@ -126,6 +126,12 @@
 
 {% block script_end %}
 <script>
+$(document).ready(function(){
+
+    $(".editableBox").change(function(){
+        $(".timeTextBox").val($(".editableBox option:selected").html());
+    });
+});
           var table;
           var source, sourceCols;
           var cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
@@ -171,8 +177,8 @@
                   //destroy: true,
                   "pageLength": 25,
                   "type"   : "POST",
-                   "aaData": data,
-                   "columns": cols,
+                  "aaData": data,
+                  "columns": cols,
                   } );
             }
 
@@ -187,41 +193,41 @@
           name = that.attr('name'),
           value = that.val();
 
-
           data[name] = value;
-          cluster = $("#app_poliodbbundle_admindata_cluster").val();
-          sdistrict = $("#app_poliodbbundle_admindata_subDistrictName").val();
-          targetpopulation = $("#app_poliodbbundle_admindata_targetPopulation").val();
-          receivedvials = $("#app_poliodbbundle_admindata_receivedVials").val();
-          usedvials = $("#app_poliodbbundle_admindata_usedVials").val();
-          child011 = $("#app_poliodbbundle_admindata_child011").val();
-          child1259 = $("#app_poliodbbundle_admindata_child1259").val();
-          regabsent = $("#app_poliodbbundle_admindata_regAbsent").val();
-          vaccabsent = $("#app_poliodbbundle_admindata_vaccAbsent").val();
-          regsleep = $("#app_poliodbbundle_admindata_regSleep").val();
-          vaccsleep = $("#app_poliodbbundle_admindata_vaccSleep").val();
-          regrefusal = $("#app_poliodbbundle_admindata_regRefusal").val();
-          vaccrefusal = $("#app_poliodbbundle_admindata_vaccRefusal").val();
-          newpcase = $("#app_poliodbbundle_admindata_newPolioCase").val();
-          vaccday = $("#app_poliodbbundle_admindata_vaccDay").val();
-          district = $("#app_poliodbbundle_admindata_districtCode").val();
-          compaignid = $("#app_poliodbbundle_admindata_campaign").val();
         });
+
+        cluster = $("#app_poliodbbundle_admindata_cluster").val();
+        sdistrict = $("#app_poliodbbundle_admindata_subDistrictName").val();
+        targetpopulation = $("#app_poliodbbundle_admindata_targetPopulation").val();
+        receivedvials = $("#app_poliodbbundle_admindata_receivedVials").val();
+        usedvials = $("#app_poliodbbundle_admindata_usedVials").val();
+        child011 = $("#app_poliodbbundle_admindata_child011").val();
+        child1259 = $("#app_poliodbbundle_admindata_child1259").val();
+        regabsent = $("#app_poliodbbundle_admindata_regAbsent").val();
+        vaccabsent = $("#app_poliodbbundle_admindata_vaccAbsent").val();
+        regsleep = $("#app_poliodbbundle_admindata_regSleep").val();
+        vaccsleep = $("#app_poliodbbundle_admindata_vaccSleep").val();
+        regrefusal = $("#app_poliodbbundle_admindata_regRefusal").val();
+        vaccrefusal = $("#app_poliodbbundle_admindata_vaccRefusal").val();
+        newpcase = $("#app_poliodbbundle_admindata_newPolioCase").val();
+        vaccday = $("#app_poliodbbundle_admindata_vaccDay").val();
+        district = $("#app_poliodbbundle_admindata_districtCode").val();
+        compaignid = $("#app_poliodbbundle_admindata_campaign").val();
 
         $.ajax({
               type: type,
               url: url,
               data: data,
               success: function(response){
-                 table.row.add([cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
-                 regabsent, vaccabsent, regsleep, vaccsleep, regrefusal, vaccrefusal, newpcase, vaccday, district,
-                 compaignid]).draw(false);
-                // console.log(cluster);
+                //  table.row.add([cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
+                //  regabsent, vaccabsent, regsleep, vaccsleep, regrefusal, vaccrefusal, newpcase, vaccday, district,
+                //  compaignid]).draw(false);
+                // console.log(sdistrict);
+                // table.row.add(data).draw(false);
 
               }
           });
-
-    return false;
-});
+            return false;
+        });
 </script>
 {% endblock %}
