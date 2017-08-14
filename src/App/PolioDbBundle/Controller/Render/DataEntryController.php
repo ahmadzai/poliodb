@@ -77,4 +77,14 @@ class DataEntryController extends Controller
         return $this->render("pages/home.html.twig");
     }
 
+    /**
+     * @Route("/data_entry/edit/{id}", name="edit_admin_data")
+     */
+    public function DashboardEditDataAction($id)
+    {
+        return $this->render("test.html.twig", array(
+            'var' => $id
+            ));
+    }
+
 }

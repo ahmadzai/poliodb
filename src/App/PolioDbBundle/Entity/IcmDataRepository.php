@@ -1,7 +1,8 @@
 <?php
 
 namespace App\PolioDbBundle\Entity;
-
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 /**
  * IcmDataRepository
  *
@@ -10,4 +11,126 @@ namespace App\PolioDbBundle\Entity;
  */
 class IcmDataRepository extends \Doctrine\ORM\EntityRepository
 {
+  /**
+   * @param $region
+   * @return array
+   */
+  public function selectRegion($region) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['regio'=>$region])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $province
+   * @return array
+   */
+  public function selectProvince($province) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['prov'=>$province])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $district
+   * @return array
+   */
+  public function selectDistrict($district) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['dist'=>$district])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $campaign
+   * @return array
+   */
+  public function selectCampaign($campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['camp'=>$campaign])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $region
+   * @param $campaign
+   * @return array
+   */
+
+  public function regionByCampaigns($region, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['camp'=>$campaign, 'regio'=>$region])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $province
+   * @param $campaign
+   * @return array
+   */
+  public function provinceByCampaigns($province, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['camp'=>$campaign, 'prov'=>$province])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $district
+   * @param $campaign
+   * @return array
+   */
+  public function districtByCampaigns($district, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, icm.noTeamMonitored as NoTeamMonitored, icm.vaccinatorTrained as VaccinatorTrained,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, icm.vaccStage3 as VaccStage3, icm.teamSupervised as TeamSupervised,
+          icm.teamWithChw as TeamWithChw, icm.teamWithFemale as TeamWithFemale, icm.teamAccomSm as TeamAccomSm, icm.noMissedChildNovisit as NoMissedChildNovisit, icm.noChildSeen as NoChildSeen,
+          icm.noChildWithFm as NoChildWithFm, icm.noMissedChild as NoMissedChild, icm.noMissed10 as NoMissed10
+              FROM AppPolioDbBundle:IcmData icm JOIN icm.campaign c JOIN icm.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName"
+        )-> setParameters(['camp'=>$campaign, 'dist' => $district])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
 }

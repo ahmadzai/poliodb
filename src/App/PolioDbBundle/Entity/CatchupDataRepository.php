@@ -1,7 +1,8 @@
 <?php
 
 namespace App\PolioDbBundle\Entity;
-
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 /**
  * CatchupDataRepository
  *
@@ -10,4 +11,126 @@ namespace App\PolioDbBundle\Entity;
  */
 class CatchupDataRepository extends \Doctrine\ORM\EntityRepository
 {
+  /**
+   * @param $region
+   * @return array
+   */
+  public function selectRegion($region) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['regio'=>$region])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $province
+   * @return array
+   */
+  public function selectProvince($province) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['prov'=>$province])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $district
+   * @return array
+   */
+  public function selectDistrict($district) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE d.districtCode in (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['dist'=>$district])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $campaign
+   * @return array
+   */
+  public function selectCampaign($campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['camp'=>$campaign])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $region
+   * @param $campaign
+   * @return array
+   */
+
+  public function regionByCampaigns($region, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND p.provinceRegion in (:regio) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['camp'=>$campaign, 'regio'=>$region])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $province
+   * @param $campaign
+   * @return array
+   */
+  public function provinceByCampaigns($province, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND p.provinceCode in (:prov) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['camp'=>$campaign, 'prov'=>$province])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
+
+  /**
+   * @param $district
+   * @param $campaign
+   * @return array
+   */
+  public function districtByCampaigns($district, $campaign) {
+
+    return $this->getEntityManager()
+        ->createQuery(
+          "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, cat.subDistrictName as SDistrict, cat.clusterNo as ClusterNo,
+          c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, cat.regAbsent as RegAbsent, cat.vaccAbsent as VaccAbsent,
+          cat.regSleep as RegSleep, cat.vaccSleep as VaccSleep, cat.regRefusal as RegRefusal, cat.vaccRefusal as VaccRefusal, cat.newMissed as NewMissed,
+          cat.newVaccinated as NewVaccinated, cat.newRemaining as NewRemaining
+              FROM AppPolioDbBundle:CatchupData cat JOIN cat.campaign c JOIN cat.districtCode d JOIN d.provinceCode p WHERE c.campaignId in (:camp) AND d.districtCode IN (:dist) ORDER BY p.provinceRegion, p.provinceName, d.districtName, cat.clusterNo"
+        )-> setParameters(['camp'=>$campaign, 'dist' => $district])
+        ->getResult(Query::HYDRATE_SCALAR);
+  }
 }
