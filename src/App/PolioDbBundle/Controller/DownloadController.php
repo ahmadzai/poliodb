@@ -32,7 +32,8 @@ class DownloadController extends Controller
     {
       // $isAjax = $request->isXmlHttpRequest();
 
-
+      //track url
+      $this->get('app.settings')->trackUrl('admin_data_download');
       $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
       $lastCampData = $this->get('app.download')->latestCampaignForAdmin($lastCamp[0]['campaignId']);
 
@@ -71,7 +72,7 @@ class DownloadController extends Controller
     {
       // $isAjax = $request->isXmlHttpRequest();
 
-
+      $this->get('app.settings')->trackUrl('catchup_data_download');
       $lastCamp = $this->get('app.settings')->latestCampaign('CatchupData');
       $lastCampData = $this->get('app.download')->latestCampaignForCatchup($lastCamp[0]['campaignId']);
 
@@ -93,7 +94,7 @@ class DownloadController extends Controller
     {
       // $isAjax = $request->isXmlHttpRequest();
 
-
+      $this->get('app.settings')->trackUrl('icm_data_download');
       $lastCamp = $this->get('app.settings')->latestCampaign('IcmData');
       $lastCampData = $this->get('app.download')->latestCampaignForIcm($lastCamp[0]['campaignId']);
 

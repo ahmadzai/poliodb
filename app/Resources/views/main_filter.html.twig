@@ -39,6 +39,8 @@
 			<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.0.2/css/responsive.dataTables.min.css">
 			<link rel="stylesheet" href="{{ asset('template/assets/css/jquery.dataTables.css')}}">
 			<link rel="stylesheet" href="{{ asset('template/assets/css/plugins/dataTables_bootstrap.css')}}">
+			{# added for editable textbox #}
+			<link rel="stylesheet" href="{{ asset('template/assets/css/jquery-editable-select.min.css')}}">
 
     {% endblock %}
 
@@ -123,6 +125,10 @@
 			  <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.colVis.min.js"></script>
 				<script type="text/javascript" src="{{ asset('template/plugins/datatables/tabletools/TableTools.min.js')}}"></script>
 				<script type="text/javascript" src="{{ asset('template/plugins/datatables/colvis/ColVis.min.js')}}"></script>
+
+				{# added for editable textbox #}
+				<script type="text/javascript" src="{{ asset('template/assets/js/jquery-editable-select.min.js') }}"></script>
+
 
         <script>
             $(document).ready(function(){

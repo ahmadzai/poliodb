@@ -27,6 +27,9 @@ class DataEntryController extends Controller
      */
     public function DashboardAdminDataAction(Request $request)
     {
+      $this->get('app.settings')->trackUrl('entry_admin_data');
+      $datasource = "admin_data";
+
       $adminData = new AdminData();
       $form = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $adminData);
       $form->handleRequest($request);
@@ -57,7 +60,8 @@ class DataEntryController extends Controller
       return $this->render('dataentry/admin/new.html.twig', array(
           'admindata' => $adminData,
           'form' => $form->createView(),
-          'lastthreerows' => json_encode($lastThreeRows)
+          'lastthreerows' => json_encode($lastThreeRows),
+          'table' => $datasource
       ));
     }
 
@@ -80,11 +84,30 @@ class DataEntryController extends Controller
     /**
      * @Route("/data_entry/edit/{id}", name="edit_admin_data")
      */
-    public function DashboardEditDataAction($id)
+    public function DashboardEditDataAction($id, Request $request)
     {
-        return $this->render("test.html.twig", array(
-            'var' => $id
-            ));
+        // return $this->render("test.html.twig", array(
+        //     'var' => $id
+        //     ));
+        //$deleteForm = $this->createDeleteForm($id);
+
+        $objj = $this->getDoctrine()
+        ->getRepository('AppPolioDbBundle:AdminData')
+        ->find($id);
+
+        $editForm = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $objj);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin_data_download');
+        }
+
+        return $this->render('test.html.twig', array(
+            'id' => $id,
+            'edit_form' => $editForm->createView()
+        ));
     }
 
 }

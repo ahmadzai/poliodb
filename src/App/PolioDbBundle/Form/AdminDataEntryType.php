@@ -39,7 +39,14 @@ class AdminDataEntryType extends AbstractType
                 ->add('vaccRefusal')
                 // ->add('refusal')
                 ->add('newPolioCase')
-                ->add('vaccDay')
+                ->add('vaccDay', ChoiceType::class, array(
+                      'choices' => array(
+                          'VDay1' => 1,
+                          'VDay2' => 2,
+                          'VDay3' => 3,
+                          'VDay5' => 4,
+                      )
+                  ))
                 // ->add('entryDate', DateTimeType::class, array(
                 //     'label'=>'Entry Date',
                 //     'widget' => 'single_text',
@@ -50,14 +57,14 @@ class AdminDataEntryType extends AbstractType
                     'choice_label' => 'districtName',
                     'choice_value' => 'districtName',
                     'label' => 'District',
-                    'placeholder' => 'Select District'
+                    'placeholder' => 'District'
                 ))
                 ->add('campaign', 'entity', array(
                     'class' => 'AppPolioDbBundle:Campaign',
                     'choice_label' => 'CampaignName',
                     'choice_value' => 'CampaignName',
                     'label' => 'Campaign',
-                    'placeholder' => 'Select Campaign'
+                    'placeholder' => 'Campaign'
                 ));
 
 

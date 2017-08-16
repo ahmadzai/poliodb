@@ -604,7 +604,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -622,7 +622,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -640,7 +640,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -658,7 +658,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -678,7 +678,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -697,7 +697,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -716,7 +716,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, adm.subDistrictName as SDistrict, adm.cluster as Cluster,
             c.campaignType as CType, c.campaignMonth as CMonth, c.campaignYear as CYear, adm.receivedVials as ReceivedVials
             , adm.usedVials as UsedVials, adm.child011 as Child011, adm.child1259 as Child1259, adm.regAbsent as RegAbsent, adm.vaccAbsent as VaccAbsent, adm.missed as RemainingAbsent,
             adm.regSleep as RegSleep
@@ -734,7 +734,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -784,7 +784,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -834,7 +834,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -884,7 +884,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -936,7 +936,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -987,7 +987,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,
@@ -1038,7 +1038,7 @@ class AdminDataRepository extends EntityRepository {
 
       return $this->getEntityManager()
           ->createQuery(
-            "SELECT p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
+            "SELECT adm.id as ID, p.provinceRegion as Region, p.provinceName as Province, d.districtName as District, d.districtCode as DCODE, cmp.campaignStartDate as CDate, cmp.campaignId as CID,
               cmp.campaignType as CType, cmp.campaignYear as CYear, cmp.campaignMonth as CMonth, adm.clusterName as ClusterName, adm.clusterNo as ClusterNo,
               sum(adm.receivedVials) as RVials, sum(adm.usedVials) as UVials,
               ((sum(adm.usedVials)*20 - (sum(adm.child011)+sum(adm.child1259)+sum(adm.vaccAbsent)+sum(adm.vaccSleep)+sum(adm.vaccRefusal)))/(sum(adm.usedVials)*20) * 100) as VaccWastage,

@@ -104,6 +104,7 @@ $(document).ready(function () {
     //     "defaultContent": "",
     //     "width": "4%"
     // },
+    { "data": "ID", title : 'ID'},
     { "data": "Region", title : 'Region'},
     { "data": "Province", title : 'Province' },
     { "data": "District", title : 'District'},
@@ -111,11 +112,11 @@ $(document).ready(function () {
     { "data": "Cluster", title : 'Cluster'},
     { "data": "CType", title : 'CType'},
     { "data": "CMonth", title : 'CMonth'},
-    { "data": "CYear", title : 'CYear'},
-    { "data": "ReceivedVials", title : 'ReceivedVials'},
-    { "data": "UsedVials",  title : 'UsedVials'},
-    { "data": "Child011",  title : 'Child011'},
-    { "data": "Child1259", title : 'Child1259'},
+    { "data": "CYear", "visible": false, title : 'CYear'},
+    { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
+    { "data": "UsedVials",  "visible": false, title : 'UsedVials'},
+    { "data": "Child011",  "visible": false, title : 'Child011'},
+    { "data": "Child1259", "visible": false, title : 'Child1259'},
     { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
     { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
     { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
@@ -150,6 +151,7 @@ $(document).ready(function () {
           //       "defaultContent": "",
           //       "width": "4%"
           //   },
+          { "data": "ID", title : 'ID'},
           { "data": "Region", title : 'Region'},
           { "data": "Province", title : 'Province' },
           { "data": "District", title : 'District'},
@@ -203,6 +205,7 @@ $(document).ready(function () {
           //      "defaultContent": "",
           //      "width": "4%"
           //  },
+          { "data": "ID", title : 'ID'},
           { "data": "Region", title : 'Region'},
           { "data": "Province", title : 'Province' },
           { "data": "District", title : 'District'},
@@ -257,11 +260,8 @@ $(document).ready(function () {
         search: "",
         searchPlaceholder: "Search..."
       },
-      scrollY: 600,
+      //scrollY: 600,
       deferRender: true,
-      scroller: {
-        loadingIndicator: true
-      },
       //"searching": false,
       buttons: [{
         extend: 'colvis',
@@ -287,15 +287,9 @@ $(document).ready(function () {
     "columns": cols,
     "order": [[1, 'asc']],
     "columnDefs": [
-      { "width": "5%", "targets": 0 },
-      { "width": "10%", "targets": 1 },
-      { "width": "12%", "targets": 2 },
-      { "width": "2%", "targets": 3 },
-      { "width": "4%", "targets": 4 },
-      { "width": "45", "targets": 5 },
       {
       "targets": -1,
-      "width": "10%",
+      "width": "8%",
       "data": null,
       "defaultContent": '<button class="btn btn-xs" type="button"><i class="icon-edit"></i></button>'
       + '<button class="btn btn-xs"  type="button"><i class="icon-bar-chart"></i></button>'
