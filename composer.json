@@ -39,8 +39,7 @@
         "sonata-project/easy-extends-bundle": "^2.2",
         "sonata-project/user-bundle": "4.x-dev",
         "liuggio/excelbundle": "^2.1",
-        "phpoffice/phpexcel": "^1.8",
-        "sg/datatablesbundle": "^1.0"
+        "phpoffice/phpexcel": "^1.8"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

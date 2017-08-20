@@ -82,10 +82,11 @@ class DataEntryController extends Controller
     }
 
     /**
-     * @Route("/data_entry/edit/{id}", name="edit_admin_data")
+     * @Route("/data_entry/edit", name="edit_admin_data")
      */
-    public function DashboardEditDataAction($id, Request $request)
+    public function DashboardEditDataAction(Request $request)
     {
+        $id = $request->get('id');
         // return $this->render("test.html.twig", array(
         //     'var' => $id
         //     ));
@@ -95,19 +96,26 @@ class DataEntryController extends Controller
         ->getRepository('AppPolioDbBundle:AdminData')
         ->find($id);
 
-        $editForm = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $objj);
-        $editForm->handleRequest($request);
+        // $editForm = $this->createForm('App\PolioDbBundle\Form\AdminDataEntryType', $objj);
+        // $editForm->handleRequest($request);
+        //
+        // if ($editForm->isSubmitted() && $editForm->isValid()) {
+        //     $this->getDoctrine()->getManager()->flush();
+        //
+        //     return $this->redirectToRoute('admin_data_download');
+        // }
+        //
+        // return $this->render('test.html.twig', array(
+        //     'id' => $id,
+        //     'edit_form' => $editForm->createView()
+        // ));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $categorias = $this->get('serializer')->serialize($objj, 'json');
+        $response = new Response($categorias);
+        $response->headers->set('Content-Type', 'application/json');
 
-            return $this->redirectToRoute('admin_data_download');
-        }
+        return $response;
 
-        return $this->render('test.html.twig', array(
-            'id' => $id,
-            'edit_form' => $editForm->createView()
-        ));
     }
 
 }

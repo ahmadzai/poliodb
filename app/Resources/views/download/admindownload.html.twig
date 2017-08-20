@@ -62,11 +62,6 @@
 </div>
 </div> -->
 
-<!-- <div>
-<h2>Posts</h2>
-{#  {{ sg_datatables_render(datatable) }}  #}
-
-</div> -->
 <!-- <label> Select data format: </label><br>
 <select id="data-format">
 <option value="raw">Raw Data</option>
@@ -78,6 +73,126 @@
 <table id="example" cellspacing="0" width="100%">
 </table>
 
+                    <!-- Modal dialog -->
+											<div class="modal fade" id="myModal1">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title">Modal title</h4>
+														</div>
+														<div class="modal-body">
+
+
+
+        <div class="row">
+					<div class="col-md-12">
+						<div class="widget box">
+							<div class="widget-header">
+								<h4><i class="icon-reorder"></i> Edit Entry</h4>
+							</div>
+							<div class="widget-content">
+								<form class="form-horizontal row-border" action="#" id="myForm">
+									<div class="form-group">
+										<label class="col-md-2 control-label">Cluster</label>
+										<div class="col-md-10"><input type="text" name="regular" class="form-control input-width-medium" id="cluster"></div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-2 control-label">SDistrictName</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="pass" id="sdistrictname"></div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-2 control-label">TPopulation</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="tpopulation"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">receivedVials</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rvials"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">usedVials</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="uvials"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">child011</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="child011"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">child1259</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="child1259"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">regAbsent</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rabsent"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">vaccAbsent</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vabsent"></div>
+									</div>
+
+                  <div class="form-group">
+										<label class="col-md-2 control-label">regSleep</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rsleep"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">vaccSleep</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vsleep"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">regRefusal</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rrefusal"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">vaccRefusal</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vrefusal"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">newPolioCase</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="npoliocase"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">vaccDay</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vday"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">districtCode</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="dcode"></div>
+									</div>
+                  <div class="form-group">
+										<label class="col-md-2 control-label">campaign</label>
+										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="campaign"></div>
+									</div>
+                  <br>
+                  <input type="submit" class="btn btn-info pull-right" value="Submit" data-dismiss="modal" />
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+      </div>
+
+
+
+
+
+
+
+
+														<!-- <div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+														</div> -->
+													</div>
+												</div>
+											</div>
 
 
 {% block script_endd %}
@@ -262,8 +377,8 @@ $(document).ready(function () {
       },
       //scrollY: 600,
       deferRender: true,
-      //"searching": false,
-      buttons: [{
+      "searching": false,
+       buttons: [{
         extend: 'colvis',
         columns: ':not(.noVis)',
         collectionLayout: 'fixed two-column'
@@ -291,7 +406,7 @@ $(document).ready(function () {
       "targets": -1,
       "width": "8%",
       "data": null,
-      "defaultContent": '<button class="btn btn-xs" type="button"><i class="icon-edit"></i></button>'
+      "defaultContent": '<button class="btn btn-xs" data-toggle="modal" type="button" data-target="#myModal1"><i class="icon-edit"></i></button>'
       + '<button class="btn btn-xs"  type="button"><i class="icon-bar-chart"></i></button>'
     } ]
   } );
@@ -300,14 +415,51 @@ $(document).ready(function () {
 
 
 $('#example tbody').on( 'click', '.btn, .btn-xs', function () {
+        var infoModal = $('#myModal1');
          //console.log(table.row( $(this).parents('tr')).id());
         var trElem = $(this).closest("tr");// grabs the button parent tr element
         var firstTd = $(trElem).children("td")[0]; //takes the first td which would have your Id
         var id = $(firstTd).text();
-        location.href = Routing.generate('edit_admin_data', { "id": id });
+        var iddata = {"id": id};
+        // location.href = Routing.generate('edit_admin_data', { "id": id });
+        $.ajax({
+            url: Routing.generate('edit_admin_data'),
+            data: iddata,
+            type: 'POST',
+            success: function (data) {
+        //         //$('#'+target).multiselect('dataprovider', JSON.parse(data));
+        //         console.log(data);
+          //       htmlData = '<ul><li>title: '+data.cluster+'</li><li>age: '+data.vaccDay+'</li></ul>';
+           //infoModal.find('.modal-body').html(htmlData);
+           $("#cluster").val(data.cluster);
+           $("#sdistrictname").val(data.subDistrictName);
+           $("#tpopulation").val(data.targetPopulation);
+           $("#cluster").val(data.cluster);
+           $("#rvials").val(data.receivedVials);
+           $("#uvials").val(data.usedVials);
+           $("#child011").val(data.child011);
+           $("#child011").val(data.child011);
+           $("#rabsent").val(data.regAbsent);
+           $("#vabsent").val(data.vaccAbsent);
+           $("#rsleep").val(data.regSleep);
+           $("#vsleep").val(data.vaccSleep);
+           $("#rrefusal").val(data.regRefusal);
+           $("#vrefusal").val(data.vaccRefusal);
+           $("#npoliocase").val(data.newPolioCase);
+           $("#vday").val(data.vaccDay);
+           $("#dcode").val(data.districtCode.districtCode);
+           $("#campaign").val(data.campaign.campaignId);
+           //modal.modal('show');
+            }
+         });
 
 
     } );
+
+    $('#myForm').on('submit',function(){
+            console.log("done");
+        });
+
 
 document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";
 

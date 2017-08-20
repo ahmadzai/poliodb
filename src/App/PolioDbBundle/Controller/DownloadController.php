@@ -37,8 +37,8 @@ class DownloadController extends Controller
       $lastCamp = $this->get('app.settings')->latestCampaign('AdminData');
       $lastCampData = $this->get('app.download')->latestCampaignForAdmin($lastCamp[0]['campaignId']);
 
-      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
-      $datatable->buildDatatable();
+      // $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
+      // $datatable->buildDatatable();
 
       $datasource = "admin_data";
       //
@@ -55,16 +55,10 @@ class DownloadController extends Controller
       // }
 
       return $this->render('download/admindownload.html.twig', array(
-        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
+        'lastcamp' => json_encode($lastCampData), 'table' => $datasource
       ));
     }
 
-    public function showAction(Post $post)
-    {
-        return $this->render('post/show.html.twig', array(
-            'post' => $post
-        ));
-    }
     /**
      * @Route("/download/catchup_data", name="catchup_data_download")
      */
@@ -76,14 +70,11 @@ class DownloadController extends Controller
       $lastCamp = $this->get('app.settings')->latestCampaign('CatchupData');
       $lastCampData = $this->get('app.download')->latestCampaignForCatchup($lastCamp[0]['campaignId']);
 
-      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
-      $datatable->buildDatatable();
-
       $datasource = "catchup_data";
 
 
       return $this->render('download/catchupdownload.html.twig', array(
-        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
+        'lastcamp' => json_encode($lastCampData), 'table' => $datasource
       ));
     }
 
@@ -98,14 +89,12 @@ class DownloadController extends Controller
       $lastCamp = $this->get('app.settings')->latestCampaign('IcmData');
       $lastCampData = $this->get('app.download')->latestCampaignForIcm($lastCamp[0]['campaignId']);
 
-      $datatable = $this->get('sg_datatables.factory')->create(AdminDataDatatable::class);
-      $datatable->buildDatatable();
 
       $datasource = "icm_data";
 
 
       return $this->render('download/icmdownload.html.twig', array(
-        'datatable' => $datatable, 'lastcamp' => json_encode($lastCampData), 'table' => $datasource
+        'lastcamp' => json_encode($lastCampData), 'table' => $datasource
       ));
     }
 }

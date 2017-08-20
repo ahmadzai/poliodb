@@ -134,4 +134,23 @@ class FilterController extends Controller
 
     }
 
+    /**
+     * @Route("/dataentryFilter", name="dataentry_filter")
+     * @Method("GET")selectProvinceByRegion
+     */
+    public function dataentryFilterAction()
+    {
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $selectedCampaigns = $this->get('app.settings')->lastFewCampaigns('AdminData');
+
+        $campaigns = $em->getRepository('AppPolioDbBundle:Campaign')->findBy([], ['campaignId' => 'DESC']);
+
+        $regions = $em->getRepository('AppPolioDbBundle:Province')->selectAllRegions();
+
+        return $this->render("html/common/dataentry-small.html.twig", ['campaigns' => $campaigns, 'regions' => $regions, 'selectedCampaign' => $selectedCampaigns]);
+    }
+
 }

@@ -30,7 +30,7 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-            new Sg\DatatablesBundle\SgDatatablesBundle(),
+            //new Sg\DatatablesBundle\SgDatatablesBundle(),
 
         ];
 
