@@ -128,5 +128,40 @@ class Settings
 //        return $menu;
 //    }
 
+      /**
+       * @param $table
+       * @return array
+       */
+      public function noEntryCampaigns($table) {
+          $campaigns = $this->campaignMenu($table);
+          $cam = [];
+          foreach ($campaigns as $campaign) {
+            $check = $this->campaignEntryCheck($campaign['campaignId']);
+              if(isset($check))
+                $cam[] = $campaign['campaignId'];
+
+                $check = [];
+          }
+
+          return $cam;
+      }
+
+      /**
+       * @param $campaignId
+       * @return array
+       */
+      public function campaignEntryCheck($campaignId)
+      {
+
+          $data = $this->em->createQuery(
+              "SELECT adm FROM AppPolioDbBundle:AdminData adm WHERE adm.campaign =:camp"
+            )->setParameter('camp', $campaignId)
+             ->setFirstResult(1)
+             ->setMaxResults(1)
+             ->getResult(Query::HYDRATE_SCALAR);
+
+          return $data;
+
+      }
 
 }

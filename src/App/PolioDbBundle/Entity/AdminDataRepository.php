@@ -1079,4 +1079,16 @@ class AdminDataRepository extends EntityRepository {
         )-> setParameters(['camp'=>$campaign, 'dist' => $district])
         ->getResult(Query::HYDRATE_SCALAR);
     }
+
+    /**
+     * @param $district
+     * @return array
+     */
+    public function selectClustereByDistrict($district) {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT DISTINCT a, d.districtCode FROM AppPolioDbBundle:AdminData a JOIN a.districtCode d WHERE a.districtCode IN (:dis) ORDER BY a.districtCode"
+            ) ->setParameter('dis', $district)
+            ->getResult(Query::HYDRATE_SCALAR);
+    }
 }

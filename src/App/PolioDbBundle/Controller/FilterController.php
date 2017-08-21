@@ -144,13 +144,54 @@ class FilterController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $noEntryCampaigns = $this->get('app.settings')->noEntryCampaigns('AdminData');
+
         $selectedCampaigns = $this->get('app.settings')->lastFewCampaigns('AdminData');
 
         $campaigns = $em->getRepository('AppPolioDbBundle:Campaign')->findBy([], ['campaignId' => 'DESC']);
 
         $regions = $em->getRepository('AppPolioDbBundle:Province')->selectAllRegions();
 
-        return $this->render("html/common/dataentry-small.html.twig", ['campaigns' => $campaigns, 'regions' => $regions, 'selectedCampaign' => $selectedCampaigns]);
+        return $this->render("html/common/dataentry-small.html.twig", ['campaigns' => $campaigns, 'regions' => $regions, 'selectedCampaign' => $selectedCampaigns, 'noentrycamps' => $noEntryCampaigns]);
+    }
+
+    /**
+     * @Route("filter/cluster", name="filter_cluster")
+     * @param Request $request
+     * @return Response
+     */
+    public function filterClusterAction(Request $request) {
+
+        $district = $request->get('district');
+        //$requestData = json_decode($content);
+
+
+        //return new Response(var_dump($content));
+
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('AppPolioDbBundle:AdminData')
+            ->selectClustereByDistrict($district);
+
+        $response = array();
+
+        foreach ($district as $dis) {
+            $temp = array();
+            foreach ($data as $option) {
+                if($option['districtCode'] == $dis[0]) {
+                    $temp[] = array('label' => $option['a_cluster'], 'value' => $option['a_cluster']);
+                    //$response .= "<option value='".$option['p_provinceCode']."'>".$option['p_provinceName']."</option>";
+                }
+            }
+
+            $response[] = array('label'=>$dis[0], 'children'=>$temp);
+        }
+
+
+
+        return new Response(
+            json_encode($response)
+        );
+
     }
 
 }
