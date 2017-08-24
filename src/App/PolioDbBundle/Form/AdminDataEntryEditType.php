@@ -12,9 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class AdminDataEntryType extends AbstractType
+class AdminDataEntryEditType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -32,7 +31,7 @@ class AdminDataEntryType extends AbstractType
       //    },
       //    'choice_label' => 'Cluster',
       //    ))
-         ->add('cluster', HiddenType::class)
+         ->add('cluster', TextType::class)
          ->add('subDistrictName', TextType::class)
          ->add('targetPopulation')
          ->add('receivedVials')
@@ -62,22 +61,20 @@ class AdminDataEntryType extends AbstractType
          //     'widget' => 'single_text',
          //     'format' => 'yyyy-MM-dd',
          //     ))
-        //  ->add('districtCode', 'entity', array(
-        //    'class' => 'AppPolioDbBundle:District',
-        //    'choice_label' => 'districtName',
-        //    'choice_value' => 'districtName',
-        //    'label' => 'District',
-        //    'placeholder' => 'District'
-        //  ))
-        //  ->add('campaign', 'entity', array(
-        //    'class' => 'AppPolioDbBundle:Campaign',
-        //    'choice_label' => 'CampaignName',
-        //    'choice_value' => 'CampaignName',
-        //    'label' => 'Campaign',
-        //    'placeholder' => 'Campaign'
-        //  ));
-         ->add('districtCode', HiddenType::class)
-         ->add('campaign', HiddenType::class);
+         ->add('districtCode', 'entity', array(
+           'class' => 'AppPolioDbBundle:District',
+           'choice_label' => 'districtName',
+           'choice_value' => 'districtName',
+           'label' => 'District',
+           //'placeholder' => 'District'
+         ))
+         ->add('campaign', 'entity', array(
+           'class' => 'AppPolioDbBundle:Campaign',
+           'choice_label' => 'CampaignName',
+           'choice_value' => 'CampaignName',
+           'label' => 'Campaign',
+           //'placeholder' => 'Campaign'
+         ));
 
 
 
@@ -98,8 +95,6 @@ class AdminDataEntryType extends AbstractType
        */
        public function getBlockPrefix()
        {
-         return 'app_poliodbbundle_admindata';
+         return 'app_poliodbbundle_admindataedit';
        }
-
-
      }

@@ -183,7 +183,7 @@ class FilterController extends Controller
                 }
             }
 
-            $response[] = array('label'=>$dis[0], 'children'=>$temp);
+            $response[] = array('label'=>'Clusters', 'children'=>$temp);
         }
 
 

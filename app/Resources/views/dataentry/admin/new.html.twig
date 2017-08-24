@@ -47,11 +47,6 @@
         <div class="row">
           <div class="col-md-12">
             <div class="col-md-2">
-              <!-- <label class="control-label">Cluster:</label> -->
-              {{ form_widget(form.cluster, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Cluster', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.cluster) }}
-            </div>
-            <div class="col-md-2">
               <!-- <label class="control-label">SubDistrictName:</label> -->
               {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'SDistrictName', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.subDistrictName) }}
@@ -76,17 +71,17 @@
               {{ form_widget(form.child011, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child001', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.child011) }}
             </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Child1259:</label> -->
+              {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child1259', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.child1259) }}
+            </div>
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <!-- <label class="control-label">Child1259:</label> -->
-              {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child1259', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.child1259) }}
-            </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Reg Absent:</label> -->
               {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegAbsent', 'style': 'text-align: center'} }) }}
@@ -112,17 +107,17 @@
               {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegRefusal', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.regRefusal) }}
             </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Refusal:</label> -->
+              {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccRefusal', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccRefusal) }}
+            </div>
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
-              <!-- <label class="control-label">Vacc Refusal:</label> -->
-              {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccRefusal', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.vaccRefusal) }}
-            </div>
             <div class="col-md-2">
               <!-- <label class="control-label">NewPolioCase:</label> -->
               {{ form_widget(form.newPolioCase, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NPolioCase', 'style': 'text-align: center'} }) }}
@@ -132,6 +127,11 @@
               <!-- <label class="control-label">Vacc Day:</label> -->
               {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.vaccDay) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Cluster:</label> -->
+              {{ form_widget(form.cluster, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Cluster', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.cluster) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">District Code:</label> -->
@@ -231,10 +231,16 @@ $('form.ajaxForm').on('submit', function () {
     var that = $(this),
     name = that.attr('name'),
     value = that.val();
-
     data[name] = value;
-  });
+    // if(name == 'app_poliodbbundle_admindata[cluster]')
+    // data[name] = $("#filterCluster option:selected" ).attr("value");
+    // if(name == 'app_poliodbbundle_admindata[campaign]')
+    // data[name] = $("#filterCampaign option:selected" ).attr("value");
+    // if(name == 'app_poliodbbundle_admindata[districtCode]')
+    // data[name] = data[name] = $("#filterDistrict option:selected" ).attr("value");
 
+  });
+  console.log(data);
   cluster = $("#app_poliodbbundle_admindata_cluster").val();
   sdistrict = $("#app_poliodbbundle_admindata_subDistrictName").val();
   targetpopulation = $("#app_poliodbbundle_admindata_targetPopulation").val();

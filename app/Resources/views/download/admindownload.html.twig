@@ -90,7 +90,7 @@
 
 
 
-        <div class="row">
+        <!-- <div class="row">
 					<div class="col-md-12">
 						<div class="widget box">
 							<div class="widget-header">
@@ -182,7 +182,7 @@
 						</div>
 					</div>
 				</div>
-      </div>
+      </div> -->
 
 
 
@@ -193,8 +193,8 @@
 
 														<!-- <div class="modal-footer">
 															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-															<button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-														</div> -->
+															<button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button> -->
+														</div>
 													</div>
 												</div>
 											</div>
@@ -435,25 +435,25 @@ $('#example tbody').on( 'click', '.btn, .btn-xs', function () {
         //         //$('#'+target).multiselect('dataprovider', JSON.parse(data));
         //         console.log(data);
           //       htmlData = '<ul><li>title: '+data.cluster+'</li><li>age: '+data.vaccDay+'</li></ul>';
-           //infoModal.find('.modal-body').html(htmlData);
-           $("#cluster").val(data.cluster);
-           $("#sdistrictname").val(data.subDistrictName);
-           $("#tpopulation").val(data.targetPopulation);
-           $("#cluster").val(data.cluster);
-           $("#rvials").val(data.receivedVials);
-           $("#uvials").val(data.usedVials);
-           $("#child011").val(data.child011);
-           $("#child011").val(data.child011);
-           $("#rabsent").val(data.regAbsent);
-           $("#vabsent").val(data.vaccAbsent);
-           $("#rsleep").val(data.regSleep);
-           $("#vsleep").val(data.vaccSleep);
-           $("#rrefusal").val(data.regRefusal);
-           $("#vrefusal").val(data.vaccRefusal);
-           $("#npoliocase").val(data.newPolioCase);
-           $("#vday").val(data.vaccDay);
-           $("#dcode").val(data.districtCode.districtCode);
-           $("#campaign").val(data.campaign.campaignId);
+           infoModal.find('.modal-body').html(data);
+          //  $("#cluster").val(data.cluster);
+          //  $("#sdistrictname").val(data.subDistrictName);
+          //  $("#tpopulation").val(data.targetPopulation);
+          //  $("#cluster").val(data.cluster);
+          //  $("#rvials").val(data.receivedVials);
+          //  $("#uvials").val(data.usedVials);
+          //  $("#child011").val(data.child011);
+          //  $("#child011").val(data.child011);
+          //  $("#rabsent").val(data.regAbsent);
+          //  $("#vabsent").val(data.vaccAbsent);
+          //  $("#rsleep").val(data.regSleep);
+          //  $("#vsleep").val(data.vaccSleep);
+          //  $("#rrefusal").val(data.regRefusal);
+          //  $("#vrefusal").val(data.vaccRefusal);
+          //  $("#npoliocase").val(data.newPolioCase);
+          //  $("#vday").val(data.vaccDay);
+          //  $("#dcode").val(data.districtCode.districtCode);
+          //  $("#campaign").val(data.campaign.campaignId);
            //modal.modal('show');
             }
          });
@@ -461,9 +461,9 @@ $('#example tbody').on( 'click', '.btn, .btn-xs', function () {
 
     } );
 
-    $('#myForm').on('submit',function(){
-            console.log("done");
-        });
+    // $('#myForm').on('submit',function(){
+    //         console.log("done");
+    //     });
 
 
 document.getElementById("example").className = "table table-striped table-bordered table-hover table-checkable datatable";

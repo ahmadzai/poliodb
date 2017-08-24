@@ -31,7 +31,7 @@
                 <div class="dropdown">
                     {#<label class="col-md-1 control-label" style="color: #ffffff;">Region:</label>#}
                     <div class="col-md-10">
-                        <select multiple="multiple" class="multiselect" name="filterDistrict" id="filterDistrict">
+                        <select class="multiselect" name="filterDistrict" id="filterDistrict">
 
                         </select>
                     </div>
@@ -76,6 +76,9 @@
             <script type="text/javascript">
                 $(document).ready(function () {
 
+                  //$("#filterRegion option[value='multiselect-all']").remove();
+                  $("#filterCampaign option:enabled").prependTo("#filterCampaign");
+
                     $('#filterCampaign').multiselect({
                         nonSelectedText: 'Campaigns',
                         numberDisplayed: 2,
@@ -83,7 +86,7 @@
                     });
                     $('#filterRegion').multiselect({
                         nonSelectedText: 'Region',
-                        includeSelectAllOption: true,
+                        includeSelectAllOption: false,
                         onSelectAll: function() {
                             $('#filterDistrict').multiselect('dataprovider', []);
                             var region = $('#filterRegion option:selected');
@@ -120,7 +123,7 @@
                         nonSelectedText: 'Province',
                         numberDisplayed: 2,
                         maxHeight: 300,
-                        enableClickableOptGroups: true,
+                        enableClickableOptGroups: false,
                         onChange: function(element, checked) {
                             $('#filterDistrict').multiselect('dataprovider', []);
                             var province = $('#filterProvince option:selected');
@@ -140,8 +143,8 @@
                         nonSelectedText: 'District',
                         numberDisplayed: 2,
                         maxHeight: 300,
-                        enableCaseInsensitiveFiltering: true,
-                        enableClickableOptGroups: true,
+                        enableCaseInsensitiveFiltering: false,
+                        enableClickableOptGroups: false,
                         onChange: function (element, checked) {
                           $('#filterCluster').multiselect('dataprovider', []);
                             var selectedDistricts = [];

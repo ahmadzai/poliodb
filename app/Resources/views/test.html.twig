@@ -9,102 +9,127 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">Cluster:</label>
-              {{ form_widget(edit_form.cluster, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Cluster', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.cluster, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'Cluster', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.cluster) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">SubDName:</label>
-              {{ form_widget(edit_form.subDistrictName, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'SDistrictName', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.subDistrictName, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'SDistrictName', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.subDistrictName) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">TPopulation:</label>
-              {{ form_widget(edit_form.targetPopulation, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TPopulation', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.targetPopulation, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'TPopulation', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.targetPopulation) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">RVials:</label>
-              {{ form_widget(edit_form.receivedVials, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'ReceivedVials', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.receivedVials, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'ReceivedVials', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.receivedVials) }}
             </div>
-            <div class="col-md-2">
-              <label class="control-label">UVials:</label>
-              {{ form_widget(edit_form.usedVials, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'UsedVials', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.usedVials) }}
-            </div>
-            <div class="col-md-2">
-              <label class="control-label">Child001:</label>
-              {{ form_widget(edit_form.child011, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child001', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.child011) }}
-            </div>
+
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
-            <div class="col-md-2">
+            <div class="col-md-3">
+              <label class="control-label">UVials:</label>
+              {{ form_widget(edit_form.usedVials, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'UsedVials', 'style': 'text-align: center'} }) }}
+              {{ form_errors(edit_form.usedVials) }}
+            </div>
+            <div class="col-md-3">
+              <label class="control-label">Child001:</label>
+              {{ form_widget(edit_form.child011, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'Child001', 'style': 'text-align: center'} }) }}
+              {{ form_errors(edit_form.child011) }}
+            </div>
+            <div class="col-md-3">
               <label class="control-label">Child1259:</label>
-              {{ form_widget(edit_form.child1259, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child1259', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.child1259, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'Child1259', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.child1259) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">RAbsent:</label>
-              {{ form_widget(edit_form.regAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegAbsent', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.regAbsent, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'RegAbsent', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.regAbsent) }}
             </div>
-            <div class="col-md-2">
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-3">
               <label class="control-label">VAbsent:</label>
-              {{ form_widget(edit_form.vaccAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccAbsent', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.vaccAbsent, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'VaccAbsent', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.vaccAbsent) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">RSleep:</label>
-              {{ form_widget(edit_form.regSleep, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegSleep', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.regSleep, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'RegSleep', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.regSleep) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">VSleep:</label>
-              {{ form_widget(edit_form.vaccSleep, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccSleep', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.vaccSleep, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'VaccSleep', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.vaccSleep) }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
               <label class="control-label">RRefusal:</label>
-              {{ form_widget(edit_form.regRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegRefusal', 'style': 'text-align: center'} }) }}
+              {{ form_widget(edit_form.regRefusal, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'RegRefusal', 'style': 'text-align: center'} }) }}
               {{ form_errors(edit_form.regRefusal) }}
             </div>
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="col-md-2">
-              <label class="control-label">VRefusal:</label>
-              {{ form_widget(edit_form.vaccRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccRefusal', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.vaccRefusal) }}
+
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="col-md-3">
+                    <label class="control-label">VRefusal:</label>
+                    {{ form_widget(edit_form.vaccRefusal, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'VaccRefusal', 'style': 'text-align: center'} }) }}
+                    {{ form_errors(edit_form.vaccRefusal) }}
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label">NPolioCase:</label>
+                    {{ form_widget(edit_form.newPolioCase, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'NPolioCase', 'style': 'text-align: center'} }) }}
+                    {{ form_errors(edit_form.newPolioCase) }}
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label">VDay:</label>
+                    {{ form_widget(edit_form.vaccDay, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
+                    {{ form_errors(edit_form.vaccDay) }}
+                  </div>
+                  <div class="col-md-3">
+                    <label class="control-label">DCode:</label>
+                    {{ form_widget(edit_form.districtCode, { 'attr': {'class': 'form-control input-width-small', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
+                    {{ form_errors(edit_form.districtCode) }}
+                  </div>
+
+                </div>
+              </div>
             </div>
-            <div class="col-md-2">
-              <label class="control-label">NPolioCase:</label>
-              {{ form_widget(edit_form.newPolioCase, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NPolioCase', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.newPolioCase) }}
-            </div>
-            <div class="col-md-2">
-              <label class="control-label">VDay:</label>
-              {{ form_widget(edit_form.vaccDay, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.vaccDay) }}
-            </div>
-            <div class="col-md-2">
-              <label class="control-label">DCode:</label>
-              {{ form_widget(edit_form.districtCode, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.districtCode) }}
-            </div>
-            <div class="col-md-2">
-              <label class="control-label">CID:</label>
-              {{ form_widget(edit_form.campaign, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'style': 'text-align: center'} }) }}
-              {{ form_errors(edit_form.campaign) }}
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-12">
+
+
+                  <div class="col-md-3">
+                    <label class="control-label">CID:</label>
+                    {{ form_widget(edit_form.campaign, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'style': 'text-align: center'} }) }}
+                    {{ form_errors(edit_form.campaign) }}
+                  </div>
+
+                </div>
+              </div>
             </div>
             <br>
             <input type="submit" class="btn btn-info pull-right" value="Save" />
