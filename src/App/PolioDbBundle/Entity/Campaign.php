@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
  * Campaign
  *
  * @ORM\Table(name="campaign")
+ * @ORM\Entity(repositoryClass="App\PolioDbBundle\Entity\CampaignRepository")
  * @ORM\Entity
  */
 class Campaign

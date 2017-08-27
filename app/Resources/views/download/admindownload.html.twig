@@ -224,14 +224,15 @@ $(document).ready(function () {
     //     "defaultContent": "",
     //     "width": "4%"
     // },
-    { "data": "ID", title : 'ID'},
-    { "data": "Region", title : 'Region'},
+    { "data": "ID", "visible": false, title : 'ID'},
+    { "data": "Region", "visible": false, title : 'Region'},
     { "data": "Province", title : 'Province' },
     { "data": "District", title : 'District'},
     { "data": "SDistrict", "visible": false, title : 'SDistrict'},
     { "data": "Cluster", title : 'Cluster'},
-    { "data": "CType", title : 'CType'},
-    { "data": "CMonth", title : 'CMonth'},
+    { "data": "CName", title : 'CName'},
+    { "data": "CType", "visible": false, title : 'CType'},
+    { "data": "CMonth", "visible": false, title : 'CMonth'},
     { "data": "CYear", "visible": false, title : 'CYear'},
     { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
     { "data": "UsedVials",  "visible": false, title : 'UsedVials'},
@@ -239,13 +240,13 @@ $(document).ready(function () {
     { "data": "Child1259", "visible": false, title : 'Child1259'},
     { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
     { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
-    { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+    { "data": "RemainingAbsent", title : 'RemainingAbsent'},
     { "data": "RegSleep", "visible": false, title : 'RegSleep'},
     { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
-    { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+    { "data": "RemainingSleep", title : 'RemainingSleep'},
     { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
     { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
-    { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
+    { "data": "RemainingRefusal",  title : 'RemainingRefusal'},
     { "data": "VaccDay", title : 'VaccDay'},
     { "data": null}
   ];
@@ -271,29 +272,30 @@ $(document).ready(function () {
           //       "defaultContent": "",
           //       "width": "4%"
           //   },
-          { "data": "ID", title : 'ID'},
-          { "data": "Region", title : 'Region'},
+          { "data": "ID", "visible": false, title : 'ID'},
+          { "data": "Region", "visible": false, title : 'Region'},
           { "data": "Province", title : 'Province' },
           { "data": "District", title : 'District'},
           { "data": "SDistrict", "visible": false, title : 'SDistrict'},
           { "data": "Cluster", title : 'Cluster'},
-          { "data": "CType", title : 'CType'},
+          { "data": "CName", title : 'CName'},
+          { "data": "CType", "visible": false,title : 'CType'},
           { "data": "CMonth", "visible": false, title : 'CMonth'},
-          { "data": "CYear", title : 'CYear'},
+          { "data": "CYear", "visible": false, title : 'CYear'},
           { "data": "ReceivedVials", "visible": false, title : 'ReceivedVials'},
           { "data": "UsedVials", "visible": false, title : 'UsedVials'},
           { "data": "Child011", "visible": false, title : 'Child011'},
           { "data": "Child1259", "visible": false, title : 'Child1259'},
           { "data": "RegAbsent", "visible": false, title : 'RegAbsent'},
           { "data": "VaccAbsent", "visible": false, title : 'VaccAbsent'},
-          { "data": "RemainingAbsent", "visible": false, title : 'RemainingAbsent'},
+          { "data": "RemainingAbsent", title : 'RemainingAbsent'},
           { "data": "RegSleep", "visible": false, title : 'RegSleep'},
           { "data": "VaccSleep", "visible": false, title : 'VaccSleep'},
-          { "data": "RemainingSleep", "visible": false, title : 'RemainingSleep'},
+          { "data": "RemainingSleep", title : 'RemainingSleep'},
           { "data": "RegRefusal", "visible": false, title : 'RegRefusal'},
           { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
-          { "data": "RemainingRefusal", "visible": false, title : 'RemainingRefusal'},
-          { "data": "VaccDay", "visible": false, title : 'VaccDay'},
+          { "data": "RemainingRefusal", title : 'RemainingRefusal'},
+          { "data": "VaccDay", title : 'VaccDay'},
           { "data": null}
         ];
         createDatatable(source, sourceCols);
@@ -325,8 +327,8 @@ $(document).ready(function () {
           //      "defaultContent": "",
           //      "width": "4%"
           //  },
-          { "data": "ID", title : 'ID'},
-          { "data": "Region", title : 'Region'},
+          { "data": "ID", "visible": false, title : 'ID'},
+          { "data": "Region", "visible": false, title : 'Region'},
           { "data": "Province", title : 'Province' },
           { "data": "District", title : 'District'},
           { "data": "DCODE", "visible": false, title : 'DCODE'},
@@ -382,7 +384,7 @@ $(document).ready(function () {
       },
       //scrollY: 600,
       deferRender: true,
-      "searching": false,
+      //"searching": false,
        buttons: [{
         extend: 'colvis',
         columns: ':not(.noVis)',
@@ -393,9 +395,15 @@ $(document).ready(function () {
         text: 'Download',
         buttons: [ {
           extend: 'excelHtml5',
+          exportOptions: {
+                    columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ]
+                }
         },
         {
           extend: 'csvHtml5',
+          exportOptions: {
+                    columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ]
+                }
         }]
       }
     ],
@@ -425,6 +433,7 @@ $('#example tbody').on( 'click', '.btn, .btn-xs', function () {
         var trElem = $(this).closest("tr");// grabs the button parent tr element
         var firstTd = $(trElem).children("td")[0]; //takes the first td which would have your Id
         var id = $(firstTd).text();
+        console.log(id);
         var iddata = {"id": id};
         // location.href = Routing.generate('edit_admin_data', { "id": id });
         $.ajax({

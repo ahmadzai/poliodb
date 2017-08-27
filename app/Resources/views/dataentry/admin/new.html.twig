@@ -47,6 +47,16 @@
         <div class="row">
           <div class="col-md-12">
             <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Day:</label> -->
+              {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccDay) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Campaign ID:</label> -->
+              {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.campaign) }}
+            </div>
+            <div class="col-md-2">
               <!-- <label class="control-label">SubDistrictName:</label> -->
               {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'SDistrictName', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.subDistrictName) }}
@@ -66,6 +76,12 @@
               {{ form_widget(form.usedVials, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'UsedVials', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.usedVials) }}
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
             <div class="col-md-2">
               <!-- <label class="control-label">Child001:</label> -->
               {{ form_widget(form.child011, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child001', 'style': 'text-align: center'} }) }}
@@ -76,12 +92,6 @@
               {{ form_widget(form.child1259, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Child1259', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.child1259) }}
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-12">
             <div class="col-md-2">
               <!-- <label class="control-label">Reg Absent:</label> -->
               {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegAbsent', 'style': 'text-align: center'} }) }}
@@ -102,6 +112,12 @@
               {{ form_widget(form.vaccSleep, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccSleep', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.vaccSleep) }}
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
             <div class="col-md-2">
               <!-- <label class="control-label">Reg Regusal:</label> -->
               {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegRefusal', 'style': 'text-align: center'} }) }}
@@ -112,21 +128,10 @@
               {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccRefusal', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.vaccRefusal) }}
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-12">
             <div class="col-md-2">
               <!-- <label class="control-label">NewPolioCase:</label> -->
               {{ form_widget(form.newPolioCase, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NPolioCase', 'style': 'text-align: center'} }) }}
               {{ form_errors(form.newPolioCase) }}
-            </div>
-            <div class="col-md-2">
-              <!-- <label class="control-label">Vacc Day:</label> -->
-              {{ form_widget(form.vaccDay, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccDay', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.vaccDay) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Cluster:</label> -->
@@ -137,11 +142,6 @@
               <!-- <label class="control-label">District Code:</label> -->
               {{ form_widget(form.districtCode) }}
               {{ form_errors(form.districtCode) }}
-            </div>
-            <div class="col-md-2">
-              <!-- <label class="control-label">Campaign ID:</label> -->
-              {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.campaign) }}
             </div>
             <br>
             <input type="submit" class="btn btn-info pull-right" value="Submit" />
@@ -165,12 +165,42 @@
 {% endblock %}
 
 {% block script_end %}
-<script>$('#app_poliodbbundle_admindata_districtCode').editableSelect();
+<script>
+//$('#app_poliodbbundle_admindata_districtCode').editableSelect();
 $(document).ready(function(){
 
+  $("#app_poliodbbundle_admindata_vaccDay").change(function(){
 
+    $("#app_poliodbbundle_admindata_campaign > option").each(function() {
+      $(this).removeAttr('disabled');
+    });
 
-});
+    var data = {
+      cluster: $("#filterCluster option:selected" ).attr("value"),
+      vaccday: $("#app_poliodbbundle_admindata_vaccDay option:selected" ).attr("value")
+    };
+    //console.log(data);
+
+      $.ajax({
+        type: 'post',
+        url: Routing.generate('filter_campaign_select'),
+        data: data,
+        success: function(data) {
+        //console.log(data);
+          var i = 0;
+          $("#app_poliodbbundle_admindata_campaign > option").each(function() {
+
+          //alert(this.text + ' ' + this.value);
+          if(data[i].campaignName == this.value){
+            i++;
+            $(this).attr("disabled","disabled");
+          }
+          //$("#app_poliodbbundle_admindata_campaign option:enabled").prependTo("#app_poliodbbundle_admindata_campaign");
+          });
+        }
+      });
+    });
+  });
 var table;
 var source, sourceCols;
 var cluster, sdistrict, targetpopulation, receivedvials, usedvials, child011, child1259,
@@ -232,12 +262,10 @@ $('form.ajaxForm').on('submit', function () {
     name = that.attr('name'),
     value = that.val();
     data[name] = value;
-    // if(name == 'app_poliodbbundle_admindata[cluster]')
-    // data[name] = $("#filterCluster option:selected" ).attr("value");
-    // if(name == 'app_poliodbbundle_admindata[campaign]')
-    // data[name] = $("#filterCampaign option:selected" ).attr("value");
-    // if(name == 'app_poliodbbundle_admindata[districtCode]')
-    // data[name] = data[name] = $("#filterDistrict option:selected" ).attr("value");
+      if(name == 'app_poliodbbundle_admindata[cluster]')
+      data[name] = $("#filterCluster option:selected" ).attr("value");
+      // if(name == 'app_poliodbbundle_admindata[districtCode]')
+      // data[name] = $("#filterDistrict option:selected" ).attr("value");
 
   });
   console.log(data);

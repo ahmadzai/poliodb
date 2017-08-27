@@ -156,6 +156,50 @@ class FilterController extends Controller
     }
 
     /**
+     * @Route("filter/district_norisk", name="filter_district_norisk")
+     * @param Request $request
+     * @return Response
+     */
+    public function filterDistrictWithoutRiskStatusAction(Request $request) {
+
+        $province = $request->get('province');
+        //$requestData = json_decode($content);
+
+
+        //return new Response(var_dump($content));
+
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository('AppPolioDbBundle:District')
+            ->selectDistrictByProvince($province);
+
+        $response = array();
+        $flag_vhr = false;
+        $flag_hr = false;
+        foreach ($province as $prov) {
+            $temp = array();
+            $pname = '';
+            foreach ($data as $option) {
+                if($option['d_districtRiskStatus'] == "VHR")
+                    $flag_vhr = true;
+                if($option['d_districtRiskStatus'] == "HR")
+                    $flag_hr = true;
+                if($option['provinceCode'] == $prov[0]) {
+                    $pname = $option['provinceName'];
+                    $temp[] = array('label' => $option['d_districtName'], 'value'=>$option['d_districtCode']);
+                    //$response .= "<option value='".$option['p_provinceCode']."'>".$option['p_provinceName']."</option>";
+                }
+            }
+
+            $response[] = array('label'=>$pname, 'children'=>$temp);
+        }
+
+            return new Response(
+            json_encode($response)
+        );
+
+    }
+
+    /**
      * @Route("filter/cluster", name="filter_cluster")
      * @param Request $request
      * @return Response

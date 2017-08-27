@@ -122,4 +122,23 @@ class DataEntryController extends Controller
 
     }
 
+    /**
+     * @Route("/data_entry/filter_campaign_select", name="filter_campaign_select")
+     */
+    public function FilterCampaignSelectAction(Request $request)
+    {
+        $cluster = $request->get('cluster');
+        $vaccDay = $request->get('vaccday');
+
+        $camps = $this->getDoctrine()
+        ->getRepository('AppPolioDbBundle:AdminData')
+        ->selectCampaignsByClusterVaccDay($cluster, $vaccDay);
+
+
+        return new JsonResponse(
+            $camps
+        );
+
+    }
+
 }

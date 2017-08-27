@@ -69,18 +69,14 @@ class AdminDataEntryType extends AbstractType
         //    'label' => 'District',
         //    'placeholder' => 'District'
         //  ))
-        //  ->add('campaign', 'entity', array(
-        //    'class' => 'AppPolioDbBundle:Campaign',
-        //    'choice_label' => 'CampaignName',
-        //    'choice_value' => 'CampaignName',
-        //    'label' => 'Campaign',
-        //    'placeholder' => 'Campaign'
-        //  ));
-         ->add('districtCode', HiddenType::class)
-         ->add('campaign', HiddenType::class);
-
-
-
+         ->add('campaign', 'entity', array(
+           'class' => 'AppPolioDbBundle:Campaign',
+           'choice_label' => 'CampaignName',
+           'choice_value' => 'CampaignName',
+           'label' => 'Campaign',
+           'placeholder' => 'Campaign'
+         ))
+         ->add('districtCode', HiddenType::class);
        }
 
        /**
