@@ -49,6 +49,9 @@ class UploadController extends Controller
             ->getForm();
         $syncbuttonbool = "disabled";
         $uploadbuttonbool = "";
+        $allDistricts = array();
+        $uniqueDistricts = array();
+        $checkDistricts = "";
         //second form of the page.
         $form2 = $this->get('form.factory')->createNamedBuilder('form2')
             ->getForm();
@@ -62,9 +65,35 @@ class UploadController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     //READ EXCEL FILE CONTENT
                     try {
+                              foreach($sheet as $i=>$row) {
+                                $allDistricts[$i] = trim($row['A']);
+                              }
+                              $uniqueDistricts = array_unique($allDistricts);
+
+
                         foreach($sheet as $i=>$row) {
                             if($i !== 1) {
                                 $user = new TempAdminData();
+
+                                //Checking if campaign exist in campaign table.
+                                $checkCampaign = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
+                                    ->checkIfCampaignExist($row['S']);
+                                  if ($checkCampaign == NULL) {
+                                      $request->getSession()->getFlashBag()->add('datatype_exception', "This campaign does not exist.");
+                                      throw new \Doctrine\DBAL\DBALException;
+                                  }
+
+
+                                $checkDistricts = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
+                                    ->checkDistrictsData($uniqueDistricts, $row['S']);
+                                  if ($checkDistricts != NULL) {
+                                      $request->getSession()->getFlashBag()->add('datatype_exception', "You have data for these districts.");
+                                      throw new \Doctrine\DBAL\DBALException;
+                                  }
+
+
+
+
                                 $campaignrecord = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
                                     ->checkThreeDayCampaign($row['S']);
                                 if ($campaignrecord == NULL) {
@@ -307,7 +336,7 @@ class UploadController extends Controller
             }//end of second form.
         }
         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
-            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'admin_data_upload'));
+            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'admin_data_upload', 'districts' => json_encode($checkDistricts)));
     }
     /**
      * @Route("/upload/icm_data", name="icm_data_upload")

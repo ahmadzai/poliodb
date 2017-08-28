@@ -118,7 +118,7 @@ class DataEntryController extends Controller
             'edit_form' => $editForm->createView()
         )));
 
-        return $response;
+        //return $response;
 
     }
 

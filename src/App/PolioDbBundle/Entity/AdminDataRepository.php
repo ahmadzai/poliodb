@@ -1090,11 +1090,39 @@ class AdminDataRepository extends EntityRepository {
             ->getResult(Query::HYDRATE_SCALAR);
     }
 
+    /**
+     * @param $cluster, $vaccday
+     * @return array
+     */
     public function selectCampaignsByClusterVaccDay($cluster, $vaccday) {
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT c.campaignId, c.campaignName FROM AppPolioDbBundle:AdminData a JOIN a.campaign c WHERE a.cluster IN (:clus) AND a.vaccDay IN (:vacc) GROUP BY c.campaignId"
             ) -> setParameters(['clus'=>$cluster, 'vacc'=>$vaccday])
               ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $campaign
+     * @return array
+     */
+    public function checkIfCampaignExist($campaign) {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT c.campaignId FROM AppPolioDbBundle:Campaign c WHERE c.campaignId IN (:camp)"
+            ) ->setParameter('camp', $campaign)
+            ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param $districts, $campaign
+     * @return array
+     */
+    public function checkDistrictsData($districts, $campaign) {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT DISTINCT IDENTITY(adm.districtCode) FROM AppPolioDbBundle:AdminData adm WHERE (adm.districtCode IN (:dis) AND adm.campaign IN (:camp))"
+            ) -> setParameters(['dis'=>$districts, 'camp'=>$campaign])
+            ->getResult(Query::HYDRATE_SCALAR);
     }
 }

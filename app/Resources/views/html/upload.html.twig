@@ -190,9 +190,16 @@
        {% for message in app.session.flashBag.get('datatype_exception') %}
     <div class="alert alert-danger fade in">
             <i class="icon-remove close" data-dismiss="alert"></i>
-            <strong>Notice!</strong> {{ message }}
+            <strong>Notice!</strong> {{ message }} {{ districts }}
     </div>
         {% endfor %}
+
+        <script>
+        $(document).ready(function(){
+                var source = JSON.parse('{{districts|raw}}');
+                console.log(source);
+            });
+        </script>
 
         {{ form_end(form) }}
 
@@ -219,4 +226,14 @@
 
         {{ form_end(form2) }}
 </div>
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+$(document).ready(function(){
+        var source = JSON.parse('{{districts|raw}}');
+        console.log(source);
+    });
+</script>
 {% endblock %}

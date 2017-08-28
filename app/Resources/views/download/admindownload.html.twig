@@ -430,12 +430,19 @@ $(document).ready(function () {
 $('#example tbody').on( 'click', '.btn, .btn-xs', function () {
         var infoModal = $('#myModal1');
          //console.log(table.row( $(this).parents('tr')).id());
-        var trElem = $(this).closest("tr");// grabs the button parent tr element
-        var firstTd = $(trElem).children("td")[0]; //takes the first td which would have your Id
-        var id = $(firstTd).text();
-        console.log(id);
-        var iddata = {"id": id};
+        // var trElem = $(this).closest("tr");// grabs the button parent tr element
+        // var firstTd = $(trElem).children("td")[0]; //takes the first td which would have your Id
+        // var id = $(firstTd).text();
+        // console.log(id);
+        // var iddata = {"id": id};
         // location.href = Routing.generate('edit_admin_data', { "id": id });
+
+        var row = $(this).closest('tr');
+        var data = $('#example').dataTable().fnGetData(row);
+        var id = data["ID"];
+        var iddata = {"id": id};
+
+
         $.ajax({
             url: Routing.generate('edit_admin_data'),
             data: iddata,
