@@ -83,7 +83,7 @@ class UploadController extends Controller
                                       throw new \Doctrine\DBAL\DBALException;
                                   }
 
-
+                                //checking if for the same campaign there is entry for the districts which are going to upload.
                                 $checkDistricts = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
                                     ->checkDistrictsData($uniqueDistricts, $row['S']);
                                   if ($checkDistricts != NULL) {
@@ -91,15 +91,20 @@ class UploadController extends Controller
                                       throw new \Doctrine\DBAL\DBALException;
                                   }
 
-
-
-
+                                //checking if there is entry for day four of the same campaign
                                 $campaignrecord = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
                                     ->checkThreeDayCampaign($row['S']);
-                                if ($campaignrecord == NULL) {
+                                $campaignrecorddayfour = $stmtt = $em->getRepository('AppPolioDbBundle:AdminData')
+                                    ->checkDayFourCampaign($row['S']);
+                                if ($campaignrecord == NULL && $campaignrecorddayfour != NULL) {
                                     $request->getSession()->getFlashBag()->add('datatype_exception', "Please insert data from day 1,2,3 of the current campaign.");
                                     throw new \Doctrine\DBAL\DBALException;
                                 }
+                                elseif ($campaignrecord == NULL && $campaignrecorddayfour == NULL && $row['R']==4) {
+                                    $request->getSession()->getFlashBag()->add('datatype_exception', "Please insert data from day 1,2,3 of the current campaign.");
+                                    throw new \Doctrine\DBAL\DBALException;
+                                }
+
                                 //check datatype of the filed.
                                 if(is_double($row['A']) || is_null($row['A']))
                                     echo "";
@@ -336,7 +341,7 @@ class UploadController extends Controller
             }//end of second form.
         }
         return $this->render('html/upload.html.twig', array ('form' => $form->createView(), 'form2' => $form2->createView(), 'table' => $datasource,
-            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'admin_data_upload', 'districts' => json_encode($checkDistricts)));
+            'syncbutt' => $syncbuttonbool, 'uploadbutt' => $uploadbuttonbool, 'url'=>'admin_data_upload', 'districts' => $checkDistricts));
     }
     /**
      * @Route("/upload/icm_data", name="icm_data_upload")

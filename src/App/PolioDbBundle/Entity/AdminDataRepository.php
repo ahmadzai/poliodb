@@ -524,24 +524,6 @@ class AdminDataRepository extends EntityRepository {
             ->getResult(Query::HYDRATE_SCALAR);
     }
 
-
-    public function checkThreeDayCampaign($campaignday)
-    {
-      $em = $this->getEntityManager();
-      $repository = $em->getRepository('AppPolioDbBundle:AdminData');
-
-      // createQueryBuilder() automatically selects FROM AppBundle:Product
-      // and aliases it to "p"
-      $query = $repository->createQueryBuilder('p')
-      ->where('p.campaign= :campid')
-      ->andWhere('p.vaccDay = 1 OR p.vaccDay = 2 OR p.vaccDay = 3')
-      ->setParameter('campid', $campaignday)
-      ->getQuery();
-
-
-      return $query->getResult();
-    }
-
     /**
      * @param $campaign
      * @param $region
@@ -1124,5 +1106,47 @@ class AdminDataRepository extends EntityRepository {
                 "SELECT DISTINCT IDENTITY(adm.districtCode) FROM AppPolioDbBundle:AdminData adm WHERE (adm.districtCode IN (:dis) AND adm.campaign IN (:camp))"
             ) -> setParameters(['dis'=>$districts, 'camp'=>$campaign])
             ->getResult(Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * @param  $campaign
+     * @return array
+     */
+    public function checkThreeDayCampaign($campaignday)
+    {
+      $em = $this->getEntityManager();
+      $repository = $em->getRepository('AppPolioDbBundle:AdminData');
+
+      // createQueryBuilder() automatically selects FROM AppBundle:Product
+      // and aliases it to "p"
+      $query = $repository->createQueryBuilder('p')
+      ->where('p.campaign= :campid')
+      ->andWhere('p.vaccDay = 1 OR p.vaccDay = 2 OR p.vaccDay = 3')
+      ->setParameter('campid', $campaignday)
+      ->getQuery();
+
+
+      return $query->getResult();
+    }
+
+    /**
+     * @param  $campaign
+     * @return array
+     */
+    public function checkDayFourCampaign($campaignday)
+    {
+      $em = $this->getEntityManager();
+      $repository = $em->getRepository('AppPolioDbBundle:AdminData');
+
+      // createQueryBuilder() automatically selects FROM AppBundle:Product
+      // and aliases it to "p"
+      $query = $repository->createQueryBuilder('p')
+      ->where('p.campaign= :campid')
+      ->andWhere('p.vaccDay = 4')
+      ->setParameter('campid', $campaignday)
+      ->getQuery();
+
+
+      return $query->getResult();
     }
 }
