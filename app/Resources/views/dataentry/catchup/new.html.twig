@@ -1,0 +1,259 @@
+{% extends 'main_filter.html.twig' %}
+
+{% block nav %}
+    {% include 'html/common/nav_top_dataentry_filter.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="crumbs" role="">
+    <ul id="breadcrumbs" class="breadcrumb">
+      <li>
+        <i class="icon-home"></i>
+        <a href="{{ path('dashboard_main') }}">Home</a>
+      </li>
+      <li class="">
+        <a href="#" title="">
+          {% if table == "admin_data" %}
+          Admin Data
+          {% endif %}
+          {% if table == "catchup_data" %}
+          Catchup Data
+          {% endif %}
+          {% if table == "icm_data" %}
+          Icm Data
+          {% endif %}
+        </a>
+      </li>
+      <li class="current">
+        <a href="{{ path(app.session.get('visited_url')) }}" title="">
+          {% if('admin' in app.session.get('visited_url')) %} Data Entry
+          {% elseif('icm' in app.session.get('visited_url')) %} Data Entry
+          {% elseif('catchup' in app.session.get('visited_url')) %} Data Entry
+          {% endif %}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <br>
+  <div class="widget box">
+    <div class="widget-header">
+      <h4><i class="icon-reorder"></i> Data Entry </h4>
+    </div>
+    <div class="widget-content">
+      {{ form_start(form, { 'action': path('entry_icm_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Day:</label> -->
+              {{ form_widget(form.campaign, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Campaign', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.campaign) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Campaign ID:</label> -->
+              {{ form_widget(form.noTeamMonitored, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoTeamMon', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noTeamMonitored) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">SubDistrictName:</label> -->
+              {{ form_widget(form.teamResidentArea, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamRArea', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.teamResidentArea) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Target Population:</label> -->
+              {{ form_widget(form.vaccinatorTrained, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccTrained', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccinatorTrained) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Received Vials:</label> -->
+              {{ form_widget(form.vaccStage3, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccStage3', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccStage3) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Used Vials:</label> -->
+              {{ form_widget(form.teamSupervised, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamSupervised', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.teamSupervised) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-2">
+              <!-- <label class="control-label">Child001:</label> -->
+              {{ form_widget(form.teamWithChw, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamWChw', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.teamWithChw) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Child1259:</label> -->
+              {{ form_widget(form.teamWithFemale, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamWFemale', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.teamWithFemale) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Reg Absent:</label> -->
+              {{ form_widget(form.teamAccomSm, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamAccomSm', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.teamAccomSm) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Absent:</label> -->
+              {{ form_widget(form.noMissedChildNovisit, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMissedChNoVisit', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noMissedChildNovisit) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Reg Sleep:</label> -->
+              {{ form_widget(form.noChildSeen, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegSleep', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noChildSeen) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Sleep:</label> -->
+              {{ form_widget(form.noChildWithFm, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoChWFm', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noChildWithFm) }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="col-md-2">
+              <!-- <label class="control-label">Reg Regusal:</label> -->
+              {{ form_widget(form.noMissedChild, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMChild', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noMissedChild) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">Vacc Refusal:</label> -->
+              {{ form_widget(form.noMissed10, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMissed10', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.noMissed10) }}
+            </div>
+            <div class="col-md-2">
+              <!-- <label class="control-label">District Code:</label> -->
+              {{ form_widget(form.districtCode) }}
+              {{ form_errors(form.districtCode) }}
+            </div>
+            <br>
+            <input type="submit" class="btn btn-info pull-right" value="Submit" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <br><br><br>
+  <table id="example" cellspacing="0" width="100%">
+
+  </table>
+
+</div>
+{% endblock %}
+
+{% block script_end %}
+<script>
+$(document).ready(function(){
+
+});
+var table;
+var source, sourceCols;
+var campaignid, district, noteammonitored, teamresidentarea, vaccinatortrained, vaccstage3, teamsupervised,
+teamwithchw, teamwithfemale, teamaccomsm, nomissedchildnovisit, nochildseen, nochildwithfm, nomissedchild, nomissed10;
+
+sourceCols = [
+  { "data": "noTeamMonitored", title : 'noTeamMonitored'},
+  { "data": "teamResidentArea",  title : 'teamResidentArea'},
+  { "data": "vaccinatorTrained", "visible": false, title : 'vaccinatorTrained'},
+  { "data": "vaccStage3", title : 'vaccStage3'},
+  { "data": "teamSupervised", title : 'teamSupervised'},
+  { "data": "teamWithChw", "visible": false, title : 'teamWithChw'},
+  { "data": "teamWithFemale", "visible": false, title : 'teamWithFemale'},
+  { "data": "teamAccomSm", "visible": false, title : 'teamAccomSm'},
+  { "data": "noMissedChildNoVisit", "visible": false, title : 'noMissedChildNoVisit'},
+  { "data": "noChildSeen", "visible": false, title : 'noChildSeen'},
+  { "data": "noChildWithFm", "visible": false, title : 'noChildWithFm'},
+  { "data": "noMissedChild", "visible": false, title : 'noMissedChild'},
+  { "data": "noMissed10", "visible": false, title : 'noMissed10'},
+  { "data": "District", "visible": false, title : 'District'},
+  { "data": "CampaignID", title : 'CampaignID'},
+];
+createDatatable(source, sourceCols);
+
+function createDatatable(data, cols) {
+  if ( $.fn.DataTable.isDataTable( '#example' ) ) {
+    $('#example').DataTable().destroy();
+    $('#example').empty();
+  };
+
+  table = $('#example').DataTable( {
+    //  "processing": true,
+    dom: 'frtip',
+    "searching": false,
+    //destroy: true,
+    "pageLength": 25,
+    "type"   : "POST",
+    "columns": cols,
+  } );
+}
+
+$('form.ajaxForm').on('submit', function () {
+  var that = $(this),
+  url= that.attr('action'),
+  type= that.attr('method'),
+  data = {};
+
+  that.find('[name]').each(function(index, value) {
+    var that = $(this),
+    name = that.attr('name'),
+    value = that.val();
+    data[name] = value;
+      // if(name == 'app_poliodbbundle_admindata[districtCode]')
+      // data[name] = $("#filterDistrict option:selected" ).attr("value");
+
+  });
+  console.log(data);
+  noteammonitored = $("#app_poliodbbundle_icmdata_noTeamMonitored").val();
+  teamresidentarea = $("#app_poliodbbundle_icmdata_teamResidentArea").val();
+  vaccinatortrained = $("#app_poliodbbundle_icmdata_vaccinatorTrained").val();
+  vaccstage3 = $("#app_poliodbbundle_icmdata_vaccStage3").val();
+  teamsupervised = $("#app_poliodbbundle_icmdata_teamSupervised").val();
+  teamwithchw = $("#app_poliodbbundle_icmdata_teamWithChw").val();
+  teamwithfemale = $("#app_poliodbbundle_icmdata_teamWithFemale").val();
+  teamaccomsm = $("#app_poliodbbundle_icmdata_teamAccomSm").val();
+  nomissedchildnovisit = $("#app_poliodbbundle_icmdata_noMissedChildNovisit").val();
+  nochildseen = $("#app_poliodbbundle_icmdata_noChildSeen").val();
+  nochildwithfm = $("#app_poliodbbundle_icmdata_noChildWithFm").val();
+  nomissedchild = $("#app_poliodbbundle_icmdata_noMissedChild").val();
+  nomissed10 = $("#app_poliodbbundle_icmdata_noMissed10").val();
+  district = $("#app_poliodbbundle_icmdata_districtCode").val();
+  compaignid = $("#app_poliodbbundle_icmdata_campaign").val();
+
+  $.ajax({
+    type: type,
+    url: url,
+    data: data,
+    success: function(response){
+      //console.log(data);  { "data": "noTeamMonitored", title : 'Cluster'},
+      table.row.add({"noTeamMonitored":       noteammonitored,
+      "teamResidentArea":       teamresidentarea,
+      "vaccinatorTrained":   vaccinatortrained,
+      "vaccStage3":     vaccstage3,
+      "teamSupervised": teamsupervised,
+      "teamWithChw":     teamwithchw,
+      "teamWithFemale":       teamwithfemale,
+      "teamAccomSm":   teamaccomsm,
+      "noMissedChildNoVisit":     nomissedchildnovisit,
+      "noChildSeen": nochildseen,
+      "noChildWithFm":     nochildwithfm,
+      "noMissedChild":       nomissedchild,
+      "noMissed10":       nomissed10,
+      "District":     district,
+      "CampaignID":       compaignid,
+    }).draw(false);
+  }
+});
+return false;
+});
+</script>
+{% endblock %}

@@ -74,126 +74,15 @@
 </table>
 
                     <!-- Modal dialog -->
-											<div class="modal fade" id="myModal1">
-												<div class="modal-dialog">
+											<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+												<div class="modal-dialog modal-lg">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title">Modal title</h4>
+															<h4 class="modal-title">Edit Entry</h4>
 														</div>
 														<div class="modal-body">
 
-                              {# {{ render(controller(
-                                  'AppPolioDbBundle:Render/DataEntry:DashboardEditData',
-                                  { 'id': 3 }
-                              )) }} #}
-
-
-
-        <!-- <div class="row">
-					<div class="col-md-12">
-						<div class="widget box">
-							<div class="widget-header">
-								<h4><i class="icon-reorder"></i> Edit Entry</h4>
-							</div>
-							<div class="widget-content">
-								<form class="form-horizontal row-border" action="#" id="myForm">
-									<div class="form-group">
-										<label class="col-md-2 control-label">Cluster</label>
-										<div class="col-md-10"><input type="text" name="regular" class="form-control input-width-medium" id="cluster"></div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-md-2 control-label">SDistrictName</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="pass" id="sdistrictname"></div>
-									</div>
-
-									<div class="form-group">
-										<label class="col-md-2 control-label">TPopulation</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="tpopulation"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">receivedVials</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rvials"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">usedVials</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="uvials"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">child011</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="child011"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">child1259</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="child1259"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">regAbsent</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rabsent"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">vaccAbsent</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vabsent"></div>
-									</div>
-
-                  <div class="form-group">
-										<label class="col-md-2 control-label">regSleep</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rsleep"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">vaccSleep</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vsleep"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">regRefusal</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="rrefusal"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">vaccRefusal</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vrefusal"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">newPolioCase</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="npoliocase"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">vaccDay</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="vday"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">districtCode</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="dcode"></div>
-									</div>
-                  <div class="form-group">
-										<label class="col-md-2 control-label">campaign</label>
-										<div class="col-md-10"><input class="form-control input-width-medium" type="text" name="placeholder" id="campaign"></div>
-									</div>
-                  <br>
-                  <input type="submit" class="btn btn-info pull-right" value="Submit" data-dismiss="modal" />
-
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-      </div> -->
-
-
-
-
-
-
-
-
-														<!-- <div class="modal-footer">
-															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-															<button type="submit" class="btn btn-primary" data-dismiss="modal">Save changes</button> -->
 														</div>
 													</div>
 												</div>
@@ -251,7 +140,7 @@ $(document).ready(function () {
     { "data": null}
   ];
   createDatatable(source, sourceCols);
-  
+
 
 
   $("#rawLink").click(function() {

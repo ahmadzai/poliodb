@@ -6,6 +6,11 @@
 
 {% block content %}
 <div class="container">
+<style type="text/css" class="init">
+select option[disabled] {
+    display: none;
+}
+</style>
   <div class="crumbs" role="">
     <ul id="breadcrumbs" class="breadcrumb">
       <li>
@@ -228,7 +233,7 @@ sourceCols = [
   { "data": "VaccRefusal", "visible": false, title : 'VaccRefusal'},
   { "data": "NPolioCase", "visible": false, title : 'NPolioCase'},
   { "data": "VaccDay",  title : 'VaccDay'},
-  { "data": "District", title : 'District'},
+  { "data": "District", "visible": false, title : 'District'},
   { "data": "CampaignID", title : 'CampaignID'},
 ];
 createDatatable(source, sourceCols);

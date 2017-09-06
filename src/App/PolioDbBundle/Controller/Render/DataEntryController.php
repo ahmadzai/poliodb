@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\PolioDbBundle\Entity\AdminData;
+use App\PolioDbBundle\Entity\IcmData;
+use App\PolioDbBundle\Entity\CatchupData;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DataEntryController extends Controller
@@ -68,9 +70,31 @@ class DataEntryController extends Controller
     /**
      * @Route("/data_entry/icm_data", name="entry_icm_data")
      */
-    public function DashboardIcmDataAction()
+    public function DashboardIcmDataAction(Request $request)
     {
-        return $this->render("pages/home.html.twig");
+      $this->get('app.settings')->trackUrl('entry_icm_data');
+      $datasource = "icm_data";
+
+      $icmData = new IcmData();
+      $form = $this->createForm('App\PolioDbBundle\Form\IcmDataEntryType', $icmData);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($icmData);
+          $em->flush($icmData);
+
+
+          return new JsonResponse(array('message' => 'Success!'), 200);
+          // return $this->redirectToRoute('district_show', array('id' => $district->getDistrictCode()));
+      }
+
+
+      return $this->render('dataentry/icm/new.html.twig', array(
+          'icmdata' => $icmData,
+          'form' => $form->createView(),
+          'table' => $datasource
+      ));
     }
 
     /**
@@ -78,7 +102,29 @@ class DataEntryController extends Controller
      */
     public function DashboardCatchupDataAction()
     {
-        return $this->render("pages/home.html.twig");
+      $this->get('app.settings')->trackUrl('entry_catchup_data');
+      $datasource = "catchup_data";
+
+      $catchupData = new CatchupData();
+      $form = $this->createForm('App\PolioDbBundle\Form\CatchupDataEntryType', $catchupData);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->persist($catchupData);
+          $em->flush($catchupData);
+
+
+          return new JsonResponse(array('message' => 'Success!'), 200);
+          // return $this->redirectToRoute('district_show', array('id' => $district->getDistrictCode()));
+      }
+
+
+      return $this->render('dataentry/catchup/new.html.twig', array(
+          'catchupdata' => $catchupData,
+          'form' => $form->createView(),
+          'table' => $datasource
+      ));
     }
 
     /**

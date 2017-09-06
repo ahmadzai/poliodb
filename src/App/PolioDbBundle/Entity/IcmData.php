@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class IcmData
 {
+
+  public function __construct()
+  {
+      $this->entryDate = new \DateTime();
+  }
   /**
    * @var integer
    *
@@ -108,7 +113,7 @@ class IcmData
      *
      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
-    private $entryDate = 'CURRENT_TIMESTAMP';
+    private $entryDate;
 
     /**
      * @var \float
