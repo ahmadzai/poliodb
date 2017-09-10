@@ -227,7 +227,8 @@ class FilterController extends Controller
                 }
             }
 
-            $response[] = array('label'=>'Clusters', 'children'=>$temp);
+            $response[] = array('label'=>$option['districtName'], 'children'=>$temp);
+            $response[] = array('label'=>$option['districtName'], 'children'=>$temp);
         }
 
 

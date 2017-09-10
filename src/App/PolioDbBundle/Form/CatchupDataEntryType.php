@@ -23,19 +23,18 @@ class CatchupDataEntryType extends AbstractType
      {
 
        $builder
-         ->add('noTeamMonitored')
-         ->add('teamResidentArea')
-         ->add('vaccinatorTrained')
-         ->add('vaccStage3')
-         ->add('teamSupervised')
-         ->add('teamWithChw')
-         ->add('teamWithFemale')
-         ->add('teamAccomSm')
-         ->add('noMissedChildNovisit')
-         ->add('noChildSeen')
-         ->add('noChildWithFm')
-         ->add('noMissedChild')
-         ->add('noMissed10')
+         ->add('clusterName')
+         ->add('clusterNo', HiddenType::class)
+         ->add('subDistrictName', TextType::class)
+         ->add('regAbsent')
+         ->add('vaccAbsent')
+         ->add('regSleep')
+         ->add('vaccSleep')
+         ->add('regRefusal')
+         ->add('vaccRefusal')
+         ->add('newMissed')
+         ->add('newVaccinated')
+         ->add('newRemaining')
 
          ->add('campaign', 'entity', array(
            'class' => 'AppPolioDbBundle:Campaign',
@@ -63,7 +62,7 @@ class CatchupDataEntryType extends AbstractType
        */
        public function getBlockPrefix()
        {
-         return 'app_poliodbbundle_icmdata';
+         return 'app_poliodbbundle_catchupdata';
        }
 
 

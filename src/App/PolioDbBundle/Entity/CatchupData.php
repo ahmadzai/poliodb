@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CatchupData
 {
+
+  public function __construct()
+  {
+      $this->entryDate = new \DateTime();
+  }
   /**
    * @var string
    *
@@ -94,7 +99,7 @@ class CatchupData
      *
      * @ORM\Column(name="entry_date", type="datetime", nullable=true)
      */
-    private $entryDate = 'CURRENT_TIMESTAMP';
+    private $entryDate;
 
     /**
      * @var \App\PolioDbBundle\Entity\District

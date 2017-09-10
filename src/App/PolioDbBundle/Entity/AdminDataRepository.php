@@ -1067,7 +1067,7 @@ class AdminDataRepository extends EntityRepository {
     public function selectClustereByDistrict($district) {
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT DISTINCT a, d.districtCode FROM AppPolioDbBundle:AdminData a JOIN a.districtCode d WHERE a.districtCode IN (:dis) Group BY a.cluster"
+                "SELECT DISTINCT a, d.districtCode, d.districtName FROM AppPolioDbBundle:AdminData a JOIN a.districtCode d WHERE a.districtCode IN (:dis) Group BY a.cluster"
             ) ->setParameter('dis', $district)
             ->getResult(Query::HYDRATE_SCALAR);
     }

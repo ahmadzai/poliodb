@@ -100,7 +100,7 @@ class DataEntryController extends Controller
     /**
      * @Route("/data_entry/catchup_data", name="entry_catchup_data")
      */
-    public function DashboardCatchupDataAction()
+    public function DashboardCatchupDataAction(Request $request)
     {
       $this->get('app.settings')->trackUrl('entry_catchup_data');
       $datasource = "catchup_data";

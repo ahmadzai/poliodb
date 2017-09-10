@@ -43,7 +43,7 @@
       <h4><i class="icon-reorder"></i> Data Entry </h4>
     </div>
     <div class="widget-content">
-      {{ form_start(form, { 'action': path('entry_icm_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
+      {{ form_start(form, { 'action': path('entry_catchup_data'), 'method': 'POST', 'attr': { 'class': 'ajaxForm' } }) }}
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
@@ -54,28 +54,28 @@
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Campaign ID:</label> -->
-              {{ form_widget(form.noTeamMonitored, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoTeamMon', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noTeamMonitored) }}
+              {{ form_widget(form.subDistrictName, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'SubDName', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.subDistrictName) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">SubDistrictName:</label> -->
-              {{ form_widget(form.teamResidentArea, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamRArea', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.teamResidentArea) }}
+              {{ form_widget(form.regAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RAbsent', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.regAbsent) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Target Population:</label> -->
-              {{ form_widget(form.vaccinatorTrained, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccTrained', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.vaccinatorTrained) }}
+              {{ form_widget(form.vaccAbsent, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VAbsent', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccAbsent) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Received Vials:</label> -->
-              {{ form_widget(form.vaccStage3, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VaccStage3', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.vaccStage3) }}
+              {{ form_widget(form.regSleep, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RSleep', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.regSleep) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Used Vials:</label> -->
-              {{ form_widget(form.teamSupervised, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamSupervised', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.teamSupervised) }}
+              {{ form_widget(form.vaccSleep, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VSleep', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccSleep) }}
             </div>
           </div>
         </div>
@@ -85,49 +85,33 @@
           <div class="col-md-12">
             <div class="col-md-2">
               <!-- <label class="control-label">Child001:</label> -->
-              {{ form_widget(form.teamWithChw, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamWChw', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.teamWithChw) }}
+              {{ form_widget(form.regRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RRefusal', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.regRefusal) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Child1259:</label> -->
-              {{ form_widget(form.teamWithFemale, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamWFemale', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.teamWithFemale) }}
+              {{ form_widget(form.vaccRefusal, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'VRefusal', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.vaccRefusal) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Reg Absent:</label> -->
-              {{ form_widget(form.teamAccomSm, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'TeamAccomSm', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.teamAccomSm) }}
+              {{ form_widget(form.newMissed, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NMissed', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.newMissed) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Vacc Absent:</label> -->
-              {{ form_widget(form.noMissedChildNovisit, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMissedChNoVisit', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noMissedChildNovisit) }}
+              {{ form_widget(form.newVaccinated, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NVaccinated', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.newVaccinated) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">Reg Sleep:</label> -->
-              {{ form_widget(form.noChildSeen, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'RegSleep', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noChildSeen) }}
+              {{ form_widget(form.newRemaining, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NRemaining', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.newRemaining) }}
             </div>
             <div class="col-md-2">
-              <!-- <label class="control-label">Vacc Sleep:</label> -->
-              {{ form_widget(form.noChildWithFm, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoChWFm', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noChildWithFm) }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="col-md-2">
-              <!-- <label class="control-label">Reg Regusal:</label> -->
-              {{ form_widget(form.noMissedChild, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMChild', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noMissedChild) }}
-            </div>
-            <div class="col-md-2">
-              <!-- <label class="control-label">Vacc Refusal:</label> -->
-              {{ form_widget(form.noMissed10, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'NoMissed10', 'style': 'text-align: center'} }) }}
-              {{ form_errors(form.noMissed10) }}
+              <!-- <label class="control-label">Cluster:</label> -->
+              {{ form_widget(form.clusterNo, { 'attr': {'class': 'form-control input-width-medium', 'style': 'display: block', 'placeholder': 'Cluster', 'style': 'text-align: center'} }) }}
+              {{ form_errors(form.clusterNo) }}
             </div>
             <div class="col-md-2">
               <!-- <label class="control-label">District Code:</label> -->
@@ -156,25 +140,24 @@
 $(document).ready(function(){
 
 });
-var table;
+
 var source, sourceCols;
-var campaignid, district, noteammonitored, teamresidentarea, vaccinatortrained, vaccstage3, teamsupervised,
-teamwithchw, teamwithfemale, teamaccomsm, nomissedchildnovisit, nochildseen, nochildwithfm, nomissedchild, nomissed10;
+var campaignid, district, clustername, clusterno, subdisname, regabsent, vaccabsent,
+regsleep, vaccsleep, regrefusal, vaccrefusal, newmissed, newvaccinated, newremaining;
 
 sourceCols = [
-  { "data": "noTeamMonitored", title : 'noTeamMonitored'},
-  { "data": "teamResidentArea",  title : 'teamResidentArea'},
-  { "data": "vaccinatorTrained", "visible": false, title : 'vaccinatorTrained'},
-  { "data": "vaccStage3", title : 'vaccStage3'},
-  { "data": "teamSupervised", title : 'teamSupervised'},
-  { "data": "teamWithChw", "visible": false, title : 'teamWithChw'},
-  { "data": "teamWithFemale", "visible": false, title : 'teamWithFemale'},
-  { "data": "teamAccomSm", "visible": false, title : 'teamAccomSm'},
-  { "data": "noMissedChildNoVisit", "visible": false, title : 'noMissedChildNoVisit'},
-  { "data": "noChildSeen", "visible": false, title : 'noChildSeen'},
-  { "data": "noChildWithFm", "visible": false, title : 'noChildWithFm'},
-  { "data": "noMissedChild", "visible": false, title : 'noMissedChild'},
-  { "data": "noMissed10", "visible": false, title : 'noMissed10'},
+  //{ "data": "clusterName", title : 'clusterName'},
+  { "data": "clusterNo",  title : 'clusterNo'},
+  { "data": "subDistrictName", "visible": false, title : 'subDistrictName'},
+  { "data": "regAbsent", title : 'regAbsent'},
+  { "data": "vaccAbsent", title : 'vaccAbsent'},
+  { "data": "regSleep", "visible": false, title : 'regSleep'},
+  { "data": "vaccSleep", "visible": false, title : 'vaccSleep'},
+  { "data": "regRefusal", "visible": false, title : 'regRefusal'},
+  { "data": "vaccRefusal", "visible": false, title : 'vaccRefusal'},
+  { "data": "newMissed", "visible": false, title : 'newMissed'},
+  { "data": "newVaccinated", "visible": false, title : 'newVaccinated'},
+  { "data": "newRemaining", "visible": false, title : 'newRemaining'},
   { "data": "District", "visible": false, title : 'District'},
   { "data": "CampaignID", title : 'CampaignID'},
 ];
@@ -208,26 +191,29 @@ $('form.ajaxForm').on('submit', function () {
     name = that.attr('name'),
     value = that.val();
     data[name] = value;
+    if(name == 'app_poliodbbundle_catchupdata[clusterNo]')
+    data[name] = $("#filterCluster option:selected" ).attr("value");
       // if(name == 'app_poliodbbundle_admindata[districtCode]')
       // data[name] = $("#filterDistrict option:selected" ).attr("value");
 
   });
   console.log(data);
-  noteammonitored = $("#app_poliodbbundle_icmdata_noTeamMonitored").val();
-  teamresidentarea = $("#app_poliodbbundle_icmdata_teamResidentArea").val();
-  vaccinatortrained = $("#app_poliodbbundle_icmdata_vaccinatorTrained").val();
-  vaccstage3 = $("#app_poliodbbundle_icmdata_vaccStage3").val();
-  teamsupervised = $("#app_poliodbbundle_icmdata_teamSupervised").val();
-  teamwithchw = $("#app_poliodbbundle_icmdata_teamWithChw").val();
-  teamwithfemale = $("#app_poliodbbundle_icmdata_teamWithFemale").val();
-  teamaccomsm = $("#app_poliodbbundle_icmdata_teamAccomSm").val();
-  nomissedchildnovisit = $("#app_poliodbbundle_icmdata_noMissedChildNovisit").val();
-  nochildseen = $("#app_poliodbbundle_icmdata_noChildSeen").val();
-  nochildwithfm = $("#app_poliodbbundle_icmdata_noChildWithFm").val();
-  nomissedchild = $("#app_poliodbbundle_icmdata_noMissedChild").val();
-  nomissed10 = $("#app_poliodbbundle_icmdata_noMissed10").val();
-  district = $("#app_poliodbbundle_icmdata_districtCode").val();
-  compaignid = $("#app_poliodbbundle_icmdata_campaign").val();
+
+  //clustername = $("#app_poliodbbundle_catchupdata_clusterName").val();
+  clusterno = $("#app_poliodbbundle_catchupdata_clusterNo").val();
+  subdisname = $("#app_poliodbbundle_catchupdata_subDistrictName").val();
+  regabsent = $("#app_poliodbbundle_catchupdata_regAbsent").val();
+  vaccabsent = $("#app_poliodbbundle_catchupdata_vaccAbsent").val();
+  regsleep = $("#app_poliodbbundle_catchupdata_regSleep").val();
+  vaccsleep = $("#app_poliodbbundle_catchupdata_vaccSleep").val();
+  regrefusal = $("#app_poliodbbundle_catchupdata_regRefusal").val();
+  vaccrefusal = $("#app_poliodbbundle_catchupdata_vaccRefusal").val();
+  newmissed = $("#app_poliodbbundle_catchupdata_newMissed").val();
+  newvaccinated = $("#app_poliodbbundle_catchupdata_newVaccinated").val();
+  newremaining = $("#app_poliodbbundle_catchupdata_newRemaining").val();
+  district = $("#app_poliodbbundle_catchupdata_districtCode").val();
+  compaignid = $("#app_poliodbbundle_catchupdata_campaign").val();
+  console.log(clusterno);
 
   $.ajax({
     type: type,
@@ -235,19 +221,18 @@ $('form.ajaxForm').on('submit', function () {
     data: data,
     success: function(response){
       //console.log(data);  { "data": "noTeamMonitored", title : 'Cluster'},
-      table.row.add({"noTeamMonitored":       noteammonitored,
-      "teamResidentArea":       teamresidentarea,
-      "vaccinatorTrained":   vaccinatortrained,
-      "vaccStage3":     vaccstage3,
-      "teamSupervised": teamsupervised,
-      "teamWithChw":     teamwithchw,
-      "teamWithFemale":       teamwithfemale,
-      "teamAccomSm":   teamaccomsm,
-      "noMissedChildNoVisit":     nomissedchildnovisit,
-      "noChildSeen": nochildseen,
-      "noChildWithFm":     nochildwithfm,
-      "noMissedChild":       nomissedchild,
-      "noMissed10":       nomissed10,
+      table.row.add({
+      "clusterNo":       clusterno,
+      "subDistrictName":   subdisname,
+      "regAbsent":     regabsent,
+      "vaccAbsent": vaccabsent,
+      "regSleep":     regsleep,
+      "vaccSleep":       vaccsleep,
+      "regRefusal":   regrefusal,
+      "vaccRefusal":     vaccrefusal,
+      "newMissed": newmissed,
+      "newVaccinated":     newvaccinated,
+      "newRemaining":       newremaining,
       "District":     district,
       "CampaignID":       compaignid,
     }).draw(false);
